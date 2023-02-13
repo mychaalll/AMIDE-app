@@ -1,6 +1,8 @@
+import 'package:amide_app/pages/journal/journal-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 
 class dashboardPage extends StatelessWidget {
   dashboardPage({super.key});
@@ -44,16 +46,30 @@ class dashboardPage extends StatelessWidget {
                       mainButton(
                         icon: Icons.view_list_rounded,
                         title: 'Reminders',
+                        navigation: () {
+                          
+                        },
                       ),
                       SizedBox(width: 13),
                       mainButton(
                         icon: Icons.not_listed_location_rounded,
                         title: 'Logs',
+                        navigation: () {
+                          
+                        },
                       ),
                       SizedBox(width: 13),
                       mainButton(
                         icon: Icons.elderly_sharp,
-                        title: 'Patients',
+                        title: 'Elderly',
+                        navigation: () {
+                          Navigator.of(context).push(
+                            PageTransition(
+                              child: elderlyPage(),
+                              type: PageTransitionType.rightToLeft,
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -337,39 +353,48 @@ class reminderTile extends StatelessWidget {
 class mainButton extends StatelessWidget {
   final String title;
   final IconData icon;
+  final Function()? navigation;
 
   const mainButton({
-    Key? key, required this.icon, required this.title,
+    Key? key, required this.icon, required this.title, required this.navigation,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.primBlue,
-          borderRadius: BorderRadius.circular(15)
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              color: Colors.white,
-              size: 30,
-            ),
-            Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-                fontFamily: 'Montserrat',
-                color: Colors.white
-              ),
+      child: ElevatedButton(
+        onPressed: navigation,
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
+          overlayColor: MaterialStateProperty.all(Color.fromARGB(255, 2, 5, 27)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             )
-          ],
+          )
+        ),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                color: Colors.white,
+                size: 30,
+              ),
+              Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  fontFamily: 'Montserrat',
+                  color: Colors.white
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
