@@ -1,4 +1,5 @@
 import 'package:amide_app/pages/journal/journal-page.dart';
+import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -47,7 +48,12 @@ class dashboardPage extends StatelessWidget {
                         icon: Icons.view_list_rounded,
                         title: 'Reminders',
                         navigation: () {
-                          
+                          Navigator.of(context).push(
+                            PageTransition(
+                              child: reminderPage(),
+                              type: PageTransitionType.rightToLeft,
+                            ),
+                          );
                         },
                       ),
                       SizedBox(width: 13),
@@ -113,7 +119,14 @@ class dashboardPage extends StatelessWidget {
                       ),
                       SizedBox(height: 22),
                       ElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.of(context).push(
+                            PageTransition(
+                              child: reminderPage(),
+                              type: PageTransitionType.rightToLeft,
+                            ),
+                          );
+                        },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
                           overlayColor: MaterialStateProperty.all(Color.fromARGB(255, 2, 5, 27)),

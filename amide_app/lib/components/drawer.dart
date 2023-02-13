@@ -1,5 +1,6 @@
 import 'package:amide_app/pages/dashboard/dashboard-page.dart';
 import 'package:amide_app/pages/journal/journal-page.dart';
+import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -50,6 +51,12 @@ class appDrawer extends StatelessWidget {
               icon: Icons.view_list_rounded, 
               title: 'Reminders', 
               navigation: () {
+                Navigator.of(context).push(
+                  PageTransition(
+                    child: reminderPage(),
+                    type: PageTransitionType.rightToLeft,
+                  ),
+                );
               },
             ),
             SizedBox(height: 10),
