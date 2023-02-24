@@ -1,5 +1,7 @@
+import 'package:amide_app/pages/create/create-reminder-page.dart';
 import 'package:amide_app/pages/dashboard/dashboard-page.dart';
 import 'package:amide_app/pages/journal/journal-page.dart';
+import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
         fontFamily: 'Montserrat'
       ),
-      home: elderlyPage(),
+      home: createReminder(),
     );
   }
 }

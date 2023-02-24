@@ -1,5 +1,6 @@
 import 'package:amide_app/pages/dashboard/dashboard-page.dart';
 import 'package:amide_app/pages/journal/journal-page.dart';
+import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -23,19 +24,18 @@ class appDrawer extends StatelessWidget {
                   child: Text(
                     'AMIDE',
                     style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 30,
-                      fontFamily: 'Montserrat',
-                      color: Colors.white
-                    ),
+                        fontWeight: FontWeight.w800,
+                        fontSize: 30,
+                        fontFamily: 'Montserrat',
+                        color: Colors.white),
                   ),
                 ),
               ),
             ),
             SizedBox(height: 10),
             drawerTile(
-              icon: Icons.dashboard, 
-              title: 'Dashboard', 
+              icon: Icons.dashboard,
+              title: 'Dashboard',
               navigation: () {
                 Navigator.of(context).push(
                   PageTransition(
@@ -47,22 +47,27 @@ class appDrawer extends StatelessWidget {
             ),
             SizedBox(height: 10),
             drawerTile(
-              icon: Icons.view_list_rounded, 
-              title: 'Reminders', 
+              icon: Icons.view_list_rounded,
+              title: 'Reminders',
               navigation: () {
+                Navigator.of(context).push(
+                  PageTransition(
+                    child: reminderPage(),
+                    type: PageTransitionType.rightToLeft,
+                  ),
+                );
               },
             ),
             SizedBox(height: 10),
             drawerTile(
-              icon: Icons.not_listed_location_rounded, 
-              title: 'Logs', 
-              navigation: () {
-              },
+              icon: Icons.not_listed_location_rounded,
+              title: 'Logs',
+              navigation: () {},
             ),
             SizedBox(height: 10),
             drawerTile(
-              icon: Icons.elderly_sharp, 
-              title: 'Elderly', 
+              icon: Icons.elderly_sharp,
+              title: 'Elderly',
               navigation: () {
                 Navigator.of(context).push(
                   PageTransition(
@@ -76,10 +81,9 @@ class appDrawer extends StatelessWidget {
             Container(height: 1.0, color: Colors.grey[600]),
             SizedBox(height: 10.0),
             drawerTile(
-              icon: Icons.settings, 
-              title: 'Settings', 
-              navigation: () {
-              },
+              icon: Icons.settings,
+              title: 'Settings',
+              navigation: () {},
             ),
           ],
         ),
@@ -87,33 +91,36 @@ class appDrawer extends StatelessWidget {
     );
   }
 }
+
 class drawerTile extends StatelessWidget {
   final String title;
   final IconData icon;
   final Function()? navigation;
   const drawerTile({
-    Key? key, required this.title, required this.icon, required this.navigation,
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.navigation,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      selectedColor: AppColors.primBlue,
-      selectedTileColor: AppColors.primBlue.withOpacity(0.1),
-      leading: Icon(
-        icon,
-        size: 35,
-        color: Colors.black,
-      ),
-      minLeadingWidth: 40,
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: 20, 
-          fontWeight: FontWeight.w600,
+        selectedColor: AppColors.primBlue,
+        selectedTileColor: AppColors.primBlue.withOpacity(0.1),
+        leading: Icon(
+          icon,
+          size: 35,
+          color: Colors.black,
         ),
-      ),
-      onTap: navigation
-    );
+        minLeadingWidth: 40,
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        onTap: navigation);
   }
 }
