@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 
-class dashboardPage extends StatelessWidget {
-  dashboardPage({super.key});
+class DashboardPage extends StatelessWidget {
+  DashboardPage({super.key});
   String name = 'Edilberto';
 
   @override
@@ -50,7 +50,7 @@ class dashboardPage extends StatelessWidget {
                         navigation: () {
                           Navigator.of(context).push(
                             PageTransition(
-                              child: reminderPage(),
+                              child: ReminderPage(),
                               type: PageTransitionType.rightToLeft,
                             ),
                           );
@@ -71,7 +71,7 @@ class dashboardPage extends StatelessWidget {
                         navigation: () {
                           Navigator.of(context).push(
                             PageTransition(
-                              child: elderlyPage(),
+                              child: ElderlyPage(),
                               type: PageTransitionType.rightToLeft,
                             ),
                           );
@@ -122,7 +122,7 @@ class dashboardPage extends StatelessWidget {
                         onPressed: (){
                           Navigator.of(context).push(
                             PageTransition(
-                              child: reminderPage(),
+                              child: ReminderPage(),
                               type: PageTransitionType.rightToLeft,
                             ),
                           );

@@ -5,8 +5,8 @@ import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-class appDrawer extends StatelessWidget {
-  const appDrawer({
+class AppDrawer extends StatelessWidget {
+  const AppDrawer({
     Key? key,
   }) : super(key: key);
 
@@ -39,7 +39,7 @@ class appDrawer extends StatelessWidget {
               navigation: () {
                 Navigator.of(context).push(
                   PageTransition(
-                    child: dashboardPage(),
+                    child: DashboardPage(),
                     type: PageTransitionType.leftToRight,
                   ),
                 );
@@ -52,7 +52,7 @@ class appDrawer extends StatelessWidget {
               navigation: () {
                 Navigator.of(context).push(
                   PageTransition(
-                    child: reminderPage(),
+                    child: ReminderPage(),
                     type: PageTransitionType.rightToLeft,
                   ),
                 );
@@ -71,7 +71,7 @@ class appDrawer extends StatelessWidget {
               navigation: () {
                 Navigator.of(context).push(
                   PageTransition(
-                    child: elderlyPage(),
+                    child: ElderlyPage(),
                     type: PageTransitionType.rightToLeft,
                   ),
                 );

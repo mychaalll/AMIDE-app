@@ -1,9 +1,12 @@
+import 'package:amide_app/pages/edit/edit-journal-page.dart';
+import 'package:amide_app/pages/view/view-journal-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:page_transition/page_transition.dart';
 
-class elderlyTile extends StatelessWidget {
-  const elderlyTile({
+class ElderlyTile extends StatelessWidget {
+  const ElderlyTile({
     Key? key,
   }) : super(key: key);
 
@@ -20,7 +23,13 @@ class elderlyTile extends StatelessWidget {
             SlidableAction(
               autoClose: true,
               onPressed: (context) {
-                
+                //go to edit
+                Navigator.of(context).push(
+                  PageTransition(
+                    child: EditJournal(),
+                    type: PageTransitionType.rightToLeft,
+                  ),
+                );
               },
               backgroundColor: Colors.blue,
               icon: Icons.edit_note,
@@ -50,52 +59,62 @@ class elderlyTile extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
-            height: 80,
-            decoration: BoxDecoration(
-              color: AppColors.primBlue,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.elderly_woman,
-                    color: Colors.white,
-                    size: 25,
+          child: GestureDetector(
+            onTap: (){
+              Navigator.of(context).push(
+                  PageTransition(
+                    child: ViewJournal(),
+                    type: PageTransitionType.rightToLeft,
                   ),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          'Mrs. Grace Aquino',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            fontFamily: 'Montserrat',
-                            color: Colors.white
-                          ),
-                        ),
-                        Text(
-                          '29' + ' years old',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            fontFamily: 'Montserrat',
-                            color: Colors.white
-                          ),
-                        )
-                      ],
+                );
+            },
+            child: Container(
+              height: 80,
+              decoration: BoxDecoration(
+                color: AppColors.primBlue,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.elderly_woman,
+                      color: Colors.white,
+                      size: 25,
                     ),
-                  )
-                ]
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            'Mrs. Grace Aquino',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              fontFamily: 'Montserrat',
+                              color: Colors.white
+                            ),
+                          ),
+                          Text(
+                            '29' + ' years old',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              fontFamily: 'Montserrat',
+                              color: Colors.white
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ]
+                ),
               ),
             ),
           ),

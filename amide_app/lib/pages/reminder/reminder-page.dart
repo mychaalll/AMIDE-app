@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 
+<<<<<<< HEAD
 class reminderPage extends StatefulWidget {
   reminderPage({super.key});
 
@@ -73,23 +74,29 @@ class _reminderPageState extends State<reminderPage> {
     }
     super.initState();
   }
+=======
+class ReminderPage extends StatelessWidget {
+  const ReminderPage({super.key});
+>>>>>>> a0f1fc5fb3bb88f39201297c0fec043c73f4992b
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-          backgroundColor: AppColors.primBlue,
-          centerTitle: true,
-          title: Text(
-            'Reminder',
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-                fontFamily: 'Montserrat',
-                color: Colors.white),
-          )),
-      drawer: appDrawer(),
+        backgroundColor: AppColors.primBlue,
+        centerTitle: true,
+        title: Text(
+          'Reminder',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+            fontFamily: 'Montserrat',
+            color: Colors.white
+          ),
+        )
+      ),
+      drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primBlue,
         foregroundColor: Colors.white,
@@ -98,10 +105,14 @@ class _reminderPageState extends State<reminderPage> {
         onPressed: () {
           Navigator.of(context).push(
             PageTransition(
+<<<<<<< HEAD
               child: createReminder(
                 titleController: _titleController,
                 onPressed: saveTask,
               ),
+=======
+              child: CreateReminder(),
+>>>>>>> a0f1fc5fb3bb88f39201297c0fec043c73f4992b
               type: PageTransitionType.rightToLeft,
             ),
           );
@@ -126,6 +137,7 @@ class _reminderPageState extends State<reminderPage> {
                 SizedBox(height: 20),
                 Expanded(
                   child: ListView.builder(
+<<<<<<< HEAD
                       itemCount: db.toDoList.length,
                       itemBuilder: ((context, index) {
                         return reminderTile(
@@ -137,6 +149,13 @@ class _reminderPageState extends State<reminderPage> {
                           value: db.toDoList[index][2],
                         );
                       })),
+=======
+                    itemCount: 4,
+                    itemBuilder: ((context, index) {
+                      return ReminderTile();
+                    })
+                  ),
+>>>>>>> a0f1fc5fb3bb88f39201297c0fec043c73f4992b
                 )
               ],
             ),
