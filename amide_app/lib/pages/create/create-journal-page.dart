@@ -1,18 +1,20 @@
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import '../reminder/reminder-page.dart';
 
-class CreateReminder extends StatefulWidget {
-  const CreateReminder({super.key});
+class CreateJournal extends StatefulWidget {
+  const CreateJournal({super.key});
 
   @override
-  State<CreateReminder> createState() => _CreateReminderState();
+  State<CreateJournal> createState() => _CreateJournalState();
 }
 
-class _CreateReminderState extends State<CreateReminder> {
+  List<String> list = <String>['Male','Female'];
+
+class _CreateJournalState extends State<CreateJournal> {
   DateTime _dateTime = DateTime.now();
+  String dropdownValue = list.first;
   
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class _CreateReminderState extends State<CreateReminder> {
               children: [
                 SizedBox(height: 20),
                 Text(
-                  'Add Reminder',
+                  'Add Entry',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 18,
@@ -61,7 +63,7 @@ class _CreateReminderState extends State<CreateReminder> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Reminder Title',
+                    'Elderly Name',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.black,
@@ -104,136 +106,127 @@ class _CreateReminderState extends State<CreateReminder> {
                   ),
                 ),
                 SizedBox(height: 22),
-                //time textbox
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Time',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Container(
-                  height: 40,
-                  width: width - 30,
-                  child: TextField(
-                    readOnly: true,
-                    textAlign: TextAlign.left,
-                    textAlignVertical: TextAlignVertical.bottom,
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.watch_later
+                Row(
+                  children: [
+                    //age
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Age Name',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                         ),
-                        onPressed: () async {
-                          TimeOfDay? newTime = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(_dateTime),
-                          );
-                          if (newTime == null) return;
-                          final newDateTime = DateTime(
-                            _dateTime.year,
-                            _dateTime.month,
-                            _dateTime.day,
-                            newTime.hour,
-                            newTime.minute,
-                          );
-                          setState(() {
-                            _dateTime = newDateTime;
-                          });
-                        },
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 5.0,
+                        SizedBox(height: 5),
+                        Container(
+                          height: 40,
+                          width: width / 2 - 32,
+                          child: TextField(
+                            textAlign: TextAlign.left,
+                            textAlignVertical: TextAlignVertical.bottom,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 5.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              hintText: 'Age',
+                              hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      hintText: DateFormat.jm().format(_dateTime),
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      ],
                     ),
-                  ),
-                ),
-                SizedBox(height: 22),
-                //music
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Reminder Music',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Container(
-                  height: 40,
-                  width: width - 30,
-                  child: TextField(
-                    readOnly: true,
-                    textAlign: TextAlign.left,
-                    textAlignVertical: TextAlignVertical.bottom,
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.queue_music
+                    SizedBox(width: 32),
+                    //sex
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Sex',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                         ),
-                        onPressed: () {}
-                          
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 5.0,
+                        SizedBox(height: 5),
+                        Container(
+                          height: 40,
+                          width: width / 2 - 32,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.black54,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                isExpanded: true,
+                                value: dropdownValue,
+                                icon: Icon(Icons.arrow_drop_down_circle),
+                                elevation: 1,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                items: list.map<DropdownMenuItem<String>>((String value)
+                                {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(), 
+                                onChanged: (value) {  
+                                  setState(() {
+                                    dropdownValue = value!;
+                                  });
+                                },
+                            
+                              ),
+                            ),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      hintText: 'music.wav',
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      ],
                     ),
-                  ),
+                  ],
                 ),
                 SizedBox(height: 22),
                 //note
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Reminder Details',
+                    'Journal Details',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.black,
@@ -249,7 +242,7 @@ class _CreateReminderState extends State<CreateReminder> {
                     child: TextField(
                       textAlign: TextAlign.left,
                       textAlignVertical: TextAlignVertical.bottom,
-                      maxLines: 10,
+                      maxLines: 15,
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.black,
@@ -266,7 +259,7 @@ class _CreateReminderState extends State<CreateReminder> {
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        hintText: 'Some details here...',
+                        hintText: 'Some important notes here...',
                         hintStyle: TextStyle(
                           color: Colors.grey,
                           fontSize: 14,
@@ -277,6 +270,7 @@ class _CreateReminderState extends State<CreateReminder> {
                   ),
                 ),
                 SizedBox(height: 22),
+                //button
                 ElevatedButton(
                   onPressed: (){
                   },
@@ -291,7 +285,6 @@ class _CreateReminderState extends State<CreateReminder> {
                   ),
                   child: Container(
                     height: 40,
-                    
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -303,7 +296,7 @@ class _CreateReminderState extends State<CreateReminder> {
                         SizedBox(width: 10),
                         width > 280 ?
                         Text(
-                          'Save Reminder',
+                          'Save Entry',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
@@ -317,9 +310,10 @@ class _CreateReminderState extends State<CreateReminder> {
                 SizedBox(height: 15),
               ],
             ),
-          ),
-        ),
-      ),
+          )
+        )
+      )
     );
   }
 }
+    
