@@ -1,6 +1,8 @@
+import 'package:amide_app/pages/edit/create-reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ReminderTile extends StatefulWidget {
   const ReminderTile({
@@ -27,7 +29,13 @@ class _ReminderTileState extends State<ReminderTile> {
             SlidableAction(
               autoClose: true,
               onPressed: (context) {
-                
+                //go to edit
+                Navigator.of(context).push(
+                  PageTransition(
+                    child: EditReminder(),
+                    type: PageTransitionType.rightToLeft,
+                  ),
+                );
               },
               backgroundColor: Colors.blue,
               icon: Icons.edit_note,
