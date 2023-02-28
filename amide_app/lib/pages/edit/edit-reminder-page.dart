@@ -5,18 +5,22 @@ import 'package:page_transition/page_transition.dart';
 
 import '../reminder/reminder-page.dart';
 
-class createReminder extends StatefulWidget {
+class editReminder extends StatefulWidget {
+  final String text;
   TextEditingController titleController = TextEditingController();
-
   VoidCallback onPressed;
-  createReminder(
-      {super.key, required this.onPressed, required this.titleController});
+  editReminder({
+    super.key,
+    required this.onPressed,
+    required this.text,
+    required this.titleController,
+  });
 
   @override
-  State<createReminder> createState() => _createReminderState();
+  State<editReminder> createState() => _editReminderState();
 }
 
-class _createReminderState extends State<createReminder> {
+class _editReminderState extends State<editReminder> {
   DateTime _dateTime = DateTime.now();
 
   @override
@@ -51,7 +55,7 @@ class _createReminderState extends State<createReminder> {
             children: [
               SizedBox(height: 20),
               Text(
-                'Add Reminder',
+                'Edit Reminder',
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 18,
@@ -82,8 +86,9 @@ class _createReminderState extends State<createReminder> {
                       Container(
                         height: 40,
                         width: width - 30,
-                        child: TextField(
-                          controller: widget.titleController,
+                        child: TextFormField(
+                          controller:
+                              TextEditingController(text: "${widget.text}"),
                           textAlign: TextAlign.left,
                           textAlignVertical: TextAlignVertical.bottom,
                           maxLines: 1,
