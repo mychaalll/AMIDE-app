@@ -2,16 +2,16 @@ import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class reminderTile extends StatefulWidget {
-  const reminderTile({
+class ReminderTile extends StatefulWidget {
+  const ReminderTile({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<reminderTile> createState() => _reminderTileState();
+  State<ReminderTile> createState() => _ReminderTileState();
 }
 
-class _reminderTileState extends State<reminderTile> {
+class _ReminderTileState extends State<ReminderTile> {
   bool value = true;
 
   @override

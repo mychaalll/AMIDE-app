@@ -3,8 +3,8 @@ import 'package:amide_app/components/reminder-tile.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class reminderPage extends StatelessWidget {
-  const reminderPage({super.key});
+class ReminderPage extends StatelessWidget {
+  const ReminderPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class reminderPage extends StatelessWidget {
           ),
         )
       ),
-      drawer: appDrawer(),
+      drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primBlue,
         foregroundColor: Colors.white,
@@ -54,7 +54,7 @@ class reminderPage extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: 4,
                     itemBuilder: ((context, index) {
-                      return reminderTile();
+                      return ReminderTile();
                     })
                   ),
                 )

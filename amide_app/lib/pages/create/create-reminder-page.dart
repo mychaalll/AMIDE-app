@@ -6,14 +6,14 @@ import 'package:page_transition/page_transition.dart';
 
 import '../reminder/reminder-page.dart';
 
-class createReminder extends StatefulWidget {
-  const createReminder({super.key});
+class CreateReminder extends StatefulWidget {
+  const CreateReminder({super.key});
 
   @override
-  State<createReminder> createState() => _createReminderState();
+  State<CreateReminder> createState() => _CreateReminderState();
 }
 
-class _createReminderState extends State<createReminder> {
+class _CreateReminderState extends State<CreateReminder> {
   DateTime _dateTime = DateTime.now();
   
   @override
@@ -30,7 +30,7 @@ class _createReminderState extends State<createReminder> {
           onPressed: () {
             Navigator.of(context).push(
               PageTransition(
-                child: reminderPage(),
+                child: ReminderPage(),
                 type: PageTransitionType.leftToRight,
               ),
             );

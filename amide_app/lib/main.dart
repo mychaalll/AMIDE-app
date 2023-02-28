@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
         fontFamily: 'Montserrat'
       ),
-      home: createReminder(),
+      home: CreateReminder(),
     );
   }
 }

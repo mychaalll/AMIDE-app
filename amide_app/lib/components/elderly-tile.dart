@@ -2,8 +2,8 @@ import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class elderlyTile extends StatelessWidget {
-  const elderlyTile({
+class ElderlyTile extends StatelessWidget {
+  const ElderlyTile({
     Key? key,
   }) : super(key: key);
 
