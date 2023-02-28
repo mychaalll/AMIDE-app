@@ -1,11 +1,12 @@
 import 'package:amide_app/components/drawer.dart';
-import 'package:amide_app/components/elderly-tile.dart';
+import 'package:amide_app/components/reminder-tile.dart';
+import 'package:amide_app/pages/create/create-reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:page_transition/page_transition.dart';
 
-class ElderlyPage extends StatelessWidget {
-  const ElderlyPage({super.key});
+class ReminderPage extends StatelessWidget {
+  const ReminderPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class ElderlyPage extends StatelessWidget {
         backgroundColor: AppColors.primBlue,
         centerTitle: true,
         title: Text(
-          'Elderly',
+          'Reminder',
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 16,
@@ -28,9 +29,15 @@ class ElderlyPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primBlue,
         foregroundColor: Colors.white,
-        label: Text('Add Elderly'),
+        label: Text('Add Reminder'),
         icon: Icon(Icons.person_add_alt_1_rounded),
         onPressed: () {
+          Navigator.of(context).push(
+            PageTransition(
+              child: CreateReminder(),
+              type: PageTransitionType.rightToLeft,
+            ),
+          );
         },
       ),
       body: SafeArea(
@@ -41,21 +48,20 @@ class ElderlyPage extends StatelessWidget {
               children: [
                 SizedBox(height: 20),
                 Text(
-                  'Elderly List',
+                  'Reminder List',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black
-                  ),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontFamily: 'Montserrat',
+                      color: Colors.black),
                 ),
                 SizedBox(height: 20),
                 Expanded(
                   child: ListView.builder(
                     itemCount: 4,
                     itemBuilder: ((context, index) {
-                      return ElderlyTile();
+                      return ReminderTile();
                     })
                   ),
                 )
@@ -65,11 +71,5 @@ class ElderlyPage extends StatelessWidget {
         ),
       ),
     );
-    
   }
 }
-
-
-
-
-
