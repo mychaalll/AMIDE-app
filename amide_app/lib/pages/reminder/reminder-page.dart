@@ -1,7 +1,9 @@
 import 'package:amide_app/components/drawer.dart';
 import 'package:amide_app/components/reminder-tile.dart';
+import 'package:amide_app/pages/create/create-reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ReminderPage extends StatelessWidget {
   const ReminderPage({super.key});
@@ -30,6 +32,12 @@ class ReminderPage extends StatelessWidget {
         label: Text('Add Reminder'),
         icon: Icon(Icons.person_add_alt_1_rounded),
         onPressed: () {
+          Navigator.of(context).push(
+            PageTransition(
+              child: CreateReminder(),
+              type: PageTransitionType.rightToLeft,
+            ),
+          );
         },
       ),
       body: SafeArea(
@@ -43,11 +51,10 @@ class ReminderPage extends StatelessWidget {
                   'Reminder List',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black
-                  ),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontFamily: 'Montserrat',
+                      color: Colors.black),
                 ),
                 SizedBox(height: 20),
                 Expanded(
