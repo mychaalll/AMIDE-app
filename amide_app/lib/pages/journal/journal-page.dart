@@ -4,8 +4,8 @@ import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class elderlyPage extends StatelessWidget {
-  const elderlyPage({super.key});
+class ElderlyPage extends StatelessWidget {
+  const ElderlyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class elderlyPage extends StatelessWidget {
           ),
         )
       ),
-      drawer: appDrawer(),
+      drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primBlue,
         foregroundColor: Colors.white,
@@ -55,7 +55,7 @@ class elderlyPage extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: 4,
                     itemBuilder: ((context, index) {
-                      return elderlyTile();
+                      return ElderlyTile();
                     })
                   ),
                 )
