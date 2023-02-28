@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'AMIDE Application',
       theme:
           ThemeData(primarySwatch: Colors.blueGrey, fontFamily: 'Montserrat'),
-      home: reminderPage(),
+      home: DashboardPage(),
     );
   }
 }

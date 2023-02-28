@@ -51,12 +51,12 @@ class _ViewReminderState extends State<ViewReminder> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                PageTransition(
-                  child: EditReminder(),
-                  type: PageTransitionType.leftToRight,
-                ),
-              );
+              // Navigator.of(context).push(
+              //   PageTransition(
+              //     child: EditReminder(),
+              //     type: PageTransitionType.leftToRight,
+              //   ),
+              // );
             },
             icon: Icon(
               Icons.edit,

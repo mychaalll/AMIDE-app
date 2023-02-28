@@ -8,15 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 
-<<<<<<< HEAD
-class reminderPage extends StatefulWidget {
-  reminderPage({super.key});
+class ReminderPage extends StatefulWidget {
+  ReminderPage({super.key});
 
   @override
-  State<reminderPage> createState() => _reminderPageState();
+  State<ReminderPage> createState() => _ReminderPageState();
 }
 
-class _reminderPageState extends State<reminderPage> {
+class _ReminderPageState extends State<ReminderPage> {
   final TextEditingController _titleController = TextEditingController();
 
   // reference the hive box
@@ -52,7 +51,7 @@ class _reminderPageState extends State<reminderPage> {
   void editTask(int index) {
     Navigator.of(context).push(
       PageTransition(
-        child: editReminder(
+        child: EditReminder(
           text: db.toDoList[index][0],
           titleController: _titleController,
           onPressed: saveTask,
@@ -74,28 +73,22 @@ class _reminderPageState extends State<reminderPage> {
     }
     super.initState();
   }
-=======
-class ReminderPage extends StatelessWidget {
-  const ReminderPage({super.key});
->>>>>>> a0f1fc5fb3bb88f39201297c0fec043c73f4992b
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: AppColors.primBlue,
-        centerTitle: true,
-        title: Text(
-          'Reminder',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-            fontFamily: 'Montserrat',
-            color: Colors.white
-          ),
-        )
-      ),
+          backgroundColor: AppColors.primBlue,
+          centerTitle: true,
+          title: Text(
+            'Reminder',
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                fontFamily: 'Montserrat',
+                color: Colors.white),
+          )),
       drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primBlue,
@@ -105,14 +98,10 @@ class ReminderPage extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             PageTransition(
-<<<<<<< HEAD
-              child: createReminder(
+              child: CreateReminder(
                 titleController: _titleController,
                 onPressed: saveTask,
               ),
-=======
-              child: CreateReminder(),
->>>>>>> a0f1fc5fb3bb88f39201297c0fec043c73f4992b
               type: PageTransitionType.rightToLeft,
             ),
           );
@@ -137,10 +126,9 @@ class ReminderPage extends StatelessWidget {
                 SizedBox(height: 20),
                 Expanded(
                   child: ListView.builder(
-<<<<<<< HEAD
                       itemCount: db.toDoList.length,
                       itemBuilder: ((context, index) {
-                        return reminderTile(
+                        return ReminderTile(
                           onEdit: (context) => editTask(index),
                           isOn: (context) => isActive(index),
                           onDelete: (context) => deleteTask(index),
@@ -149,13 +137,6 @@ class ReminderPage extends StatelessWidget {
                           value: db.toDoList[index][2],
                         );
                       })),
-=======
-                    itemCount: 4,
-                    itemBuilder: ((context, index) {
-                      return ReminderTile();
-                    })
-                  ),
->>>>>>> a0f1fc5fb3bb88f39201297c0fec043c73f4992b
                 )
               ],
             ),
