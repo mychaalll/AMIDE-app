@@ -5,8 +5,10 @@ import 'package:amide_app/pages/journal/journal-page.dart';
 import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:amide_app/pages/view/view-journal-page.dart';
 import 'package:amide_app/pages/view/view-reminder-page.dart';
+import 'package:amide_app/provider/todolist.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   // init the hive
@@ -23,12 +25,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'AMIDE Application',
-      theme:
-          ThemeData(primarySwatch: Colors.blueGrey, fontFamily: 'Montserrat'),
-      home: DashboardPage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TodoListProvider(),
+        ),
+      ],
+      builder: ((context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'AMIDE Application',
+          theme: ThemeData(
+              primarySwatch: Colors.blueGrey, fontFamily: 'Montserrat'),
+          home: DashboardPage(),
+        );
+      }),
     );
   }
 }

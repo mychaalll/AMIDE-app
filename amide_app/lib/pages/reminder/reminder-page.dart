@@ -17,6 +17,8 @@ class ReminderPage extends StatefulWidget {
 
 class _ReminderPageState extends State<ReminderPage> {
   final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
+  GlobalKey _formKey = GlobalKey<FormState>();
 
   // reference the hive box
   final _myBox = Hive.box('myBox');
@@ -25,12 +27,17 @@ class _ReminderPageState extends State<ReminderPage> {
   void saveTask() {
     setState(() {
       db.toDoList.add([
-        "08:00Am",
+        _timeController.text,
         _titleController.text,
         true,
       ]);
     });
-    Navigator.pop(context);
+    Navigator.of(context).push(
+      PageTransition(
+        child: ReminderPage(),
+        type: PageTransitionType.leftToRight,
+      ),
+    );
     db.updateDataBase();
   }
 
@@ -99,8 +106,10 @@ class _ReminderPageState extends State<ReminderPage> {
           Navigator.of(context).push(
             PageTransition(
               child: CreateReminder(
+                timeController: _timeController,
                 titleController: _titleController,
                 onPressed: saveTask,
+                formKey: _formKey,
               ),
               type: PageTransitionType.rightToLeft,
             ),
