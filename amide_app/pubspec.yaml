@@ -41,12 +41,21 @@ dependencies:
   flutter_slidable: ^1.2.0
   page_transition: ^2.0.9
   firebase_core: ^2.7.0
+
+  # for hive
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.0
   build_runner: ^2.3.3
+
+  # pick file
   file_picker: ^5.2.5
+
+  #state management
   provider: ^6.0.5
+  logger: ^1.2.2
+  path_provider: ^2.0.13
+  fluttertoast: ^8.2.1
 
 dev_dependencies:
   flutter_test:
