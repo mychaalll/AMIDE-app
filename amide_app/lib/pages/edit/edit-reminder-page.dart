@@ -5,11 +5,11 @@ import 'package:page_transition/page_transition.dart';
 
 import '../reminder/reminder-page.dart';
 
-class editReminder extends StatefulWidget {
+class EditReminder extends StatefulWidget {
   final String text;
   TextEditingController titleController = TextEditingController();
   VoidCallback onPressed;
-  editReminder({
+  EditReminder({
     super.key,
     required this.onPressed,
     required this.text,
@@ -17,10 +17,10 @@ class editReminder extends StatefulWidget {
   });
 
   @override
-  State<editReminder> createState() => _editReminderState();
+  State<EditReminder> createState() => _EditReminderState();
 }
 
-class _editReminderState extends State<editReminder> {
+class _EditReminderState extends State<EditReminder> {
   DateTime _dateTime = DateTime.now();
 
   @override
@@ -36,7 +36,7 @@ class _editReminderState extends State<editReminder> {
           onPressed: () {
             Navigator.of(context).push(
               PageTransition(
-                child: reminderPage(),
+                child: ReminderPage(),
                 type: PageTransitionType.leftToRight,
               ),
             );

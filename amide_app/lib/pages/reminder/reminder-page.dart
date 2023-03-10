@@ -8,15 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 
-class reminderPage extends StatefulWidget {
-  reminderPage({super.key});
+class ReminderPage extends StatefulWidget {
+  ReminderPage({super.key});
 
   @override
-  State<reminderPage> createState() => _reminderPageState();
+  State<ReminderPage> createState() => _ReminderPageState();
 }
 
-class _reminderPageState extends State<reminderPage> {
+class _ReminderPageState extends State<ReminderPage> {
   final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
+  GlobalKey _formKey = GlobalKey<FormState>();
 
   // reference the hive box
   final _myBox = Hive.box('myBox');
@@ -25,12 +27,17 @@ class _reminderPageState extends State<reminderPage> {
   void saveTask() {
     setState(() {
       db.toDoList.add([
-        "08:00Am",
+        _timeController.text,
         _titleController.text,
         true,
       ]);
     });
-    Navigator.pop(context);
+    Navigator.of(context).push(
+      PageTransition(
+        child: ReminderPage(),
+        type: PageTransitionType.leftToRight,
+      ),
+    );
     db.updateDataBase();
   }
 
@@ -51,7 +58,7 @@ class _reminderPageState extends State<reminderPage> {
   void editTask(int index) {
     Navigator.of(context).push(
       PageTransition(
-        child: editReminder(
+        child: EditReminder(
           text: db.toDoList[index][0],
           titleController: _titleController,
           onPressed: saveTask,
@@ -89,7 +96,7 @@ class _reminderPageState extends State<reminderPage> {
                 fontFamily: 'Montserrat',
                 color: Colors.white),
           )),
-      drawer: appDrawer(),
+      drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primBlue,
         foregroundColor: Colors.white,
@@ -98,9 +105,11 @@ class _reminderPageState extends State<reminderPage> {
         onPressed: () {
           Navigator.of(context).push(
             PageTransition(
-              child: createReminder(
+              child: CreateReminder(
+                timeController: _timeController,
                 titleController: _titleController,
                 onPressed: saveTask,
+                formKey: _formKey,
               ),
               type: PageTransitionType.rightToLeft,
             ),
@@ -128,7 +137,7 @@ class _reminderPageState extends State<reminderPage> {
                   child: ListView.builder(
                       itemCount: db.toDoList.length,
                       itemBuilder: ((context, index) {
-                        return reminderTile(
+                        return ReminderTile(
                           onEdit: (context) => editTask(index),
                           isOn: (context) => isActive(index),
                           onDelete: (context) => deleteTask(index),

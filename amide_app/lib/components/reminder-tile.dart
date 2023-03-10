@@ -1,3 +1,5 @@
+import 'package:amide_app/pages/edit/edit-reminder-page.dart';
+import 'package:amide_app/pages/view/view-reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -5,14 +7,14 @@ import 'package:page_transition/page_transition.dart';
 
 import '../pages/create/create-reminder-page.dart';
 
-class reminderTile extends StatefulWidget {
+class ReminderTile extends StatefulWidget {
   final Function(BuildContext) onEdit;
   final Function(bool) isOn;
   final Function(BuildContext) onDelete;
   final String time;
   final String subtitle;
   late bool value;
-  reminderTile({
+  ReminderTile({
     Key? key,
     required this.time,
     required this.subtitle,
@@ -23,10 +25,10 @@ class reminderTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<reminderTile> createState() => _reminderTileState();
+  State<ReminderTile> createState() => _ReminderTileState();
 }
 
-class _reminderTileState extends State<reminderTile> {
+class _ReminderTileState extends State<ReminderTile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
