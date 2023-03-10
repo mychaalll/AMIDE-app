@@ -21,7 +21,6 @@ void main() async {
 
   // open a box
   var reminderBox = await Hive.openBox("myBox");
-  var elderlyBox = await Hive.openBox<Elderly>('elderly');
 
   runApp(const MyApp());
 }
@@ -47,13 +46,6 @@ class MyApp extends StatelessWidget {
           home: DashboardPage(),
         );
       }),
-      // builder: (context, child) => MaterialApp(
-      //   debugShowCheckedModeBanner: false,
-      //   title: 'AMIDE Application',
-      //   theme:
-      //       ThemeData(primarySwatch: Colors.blueGrey, fontFamily: 'Montserrat'),
-      //   home: DashboardPage(),
-      // ),
     );
   }
 }

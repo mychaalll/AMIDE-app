@@ -1,6 +1,3 @@
-
-
-
 class Reminder {
   final String time;
 
