@@ -1,0 +1,3 @@
+{
+  "cmake.sourceDirectory": "${workspaceFolder}/amide_app/windows/flutter"
+}

@@ -1,5 +1,5 @@
 import 'package:amide_app/pages/dashboard/dashboard-page.dart';
-import 'package:amide_app/pages/journal/journal-page.dart';
+import 'package:amide_app/pages/journal/elderly-page.dart';
 import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';

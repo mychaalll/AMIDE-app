@@ -1,27 +1,101 @@
+import 'dart:io';
+
+import 'package:amide_app/models/reminder.dart';
+import 'package:amide_app/provider/reminderData.dart';
 import 'package:amide_app/utils/colors.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 import '../reminder/reminder-page.dart';
 
 class CreateReminder extends StatefulWidget {
-  TextEditingController titleController = TextEditingController();
-
-  VoidCallback onPressed;
-  CreateReminder(
-      {super.key, required this.onPressed, required this.titleController});
+  CreateReminder({
+    super.key,
+  });
 
   @override
   State<CreateReminder> createState() => _CreateReminderState();
 }
 
 class _CreateReminderState extends State<CreateReminder> {
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
+  TextEditingController _detailController = TextEditingController();
+  GlobalKey formKey = GlobalKey<FormState>();
+  FilePickerResult? result;
+  PlatformFile? pickedFile;
+  String? _fileName;
+  bool _isLoading = false;
+  File? fileToDisplay;
+
   DateTime _dateTime = DateTime.now();
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _timeController.dispose();
+    _detailController.dispose();
+    super.dispose();
+  }
+
+  void _addReminder() {
+    Provider.of<ReminderData>(context, listen: false).addReminder(
+      Reminder(
+        time: _timeController.text,
+        name: _nameController.text,
+        detail: _detailController.text,
+      ),
+    );
+    Navigator.of(context).pop();
+  }
+
+  void pickTime() async {
+    TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(_dateTime),
+    );
+
+    if (newTime != null) {
+      setState(() {
+        _timeController.text = newTime.format(context);
+      });
+    }
+  }
+
+  void pickFile() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.audio,
+        allowMultiple: false,
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (result != null) {
+        _fileName = result!.files.first.name;
+        pickedFile = result!.files.first;
+        fileToDisplay = File(
+          pickedFile!.path.toString(),
+        );
+
+        print("File name: $_fileName");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -30,12 +104,7 @@ class _CreateReminderState extends State<CreateReminder> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).push(
-              PageTransition(
-                child: ReminderPage(),
-                type: PageTransitionType.leftToRight,
-              ),
-            );
+            Navigator.of(context).pop();
           },
           icon: Icon(
             Icons.arrow_back,
@@ -64,17 +133,15 @@ class _CreateReminderState extends State<CreateReminder> {
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Container(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Reminder Title',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                      Text(
+                        'Reminder Title',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(height: 5),
@@ -82,9 +149,8 @@ class _CreateReminderState extends State<CreateReminder> {
                       Container(
                         height: 40,
                         width: width - 30,
-                        child: TextField(
-                          controller: widget.titleController,
-                          textAlign: TextAlign.left,
+                        child: TextFormField(
+                          controller: _nameController,
                           textAlignVertical: TextAlignVertical.bottom,
                           maxLines: 1,
                           style: TextStyle(
@@ -114,16 +180,13 @@ class _CreateReminderState extends State<CreateReminder> {
                       ),
                       SizedBox(height: 22),
                       //time textbox
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Time',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                      Text(
+                        'Time',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(height: 5),
@@ -131,8 +194,8 @@ class _CreateReminderState extends State<CreateReminder> {
                         height: 40,
                         width: width - 30,
                         child: TextField(
+                          controller: _timeController,
                           readOnly: true,
-                          textAlign: TextAlign.left,
                           textAlignVertical: TextAlignVertical.bottom,
                           maxLines: 1,
                           style: TextStyle(
@@ -144,24 +207,7 @@ class _CreateReminderState extends State<CreateReminder> {
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
                               icon: Icon(Icons.watch_later),
-                              onPressed: () async {
-                                TimeOfDay? newTime = await showTimePicker(
-                                  context: context,
-                                  initialTime:
-                                      TimeOfDay.fromDateTime(_dateTime),
-                                );
-                                if (newTime == null) return;
-                                final newDateTime = DateTime(
-                                  _dateTime.year,
-                                  _dateTime.month,
-                                  _dateTime.day,
-                                  newTime.hour,
-                                  newTime.minute,
-                                );
-                                setState(() {
-                                  _dateTime = newDateTime;
-                                });
-                              },
+                              onPressed: pickTime,
                             ),
                             filled: true,
                             fillColor: Colors.white,
@@ -183,16 +229,12 @@ class _CreateReminderState extends State<CreateReminder> {
                       ),
                       SizedBox(height: 22),
                       //music
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Reminder Music',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                      Text(
+                        'Reminder Music',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       SizedBox(height: 5),
@@ -212,8 +254,9 @@ class _CreateReminderState extends State<CreateReminder> {
                           ),
                           decoration: InputDecoration(
                             suffixIcon: IconButton(
-                                icon: Icon(Icons.queue_music),
-                                onPressed: () {}),
+                              icon: Icon(Icons.queue_music),
+                              onPressed: pickFile,
+                            ),
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
@@ -234,22 +277,20 @@ class _CreateReminderState extends State<CreateReminder> {
                       ),
                       SizedBox(height: 22),
                       //note
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Reminder Detail',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                      Text(
+                        'Reminder Detail',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       SizedBox(height: 5),
                       Container(
                         width: width - 30,
                         child: TextField(
+                          controller: _detailController,
                           textAlign: TextAlign.left,
                           textAlignVertical: TextAlignVertical.bottom,
                           maxLines: 7,
@@ -257,7 +298,6 @@ class _CreateReminderState extends State<CreateReminder> {
                             fontSize: 14,
                             color: Colors.black,
                             fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
                           ),
                           decoration: InputDecoration(
                             filled: true,
@@ -288,7 +328,7 @@ class _CreateReminderState extends State<CreateReminder> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: ElevatedButton(
-                  onPressed: widget.onPressed,
+                  onPressed: _addReminder,
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(AppColors.primBlue),
