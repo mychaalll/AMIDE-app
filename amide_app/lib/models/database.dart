@@ -9,7 +9,10 @@ class TodoDataBase {
 
   // run this method if this is the 1st time ever opening the app
   void createInitialData() {
-    List<Reminder> toDoList = [];
+    List<Reminder> toDoList = [
+      Reminder(time: "8:00", name: "Breakfast", isActive: true),
+      Reminder(time: "8:00", name: "Breakfast", isActive: true),
+    ];
   }
 
   // load the data from database

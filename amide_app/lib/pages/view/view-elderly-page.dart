@@ -1,5 +1,5 @@
 import 'package:amide_app/models/elderly.dart';
-import 'package:amide_app/provider/elderlyData.dart';
+import 'package:amide_app/models/elderlyData.dart';
 import 'package:amide_app/pages/edit/edit-elderly-page.dart';
 import 'package:amide_app/pages/journal/elderly-page.dart';
 import 'package:amide_app/pages/reminder/reminder-page.dart';
@@ -8,8 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-class ViewElderly extends StatelessWidget {
+class ViewElderly extends StatefulWidget {
   const ViewElderly({super.key});
+
+  @override
+  State<ViewElderly> createState() => _ViewElderlyState();
+}
+
+List<String> list = <String>['Male', 'Female'];
+
+class _ViewElderlyState extends State<ViewElderly> {
+  String _elderlyName = 'Sample Text 1';
+  String _elderlyAge = '69';
+  String _elderlySex = 'Male';
+  String _elderlyDetails = 'Sample Text 2';
 
   @override
   Widget build(BuildContext context) {
@@ -291,5 +303,3 @@ class ViewElderly extends StatelessWidget {
     );
   }
 }
-
-List<String> list = <String>['Male', 'Female'];

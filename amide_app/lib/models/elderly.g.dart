@@ -27,15 +27,13 @@ class ElderlyAdapter extends TypeAdapter<Elderly> {
   @override
   void write(BinaryWriter writer, Elderly obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.age)
       ..writeByte(2)
-      ..write(obj.sex)
-      ..writeByte(3)
-      ..write(obj.description);
+      ..write(obj.sex);
   }
 
   @override

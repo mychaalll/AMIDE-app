@@ -1,18 +1,19 @@
-import 'package:amide_app/models/reminder.dart';
-import 'package:amide_app/provider/reminderData.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 
 import '../reminder/reminder-page.dart';
 
 class EditReminder extends StatefulWidget {
-  Reminder currentReminder;
+  final String text;
+  TextEditingController titleController = TextEditingController();
+  VoidCallback onPressed;
   EditReminder({
-    required this.currentReminder,
     super.key,
+    required this.onPressed,
+    required this.text,
+    required this.titleController,
   });
 
   @override
@@ -20,38 +21,7 @@ class EditReminder extends StatefulWidget {
 }
 
 class _EditReminderState extends State<EditReminder> {
-  late String newName;
-  late String newTime;
-  late String newDetail;
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
-  TextEditingController _detailController = TextEditingController();
   DateTime _dateTime = DateTime.now();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _nameController.text = widget.currentReminder.name;
-    newName = widget.currentReminder.name;
-
-    _timeController.text = widget.currentReminder.time;
-    newTime = widget.currentReminder.time;
-
-    _detailController.text = widget.currentReminder.detail;
-    newDetail = widget.currentReminder.detail;
-  }
-
-  void _editReminder(context) {
-    Provider.of<ReminderData>(context, listen: false).editReminder(
-      reminder: Reminder(
-        time: newTime,
-        name: newName,
-        detail: newDetail,
-      ),
-    );
-    Navigator.of(context).pop();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +87,8 @@ class _EditReminderState extends State<EditReminder> {
                         height: 40,
                         width: width - 30,
                         child: TextFormField(
-                          controller: _nameController,
+                          controller:
+                              TextEditingController(text: "${widget.text}"),
                           textAlign: TextAlign.left,
                           textAlignVertical: TextAlignVertical.bottom,
                           maxLines: 1,
@@ -322,7 +293,7 @@ class _EditReminderState extends State<EditReminder> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: widget.onPressed,
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(AppColors.primBlue),

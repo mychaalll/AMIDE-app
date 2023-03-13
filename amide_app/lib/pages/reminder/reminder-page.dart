@@ -3,12 +3,10 @@ import 'package:amide_app/components/reminder-tile.dart';
 import 'package:amide_app/models/database.dart';
 import 'package:amide_app/pages/create/create-reminder-page.dart';
 import 'package:amide_app/pages/edit/edit-reminder-page.dart';
-import 'package:amide_app/provider/reminderData.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 
 class ReminderPage extends StatefulWidget {
   ReminderPage({super.key});
@@ -57,17 +55,29 @@ class _ReminderPageState extends State<ReminderPage> {
     db.updateDataBase();
   }
 
+  void editTask(int index) {
+    Navigator.of(context).push(
+      PageTransition(
+        child: EditReminder(
+          text: db.toDoList[index][0],
+          titleController: _titleController,
+          onPressed: saveTask,
+        ),
+        type: PageTransitionType.rightToLeft,
+      ),
+    );
+  }
+
   @override
   void initState() {
     // if this is the 1st time ever open in the app, then create default data
     // TODO: implement initState
-    // if (_myBox.get("TODOLIST") == null) {
-    //   db.createInitialData();
-    // } else {
-    //   // there are already exists data
-    //   // db.loadData();
-    // }
-    Provider.of<ReminderData>(context, listen: false).getReminders();
+    if (_myBox.get("TODOLIST") == null) {
+      db.createInitialData();
+    } else {
+      // there are already exists data
+      db.loadData();
+    }
     super.initState();
   }
 
@@ -95,38 +105,50 @@ class _ReminderPageState extends State<ReminderPage> {
         onPressed: () {
           Navigator.of(context).push(
             PageTransition(
-              child: CreateReminder(),
+              child: CreateReminder(
+                timeController: _timeController,
+                titleController: _titleController,
+                onPressed: saveTask,
+                formKey: _formKey,
+              ),
               type: PageTransitionType.rightToLeft,
             ),
           );
         },
       ),
       body: SafeArea(
-        child: Container(
-          color: AppColors.bgColor,
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              Text(
-                'Reminder List',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black),
-              ),
-              SizedBox(height: 20),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: Provider.of<ReminderData>(context).reminderCount,
-                    itemBuilder: ((context, index) {
-                      return ReminderTile(
-                        tileIndex: index,
-                      );
-                    })),
-              )
-            ],
+        child: Expanded(
+          child: Container(
+            color: AppColors.bgColor,
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                Text(
+                  'Reminder List',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontFamily: 'Montserrat',
+                      color: Colors.black),
+                ),
+                SizedBox(height: 20),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: db.toDoList.length,
+                      itemBuilder: ((context, index) {
+                        return ReminderTile(
+                          onEdit: (context) => editTask(index),
+                          isOn: (context) => isActive(index),
+                          onDelete: (context) => deleteTask(index),
+                          time: db.toDoList[index][0],
+                          subtitle: db.toDoList[index][1],
+                          value: db.toDoList[index][2],
+                        );
+                      })),
+                )
+              ],
+            ),
           ),
         ),
       ),

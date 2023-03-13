@@ -1,5 +1,5 @@
 import 'package:amide_app/models/elderly.dart';
-import 'package:amide_app/provider/elderlyData.dart';
+import 'package:amide_app/models/elderlyData.dart';
 import 'package:amide_app/pages/journal/elderly-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:amide_app/utils/toast.dart';

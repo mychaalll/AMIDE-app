@@ -1,4 +1,4 @@
-import 'package:amide_app/provider/elderlyData.dart';
+import 'package:amide_app/models/elderlyData.dart';
 import 'package:amide_app/pages/edit/edit-elderly-page.dart';
 import 'package:amide_app/pages/view/view-elderly-page.dart';
 import 'package:amide_app/utils/colors.dart';

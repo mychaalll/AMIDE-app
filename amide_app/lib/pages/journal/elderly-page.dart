@@ -1,6 +1,6 @@
 import 'package:amide_app/components/drawer.dart';
 import 'package:amide_app/components/elderly-tile.dart';
-import 'package:amide_app/provider/elderlyData.dart';
+import 'package:amide_app/models/elderlyData.dart';
 import 'package:amide_app/pages/create/create-elderly-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -54,31 +54,33 @@ class _ElderlyPageState extends State<ElderlyPage> {
         },
       ),
       body: SafeArea(
-        child: Container(
-          color: AppColors.bgColor,
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              Text(
-                'Elderly List',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black),
-              ),
-              SizedBox(height: 20),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: Provider.of<ElderlyData>(context).elderlyCount,
-                    itemBuilder: ((context, index) {
-                      return ElderlyTile(
-                        tileIndex: index,
-                      );
-                    })),
-              )
-            ],
+        child: Expanded(
+          child: Container(
+            color: AppColors.bgColor,
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                Text(
+                  'Elderly List',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      fontFamily: 'Montserrat',
+                      color: Colors.black),
+                ),
+                SizedBox(height: 20),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: Provider.of<ElderlyData>(context).elderlyCount,
+                      itemBuilder: ((context, index) {
+                        return ElderlyTile(
+                          tileIndex: index,
+                        );
+                      })),
+                )
+              ],
+            ),
           ),
         ),
       ),
