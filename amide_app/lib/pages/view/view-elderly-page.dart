@@ -1,3 +1,5 @@
+import 'package:amide_app/components/details-tab.dart';
+import 'package:amide_app/components/records-tab.dart';
 import 'package:amide_app/models/elderly.dart';
 import 'package:amide_app/provider/elderlyData.dart';
 import 'package:amide_app/pages/edit/edit-elderly-page.dart';
@@ -9,7 +11,40 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class ViewElderly extends StatelessWidget {
-  const ViewElderly({super.key});
+   ViewElderly({super.key});
+
+  // sample list for temp
+  final List<double> tempSummary = [
+    38.6,
+    32,
+    35.5,
+    37.9,
+    42.9,
+    31.4,
+    36.2,
+  ];
+
+  //sample list for bpm
+  final List<double> bpmSummary = [
+    69,
+    87,
+    98,
+    64,
+    79,
+    90,
+    84,
+  ];
+
+  //sample list for blood oxygen level(bol)
+  final List<double> bolSummary = [
+    99,
+    97,
+    98,
+    94,
+    92,
+    90,
+    84,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -17,270 +52,150 @@ class ViewElderly extends StatelessWidget {
     return Consumer<ElderlyData>(
       builder: ((context, value, child) {
         Elderly currentElderly = value.getActiveElderly();
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: AppColors.primBlue,
-            centerTitle: true,
-            leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  PageTransition(
-                    child: ElderlyPage(),
-                    type: PageTransitionType.leftToRight,
-                  ),
-                );
-              },
-              icon: Icon(
-                Icons.arrow_back,
-                size: 20,
-                color: Colors.white,
-              ),
-            ),
-            actions: [
-              IconButton(
+        return DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              backgroundColor: AppColors.primBlue,
+              centerTitle: true,
+              elevation: 0,
+              title: Text(currentElderly.name.toString()),
+              leading: IconButton(
                 onPressed: () {
                   Navigator.of(context).push(
                     PageTransition(
-                      child: EditElderly(
-                        currentElderly: currentElderly,
-                      ),
+                      child: ElderlyPage(),
                       type: PageTransitionType.leftToRight,
                     ),
                   );
                 },
                 icon: Icon(
-                  Icons.edit,
+                  Icons.arrow_back,
                   size: 20,
                   color: Colors.white,
                 ),
               ),
-            ],
-          ),
-          body: SafeArea(
-            child: Container(
-              color: AppColors.bgColor,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      PageTransition(
+                        child: EditElderly(
+                          currentElderly: currentElderly,
+                        ),
+                        type: PageTransitionType.leftToRight,
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.edit,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            body: SafeArea(
+              child: Container(
+                color: AppColors.bgColor,
                 child: Column(
                   children: [
-                    SizedBox(height: 20),
-                    Text(
-                      'View Entry',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        fontFamily: 'Montserrat',
-                        color: Colors.black,
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Elderly Name',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5),
                     Container(
-                      height: 40,
-                      width: width - 30,
-                      child: TextField(
-                        readOnly: true,
-                        textAlign: TextAlign.left,
-                        textAlignVertical: TextAlignVertical.bottom,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                              width: 5.0,
+                      height: 120,
+                      color: AppColors.primBlue,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Spacer(),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Age',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[400],
+                                            fontWeight: FontWeight.w600,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          currentElderly.age,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Sex',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[400],
+                                            fontWeight: FontWeight.w600,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          currentElderly.sex,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ),
+                                ],
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          hintText: "${currentElderly.name}",
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
+                            Spacer(),
+                            TabBar(
+                              tabs: [
+                                Tab(
+                                  text: 'Details',
+                                ),
+                                Tab(
+                                  text: 'Records',
+                                ),
+                              ],
+                            ),
+                          ]
                         ),
                       ),
                     ),
-                    SizedBox(height: 22),
-                    Row(
-                      children: [
-                        //age
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Age',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Container(
-                              height: 40,
-                              width: width / 2 - 32,
-                              child: TextField(
-                                readOnly: true,
-                                textAlign: TextAlign.left,
-                                textAlignVertical: TextAlignVertical.bottom,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.black,
-                                      width: 5.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  hintText: "${currentElderly.age}",
-                                  hintStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 32),
-                        //sex
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Sex',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Container(
-                              height: 40,
-                              width: width / 2 - 32,
-                              child: TextField(
-                                readOnly: true,
-                                textAlign: TextAlign.left,
-                                textAlignVertical: TextAlignVertical.bottom,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.black,
-                                      width: 5.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  hintText: "${currentElderly.sex}",
-                                  hintStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 22),
-                    //note
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Journal Details',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5),
                     Expanded(
-                      child: Container(
-                        width: width - 30,
-                        child: TextField(
-                          readOnly: true,
-                          textAlign: TextAlign.left,
-                          textAlignVertical: TextAlignVertical.bottom,
-                          maxLines: 15,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
+                      child: TabBarView(
+                        children: [
+                          ElderlyDetails(description: currentElderly.description),
+                          ElderlyRecords(
+                            temp: '38',
+                            tempSummary: tempSummary, 
+                            bpm: '69', 
+                            bpmSummary: bpmSummary, 
+                            bol: '97',
+                            bolSummary: bolSummary,
                           ),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 5.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            hintText: "${currentElderly.description}",
-                            hintStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 15),
                   ],
                 ),
               ),

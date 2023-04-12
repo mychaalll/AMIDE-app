@@ -41,6 +41,7 @@ dependencies:
   flutter_slidable: ^1.2.0
   page_transition: ^2.0.9
   firebase_core: ^2.7.0
+  fl_chart: ^0.61.0
 
   # for hive
   hive: ^2.2.3
