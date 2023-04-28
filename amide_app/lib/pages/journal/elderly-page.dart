@@ -25,6 +25,7 @@ class _ElderlyPageState extends State<ElderlyPage> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -70,7 +71,30 @@ class _ElderlyPageState extends State<ElderlyPage> {
               ),
               SizedBox(height: 20),
               Expanded(
-                child: ListView.builder(
+                child: Provider.of<ElderlyData>(context).elderlyCount == 0
+                ?
+                Container(
+                  width: width,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 60),
+                      Icon(
+                        Icons.cancel_sharp,
+                        size: 100,
+                      ),
+                      Text(
+                        'No Elderlies',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18,
+                          fontFamily: 'Montserrat',
+                          color: Colors.black
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                :ListView.builder(
                     itemCount: Provider.of<ElderlyData>(context).elderlyCount,
                     itemBuilder: ((context, index) {
                       return ElderlyTile(

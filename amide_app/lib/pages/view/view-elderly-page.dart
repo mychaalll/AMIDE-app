@@ -1,6 +1,7 @@
 import 'package:amide_app/components/details-tab.dart';
 import 'package:amide_app/components/records-tab.dart';
 import 'package:amide_app/models/elderly.dart';
+import 'package:amide_app/pages/record/recording-page.dart';
 import 'package:amide_app/provider/elderlyData.dart';
 import 'package:amide_app/pages/edit/edit-elderly-page.dart';
 import 'package:amide_app/pages/journal/elderly-page.dart';
@@ -46,6 +47,10 @@ class ViewElderly extends StatelessWidget {
     84,
   ];
 
+  // boolean to remove the record button if theres an existing record for the day,
+  // set to true if theres an available record
+  bool todayHasRecord = true;
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -77,6 +82,22 @@ class ViewElderly extends StatelessWidget {
                 ),
               ),
               actions: [
+                todayHasRecord == true ? 
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      PageTransition(
+                        child: RecordingPage(),
+                        type: PageTransitionType.leftToRight,
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.add_chart,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                ):Container(),
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).push(
@@ -94,6 +115,7 @@ class ViewElderly extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+                
               ],
             ),
             body: SafeArea(

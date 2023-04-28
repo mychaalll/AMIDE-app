@@ -30,7 +30,6 @@ class _ReminderTileState extends State<ReminderTile> {
   Widget build(BuildContext context) {
     return Consumer<ReminderData>(builder: (context, value, child) {
       Reminder currentReminder = value.getReminder(widget.tileIndex);
-
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Slidable(

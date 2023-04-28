@@ -73,6 +73,7 @@ class _ReminderPageState extends State<ReminderPage> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -111,14 +112,38 @@ class _ReminderPageState extends State<ReminderPage> {
                 'Reminder List',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  fontFamily: 'Montserrat',
+                  color: Colors.black
+                ),
               ),
               SizedBox(height: 20),
               Expanded(
-                child: ListView.builder(
+                child: Provider.of<ReminderData>(context).reminderCount == 0
+                ?
+                Container(
+                  width: width,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 60),
+                      Icon(
+                        Icons.cancel_sharp,
+                        size: 100,
+                      ),
+                      Text(
+                        'No Reminders, yet',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18,
+                          fontFamily: 'Montserrat',
+                          color: Colors.black
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                :ListView.builder(
                     itemCount: Provider.of<ReminderData>(context).reminderCount,
                     itemBuilder: ((context, index) {
                       return ReminderTile(

@@ -1,5 +1,6 @@
 import 'package:amide_app/models/elderly.dart';
 import 'package:amide_app/models/reminder.dart';
+import 'package:amide_app/pages/record/recording-page.dart';
 import 'package:amide_app/provider/elderlyData.dart';
 import 'package:amide_app/pages/create/create-elderly-page.dart';
 import 'package:amide_app/pages/create/create-reminder-page.dart';

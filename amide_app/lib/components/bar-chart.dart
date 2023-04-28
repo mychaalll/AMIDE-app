@@ -3,10 +3,10 @@ import 'package:amide_app/utils/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class RecordsChart extends StatelessWidget {
+class RecordsBarChart extends StatelessWidget {
   final List chartSummary;
   final double chartMax, chartMin;
-  const RecordsChart({
+  const RecordsBarChart({
     Key? key, required this.chartSummary, required this.chartMax, required this.chartMin,
   }) : super(key: key);
 
@@ -23,7 +23,6 @@ class RecordsChart extends StatelessWidget {
     );
 
     chartData.initializeBarData();
-
     return BarChart(
       BarChartData(
         maxY: chartMax,
