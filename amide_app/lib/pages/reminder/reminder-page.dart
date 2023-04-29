@@ -18,61 +18,21 @@ class ReminderPage extends StatefulWidget {
 }
 
 class _ReminderPageState extends State<ReminderPage> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _timeController = TextEditingController();
-  GlobalKey _formKey = GlobalKey<FormState>();
+
 
   // reference the hive box
-  final _myBox = Hive.box('myBox');
-  TodoDataBase db = TodoDataBase();
 
-  void saveTask() {
-    setState(() {
-      db.toDoList.add([
-        _timeController.text,
-        _titleController.text,
-        true,
-      ]);
-    });
-    Navigator.of(context).push(
-      PageTransition(
-        child: ReminderPage(),
-        type: PageTransitionType.leftToRight,
-      ),
-    );
-    db.updateDataBase();
-  }
-
-  void deleteTask(int index) {
-    setState(() {
-      db.toDoList.removeAt(index);
-    });
-    db.updateDataBase();
-  }
-
-  void isActive(int index) {
-    setState(() {
-      db.toDoList[index][2] = !db.toDoList[index][2];
-    });
-    db.updateDataBase();
-  }
 
   @override
   void initState() {
-    // if this is the 1st time ever open in the app, then create default data
-    // TODO: implement initState
-    // if (_myBox.get("TODOLIST") == null) {
-    //   db.createInitialData();
-    // } else {
-    //   // there are already exists data
-    //   // db.loadData();
-    // }
     Provider.of<ReminderData>(context, listen: false).getReminders();
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -118,13 +78,35 @@ class _ReminderPageState extends State<ReminderPage> {
               ),
               SizedBox(height: 20),
               Expanded(
-                child: ListView.builder(
-                    itemCount: Provider.of<ReminderData>(context).reminderCount,
-                    itemBuilder: ((context, index) {
-                      return ReminderTile(
-                        tileIndex: index,
-                      );
-                    })),
+                child: Provider.of<ReminderData>(context).reminderCount == 0
+                    ? Container(
+                        width: width,
+                        child: Column(
+                          children: [
+                            SizedBox(height: 60),
+                            Icon(
+                              Icons.cancel_sharp,
+                              size: 100,
+                            ),
+                            Text(
+                              'No Reminders, yet',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount:
+                            Provider.of<ReminderData>(context).reminderCount,
+                        itemBuilder: ((context, index) {
+                          return ReminderTile(
+                            tileIndex: index,
+                          );
+                        })),
               )
             ],
           ),

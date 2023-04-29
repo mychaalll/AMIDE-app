@@ -1,5 +1,5 @@
 import 'package:amide_app/pages/dashboard/dashboard-page.dart';
-import 'package:amide_app/pages/journal/elderly-page.dart';
+import 'package:amide_app/pages/elderly/elderly-page.dart';
 import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +13,12 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Color.fromARGB(255, 245, 242, 242),
+      backgroundColor: Color.fromARGB(255, 2, 4, 22),
       child: Container(
         child: ListView(
           children: [
             Container(
-              color: AppColors.primBlue,
+              color: Color.fromARGB(255, 2, 4, 22),
               child: DrawerHeader(
                 child: Center(
                   child: Text(
@@ -57,12 +57,6 @@ class AppDrawer extends StatelessWidget {
                   ),
                 );
               },
-            ),
-            SizedBox(height: 10),
-            drawerTile(
-              icon: Icons.not_listed_location_rounded,
-              title: 'Logs',
-              navigation: () {},
             ),
             SizedBox(height: 10),
             drawerTile(
@@ -105,22 +99,26 @@ class drawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-        selectedColor: AppColors.primBlue,
-        selectedTileColor: AppColors.primBlue.withOpacity(0.1),
-        leading: Icon(
-          icon,
-          size: 35,
-          color: Colors.black,
-        ),
-        minLeadingWidth: 40,
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal:25.0),
+      child: ListTile(
+          selectedColor: AppColors.primBlue,
+          selectedTileColor: AppColors.primBlue.withOpacity(0.1),
+          leading: Icon(
+            icon,
+            size: 20,
+            color: Colors.white,
           ),
-        ),
-        onTap: navigation);
+          minLeadingWidth: 40,
+          title: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          onTap: navigation),
+    );
   }
 }
