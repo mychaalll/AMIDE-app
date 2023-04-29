@@ -1,15 +1,17 @@
 import 'package:amide_app/components/bar-chart.dart';
+import 'package:amide_app/components/line-chart.dart';
 import 'package:flutter/material.dart';
 
 class RecordListView extends StatelessWidget {
-  const RecordListView({
+   RecordListView({
     Key? key,
     required this.width,
     required this.chartSummary, 
     required this.detail, 
-    required this.title, required this.chartMax, required this.chartMin,
+    required this.title, required this.chartMax, required this.chartMin, required this.isBar,
   }) : super(key: key);
 
+  bool isBar;
   final String detail;
   final String title;
   final double width, chartMax, chartMin;
@@ -54,7 +56,9 @@ class RecordListView extends StatelessWidget {
             height: 100,
             child: Align(
               alignment: Alignment.centerRight,
-              child: RecordsChart(chartSummary: chartSummary, chartMax: chartMax, chartMin: chartMin,)
+              child: isBar == true 
+              ? RecordsBarChart(chartSummary: chartSummary, chartMax: chartMax, chartMin: chartMin,)
+              : RecordsLineChart(chartSummary: chartSummary, chartMax: chartMax, chartMin: chartMin,)
               )
           ),
         ],

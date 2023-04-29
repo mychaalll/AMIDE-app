@@ -5,13 +5,13 @@ part "reminder.g.dart";
 @HiveType(typeId: 1)
 class Reminder extends HiveObject {
   @HiveField(0)
-  final String time;
+  late String time;
 
   @HiveField(1)
-  final String name;
+  late String name;
 
   @HiveField(2)
-  final String detail;
+  late String detail;
 
   Reminder({
     required this.time,
