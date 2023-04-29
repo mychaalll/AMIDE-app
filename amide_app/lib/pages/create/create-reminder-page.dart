@@ -7,7 +7,9 @@ import 'package:amide_app/utils/toast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../reminder/reminder-page.dart';
@@ -28,8 +30,6 @@ class _CreateReminderState extends State<CreateReminder> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   FilePickerResult? result;
   PlatformFile? pickedFile;
-  String? _fileName;
-  bool _isLoading = false;
   File? fileToDisplay;
 
   DateTime _dateTime = DateTime.now();
@@ -88,32 +88,25 @@ class _CreateReminderState extends State<CreateReminder> {
   }
 
   void pickFile() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
 
-      result = await FilePicker.platform.pickFiles(
-        type: FileType.audio,
-        allowMultiple: false,
-      );
+    // open single file
+    final file = result.files.first;
+    // openFile(file);
 
-      setState(() {
-        _isLoading = false;
-      });
+    final newFile = await saveFilePermanently(file);
+  }
 
-      if (result != null) {
-        _fileName = result!.files.first.name;
-        pickedFile = result!.files.first;
-        fileToDisplay = File(
-          pickedFile!.path.toString(),
-        );
+  void openFile(PlatformFile file) {
+    OpenFile.open(file.path!);
+  }
 
-        print("File name: $_fileName");
-      }
-    } catch (e) {
-      print(e);
-    }
+  Future<File> saveFilePermanently(PlatformFile file) async {
+    final appStorage = await getApplicationDocumentsDirectory();
+    final newFile = File("${appStorage.path}/${file.name}");
+
+    return File(file.path!).copy(newFile.path);
   }
 
   @override
@@ -175,7 +168,13 @@ class _CreateReminderState extends State<CreateReminder> {
                           height: 40,
                           width: width - 30,
                           child: TextFormField(
-                            controller: TextEditingController(text: ""),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter some value";
+                              }
+                              return null;
+                            },
+                            controller: _nameController,
                             textAlignVertical: TextAlignVertical.bottom,
                             maxLines: 1,
                             style: TextStyle(
