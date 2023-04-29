@@ -13,9 +13,8 @@ class ViewReminder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime _dateTime = DateTime.now();
+    TimeOfDay _timeOfDay = TimeOfDay(hour: 8, minute: 30);
 
-    var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Consumer<ReminderData>(
       builder: ((context, value, child) {

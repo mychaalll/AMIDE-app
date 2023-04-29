@@ -18,65 +18,17 @@ class ReminderPage extends StatefulWidget {
 }
 
 class _ReminderPageState extends State<ReminderPage> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _timeController = TextEditingController();
-  GlobalKey _formKey = GlobalKey<FormState>();
+
 
   // reference the hive box
-  final _myBox = Hive.box('myBox');
-  TodoDataBase db = TodoDataBase();
 
-  void saveTask() {
-    setState(() {
-      db.toDoList.add([
-        _timeController.text,
-        _titleController.text,
-        true,
-      ]);
-    });
-    Navigator.of(context).push(
-      PageTransition(
-        child: ReminderPage(),
-        type: PageTransitionType.leftToRight,
-      ),
-    );
-    db.updateDataBase();
-  }
-
-  void deleteTask(int index) {
-    setState(() {
-      db.toDoList.removeAt(index);
-    });
-    db.updateDataBase();
-  }
-
-  void isActive(int index) {
-    setState(() {
-      db.toDoList[index][2] = !db.toDoList[index][2];
-    });
-    db.updateDataBase();
-  }
 
   @override
   void initState() {
-    // if this is the 1st time ever open in the app, then create default data
-    // TODO: implement initState
-    // if (_myBox.get("TODOLIST") == null) {
-    //   db.createInitialData();
-    // } else {
-    //   // there are already exists data
-    //   // db.loadData();
-    // }
     Provider.of<ReminderData>(context, listen: false).getReminders();
     super.initState();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _myBox.close();
-  }
 
   @override
   Widget build(BuildContext context) {

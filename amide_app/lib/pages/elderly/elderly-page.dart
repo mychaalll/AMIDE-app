@@ -23,6 +23,7 @@ class _ElderlyPageState extends State<ElderlyPage> {
     Provider.of<ElderlyData>(context, listen: false).getElderlys();
   }
 
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;

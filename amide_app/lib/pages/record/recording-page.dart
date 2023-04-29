@@ -1,4 +1,4 @@
-import 'package:amide_app/pages/journal/elderly-page.dart';
+import 'package:amide_app/pages/elderly/elderly-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import  'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';

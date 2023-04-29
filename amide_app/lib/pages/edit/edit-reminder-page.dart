@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/toast.dart';
 import '../reminder/reminder-page.dart';
 
 class EditReminder extends StatefulWidget {
@@ -21,41 +22,45 @@ class EditReminder extends StatefulWidget {
 
 class _EditReminderState extends State<EditReminder> {
   late String newName;
-  late String newTime;
   late String newDetail;
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
-  TextEditingController _detailController = TextEditingController();
+
+  late String newDateTime = DateFormat.Hm().format(_dateTime);
   DateTime _dateTime = DateTime.now();
+  TimeOfDay _timeOfDay = TimeOfDay.now();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _detailController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     _nameController.text = widget.currentReminder.name;
     newName = widget.currentReminder.name;
 
-    _timeController.text = widget.currentReminder.time;
-    newTime = widget.currentReminder.time;
-
     _detailController.text = widget.currentReminder.detail;
     newDetail = widget.currentReminder.detail;
+
+    super.initState();
   }
 
   void _editReminder(context) {
+    if (newName == null) {
+      toastWidget("Give entry a name");
+      return;
+    }
+
     Provider.of<ReminderData>(context, listen: false).editReminder(
       reminder: Reminder(
-        time: newTime,
         name: newName,
         detail: newDetail,
+        time: newDateTime,
       ),
+      reminderKey: widget.currentReminder.key,
     );
+
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -144,6 +149,11 @@ class _EditReminderState extends State<EditReminder> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
+                          onChanged: (value) {
+                            setState(() {
+                              newName = value;
+                            });
+                          },
                         ),
                       ),
                       SizedBox(height: 22),
@@ -181,19 +191,13 @@ class _EditReminderState extends State<EditReminder> {
                               onPressed: () async {
                                 TimeOfDay? newTime = await showTimePicker(
                                   context: context,
-                                  initialTime:
-                                      TimeOfDay.fromDateTime(_dateTime),
-                                );
-                                if (newTime == null) return;
-                                final newDateTime = DateTime(
-                                  _dateTime.year,
-                                  _dateTime.month,
-                                  _dateTime.day,
-                                  newTime.hour,
-                                  newTime.minute,
-                                );
-                                setState(() {
-                                  _dateTime = newDateTime;
+                                  initialTime: TimeOfDay.now(),
+                                ).then((value) {
+                                  setState(() {
+                                    _timeOfDay = value!;
+                                    newDateTime =
+                                        _timeOfDay.format(context).toString();
+                                  });
                                 });
                               },
                             ),
@@ -206,13 +210,15 @@ class _EditReminderState extends State<EditReminder> {
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            hintText: DateFormat.jm().format(_dateTime),
+                            hintText: newDateTime,
                             hintStyle: TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
+                          controller: TextEditingController(text: newDateTime),
+                          onChanged: (value) {},
                         ),
                       ),
                       SizedBox(height: 22),

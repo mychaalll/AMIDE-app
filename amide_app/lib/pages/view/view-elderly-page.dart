@@ -4,7 +4,7 @@ import 'package:amide_app/models/elderly.dart';
 import 'package:amide_app/pages/record/recording-page.dart';
 import 'package:amide_app/provider/elderlyData.dart';
 import 'package:amide_app/pages/edit/edit-elderly-page.dart';
-import 'package:amide_app/pages/journal/elderly-page.dart';
+import 'package:amide_app/pages/elderly/elderly-page.dart';
 import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';

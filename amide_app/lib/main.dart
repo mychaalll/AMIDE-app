@@ -5,7 +5,7 @@ import 'package:amide_app/provider/elderlyData.dart';
 import 'package:amide_app/pages/create/create-elderly-page.dart';
 import 'package:amide_app/pages/create/create-reminder-page.dart';
 import 'package:amide_app/pages/dashboard/dashboard-page.dart';
-import 'package:amide_app/pages/journal/elderly-page.dart';
+import 'package:amide_app/pages/elderly/elderly-page.dart';
 import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:amide_app/pages/view/view-elderly-page.dart';
 import 'package:amide_app/pages/view/view-reminder-page.dart';

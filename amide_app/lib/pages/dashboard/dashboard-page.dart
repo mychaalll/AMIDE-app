@@ -1,6 +1,6 @@
 import 'package:amide_app/models/elderly.dart';
 import 'package:amide_app/models/reminder.dart';
-import 'package:amide_app/pages/journal/elderly-page.dart';
+import 'package:amide_app/pages/elderly/elderly-page.dart';
 import 'package:amide_app/pages/reminder/reminder-page.dart';
 import 'package:amide_app/provider/reminderData.dart';
 import 'package:amide_app/utils/colors.dart';
