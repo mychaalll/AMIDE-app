@@ -322,7 +322,7 @@ class _EditReminderState extends State<EditReminder> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => _editReminder(context),
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(AppColors.primBlue),

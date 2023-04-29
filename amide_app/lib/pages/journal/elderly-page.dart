@@ -72,35 +72,34 @@ class _ElderlyPageState extends State<ElderlyPage> {
               SizedBox(height: 20),
               Expanded(
                 child: Provider.of<ElderlyData>(context).elderlyCount == 0
-                ?
-                Container(
-                  width: width,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 60),
-                      Icon(
-                        Icons.cancel_sharp,
-                        size: 100,
-                      ),
-                      Text(
-                        'No Elderlies',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18,
-                          fontFamily: 'Montserrat',
-                          color: Colors.black
+                    ? Container(
+                        width: width,
+                        child: Column(
+                          children: [
+                            SizedBox(height: 60),
+                            Icon(
+                              Icons.cancel_sharp,
+                              size: 100,
+                            ),
+                            Text(
+                              'No Elderlies',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.black),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                )
-                :ListView.builder(
-                    itemCount: Provider.of<ElderlyData>(context).elderlyCount,
-                    itemBuilder: ((context, index) {
-                      return ElderlyTile(
-                        tileIndex: index,
-                      );
-                    })),
+                      )
+                    : ListView.builder(
+                        itemCount:
+                            Provider.of<ElderlyData>(context).elderlyCount,
+                        itemBuilder: ((context, index) {
+                          return ElderlyTile(
+                            tileIndex: index,
+                          );
+                        })),
               )
             ],
           ),

@@ -1,201 +1,246 @@
+import 'package:amide_app/models/elderly.dart';
+import 'package:amide_app/models/reminder.dart';
 import 'package:amide_app/pages/journal/elderly-page.dart';
 import 'package:amide_app/pages/reminder/reminder-page.dart';
+import 'package:amide_app/provider/reminderData.dart';
 import 'package:amide_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/elderlyData.dart';
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({super.key});
+
   String name = 'Edilberto';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            color: AppColors.bgColor,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                children: [
-                  SizedBox(height: 11),
-                  //hello user, settings icon
-                  topBar(name: name),
-                  SizedBox(height: 20),
-                  //date
-                  Container(
-                    child: Center(
-                      child: Text(
-                        DateFormat('E, d MMM yyyy').format(DateTime.now()).toString(),
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                          color: Colors.black
+      body: Consumer<ReminderData>(builder: (context, value, child) {
+        final _reminderLength = value.reminderCount;
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              color: AppColors.bgColor,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Column(
+                  children: [
+                    SizedBox(height: 11),
+                    //hello user, settings icon
+                    topBar(name: name),
+                    SizedBox(height: 20),
+                    //date
+                    Container(
+                      child: Center(
+                        child: Text(
+                          DateFormat('E, d MMM yyyy')
+                              .format(DateTime.now())
+                              .toString(),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              fontFamily: 'Montserrat',
+                              color: Colors.black),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 27),
-                  //buttons
-                  Container(
-                    height: 120,
-                    child: Row(
-                      children: [
-                        mainButton(
-                          icon: Icons.view_list_rounded,
-                          title: 'Reminders',
-                          navigation: () {
-                            Navigator.of(context).push(
-                              PageTransition(
-                                child: ReminderPage(),
-                                type: PageTransitionType.rightToLeft,
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(width: 13),
-                        mainButton(
-                          icon: Icons.elderly_sharp,
-                          title: 'Elderly',
-                          navigation: () {
-                            Navigator.of(context).push(
-                              PageTransition(
-                                child: ElderlyPage(),
-                                type: PageTransitionType.rightToLeft,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 27),
-                  //incoming reminders
-                  Container(
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Incoming Reminders',
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                              fontFamily: 'Montserrat',
-                              color: Colors.black
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 22),
-                        reminderTile(
-                          time: '09:00 AM',
-                          title: 'Reminder Title 1',
-                          details: 'Proident et dolore qui proident laboris ex..',
-                        ),
-                        SizedBox(height: 11),
-                        reminderTile(
-                          time: '12:00 PM',
-                          title: 'Reminder Title 2',
-                          details: 'Proident et dolore qui proident laboris ex..',
-                        ),
-                        SizedBox(height: 11),
-                        reminderTile(
-                          time: '06:00 PM',
-                          title: 'Reminder Title 3',
-                          details: 'Proident et dolore qui proident laboris ex..',
-                        ),
-                        SizedBox(height: 22),
-                        ElevatedButton(
-                          onPressed: (){
-                            Navigator.of(context).push(
-                              PageTransition(
-                                child: ReminderPage(),
-                                type: PageTransitionType.rightToLeft,
-                              ),
-                            );
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
-                            overlayColor: MaterialStateProperty.all(Color.fromARGB(255, 2, 5, 27)),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              )
-                            )
-                          ),
-                          child: Container(
-                            height: 40,
-                            child: Center(
-                              child: Text(
-                                'View Reminders',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
+                    SizedBox(height: 27),
+                    //buttons
+                    Container(
+                      height: 120,
+                      child: Row(
+                        children: [
+                          mainButton(
+                            icon: Icons.view_list_rounded,
+                            title: 'Reminders',
+                            navigation: () {
+                              Navigator.of(context).push(
+                                PageTransition(
+                                  child: ReminderPage(),
+                                  type: PageTransitionType.rightToLeft,
                                 ),
-                              ),
-                            ),
-                          )
-                        )
-                      ],
+                              );
+                            },
+                          ),
+                          SizedBox(width: 13),
+                          mainButton(
+                            icon: Icons.elderly_sharp,
+                            title: 'Elderly',
+                            navigation: () {
+                              Navigator.of(context).push(
+                                PageTransition(
+                                  child: ElderlyPage(),
+                                  type: PageTransitionType.rightToLeft,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 26),
-                  //activity logs
-                  Container(
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Elderly Records',
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                    SizedBox(height: 27),
+                    //incoming reminders
+                    Container(
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Incoming Reminders',
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.black),
+                            ),
+                          ),
+                          SizedBox(height: 22),
+                          _reminderLength == 0
+                              ? Container(
+                                  child: Text("Please input a reminder."),
+                                )
+                              : SizedBox(
+                                  height: 200,
+                                  child: ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: _reminderLength < 3
+                                        ? _reminderLength
+                                        : 3,
+                                    itemBuilder: (context, index) {
+                                      final _currentReminder =
+                                          value.getReminder(index);
+                                      return Container(
+                                        child: ListTile(
+                                          leading: Text(
+                                            "${_currentReminder.time}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          title: Text(
+                                            "${_currentReminder.name}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                          subtitle: Text("lorem ipmsum"),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                          // ReminderTile(
+                          //   time: '09:00 AM',
+                          //   title: 'Reminder Title 1',
+                          //   details:
+                          //       'Proident et dolore qui proident laboris ex..',
+                          // ),
+                          // SizedBox(height: 11),
+                          // ReminderTile(
+                          //   time: '12:00 PM',
+                          //   title: 'Reminder Title 2',
+                          //   details:
+                          //       'Proident et dolore qui proident laboris ex..',
+                          // ),
+                          // SizedBox(height: 11),
+                          // ReminderTile(
+                          //   time: '06:00 PM',
+                          //   title: 'Reminder Title 3',
+                          //   details:
+                          //       'Proident et dolore qui proident laboris ex..',
+                          // ),
+                          SizedBox(height: 22),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  PageTransition(
+                                    child: ReminderPage(),
+                                    type: PageTransitionType.rightToLeft,
+                                  ),
+                                );
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      AppColors.primBlue),
+                                  overlayColor: MaterialStateProperty.all(
+                                      Color.fromARGB(255, 2, 5, 27)),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ))),
+                              child: Container(
+                                height: 40,
+                                child: Center(
+                                  child: Text(
+                                    'View Reminders',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      fontFamily: 'Montserrat',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ))
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 26),
+                    //activity logs
+                    Container(
+                        child: Column(children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Elderly Records',
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 20,
                               fontFamily: 'Montserrat',
-                              color: Colors.black
-                            ),
-                          ),
+                              color: Colors.black),
                         ),
-                        SizedBox(height: 22),
-                        elderlyTile(
-                          name: 'John Wick',
-                          temp: '37.9',
-                          time: '07:00 AM',
-                          bp: '120/80',
-                          bpm: '80', 
-                          bol: '96',
-                        ),
-                        SizedBox(height: 11),
-                        elderlyTile(
-                          name: 'Ai Hoshino',
-                          temp: '35.7',
-                          time: '09:00 AM',
-                          bp: '90/80',
-                          bpm: '85',
-                          bol: '98',
-                        ),
-                        SizedBox(height: 11),
-                        elderlyTile(
-                          name: 'Juan Dela Cruz',
-                          temp: '38.5',
-                          time: '03:00 PM',
-                          bp: '110/80',
-                          bpm: '99',
-                          bol: '96',
-                        ),
-                        SizedBox(height: 22),
-                        ElevatedButton(
-                          onPressed: (){
+                      ),
+                      SizedBox(height: 22),
+                      elderlyTile(
+                        name: 'John Wick',
+                        temp: '37.9',
+                        time: '07:00 AM',
+                        bp: '120/80',
+                        bpm: '80',
+                        bol: '96',
+                      ),
+                      SizedBox(height: 11),
+                      elderlyTile(
+                        name: 'Ai Hoshino',
+                        temp: '35.7',
+                        time: '09:00 AM',
+                        bp: '90/80',
+                        bpm: '85',
+                        bol: '98',
+                      ),
+                      SizedBox(height: 11),
+                      elderlyTile(
+                        name: 'Juan Dela Cruz',
+                        temp: '38.5',
+                        time: '03:00 PM',
+                        bp: '110/80',
+                        bpm: '99',
+                        bol: '96',
+                      ),
+                      SizedBox(height: 22),
+                      ElevatedButton(
+                          onPressed: () {
                             Navigator.of(context).push(
                               PageTransition(
                                 child: ElderlyPage(),
@@ -204,14 +249,15 @@ class DashboardPage extends StatelessWidget {
                             );
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
-                            overlayColor: MaterialStateProperty.all(Color.fromARGB(255, 2, 5, 27)),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
+                              backgroundColor:
+                                  MaterialStateProperty.all(AppColors.primBlue),
+                              overlayColor: MaterialStateProperty.all(
+                                  Color.fromARGB(255, 2, 5, 27)),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
-                              )
-                            )
-                          ),
+                              ))),
                           child: Container(
                             height: 40,
                             child: Center(
@@ -225,18 +271,16 @@ class DashboardPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          )
-                        )
-                      ]
-                    )
-                  ),
-                  SizedBox(height: 20),
-                ],
+                          ))
+                    ])),
+                    SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
@@ -244,7 +288,13 @@ class DashboardPage extends StatelessWidget {
 class elderlyTile extends StatelessWidget {
   final name, temp, time, bp, bpm, bol;
   elderlyTile({
-    Key? key, required this.temp, required this.time, required this.bpm, required this.bp, required this.bol, required this.name,
+    Key? key,
+    required this.temp,
+    required this.time,
+    required this.bpm,
+    required this.bp,
+    required this.bol,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -264,11 +314,10 @@ class elderlyTile extends StatelessWidget {
                 name,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  fontFamily: 'Montserrat',
-                  color: Colors.black
-                ),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    fontFamily: 'Montserrat',
+                    color: Colors.black),
               ),
             ),
             SizedBox(height: 10.0),
@@ -292,11 +341,10 @@ class elderlyTile extends StatelessWidget {
                           '$temp° Celcius',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            fontFamily: 'Montserrat',
-                            color: Colors.black
-                          ),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                              fontFamily: 'Montserrat',
+                              color: Colors.black),
                         ),
                       ),
                     ],
@@ -317,11 +365,10 @@ class elderlyTile extends StatelessWidget {
                           '$bp mmHg',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            fontFamily: 'Montserrat',
-                            color: Colors.black
-                          ),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                              fontFamily: 'Montserrat',
+                              color: Colors.black),
                         ),
                       ),
                     ],
@@ -350,11 +397,10 @@ class elderlyTile extends StatelessWidget {
                           '$bpm BPM',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            fontFamily: 'Montserrat',
-                            color: Colors.black
-                          ),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                              fontFamily: 'Montserrat',
+                              color: Colors.black),
                         ),
                       ),
                     ],
@@ -375,11 +421,10 @@ class elderlyTile extends StatelessWidget {
                           '$bol% SpO2',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            fontFamily: 'Montserrat',
-                            color: Colors.black
-                          ),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                              fontFamily: 'Montserrat',
+                              color: Colors.black),
                         ),
                       ),
                     ],
@@ -394,11 +439,14 @@ class elderlyTile extends StatelessWidget {
   }
 }
 
-class reminderTile extends StatelessWidget {
-  final String time, title, details;
+class ReminderTile extends StatelessWidget {
+  late String time, title, details;
 
-  reminderTile({
-    Key? key, required this.time, required this.title, required this.details,
+  ReminderTile({
+    Key? key,
+    required this.time,
+    required this.title,
+    required this.details,
   }) : super(key: key);
 
   @override
@@ -411,11 +459,10 @@ class reminderTile extends StatelessWidget {
           Text(
             time,
             style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              fontFamily: 'Montserrat',
-              color: Colors.black
-            ),
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                fontFamily: 'Montserrat',
+                color: Colors.black),
           ),
           Spacer(
             flex: 1,
@@ -428,7 +475,8 @@ class reminderTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 13.0, vertical: 9),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 13.0, vertical: 9),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -437,21 +485,19 @@ class reminderTile extends StatelessWidget {
                       title,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        fontFamily: 'Montserrat',
-                        color: Colors.black
-                      ),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          fontFamily: 'Montserrat',
+                          color: Colors.black),
                     ),
                     Text(
                       details,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                        fontFamily: 'Montserrat',
-                        color: Colors.black
-                      ),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          fontFamily: 'Montserrat',
+                          color: Colors.black),
                     )
                   ],
                 ),
@@ -470,7 +516,10 @@ class mainButton extends StatelessWidget {
   final Function()? navigation;
 
   const mainButton({
-    Key? key, required this.icon, required this.title, required this.navigation,
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.navigation,
   }) : super(key: key);
 
   @override
@@ -479,14 +528,13 @@ class mainButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: navigation,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
-          overlayColor: MaterialStateProperty.all(Color.fromARGB(255, 2, 5, 27)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
+            backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
+            overlayColor:
+                MaterialStateProperty.all(Color.fromARGB(255, 2, 5, 27)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
-            )
-          )
-        ),
+            ))),
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -501,11 +549,10 @@ class mainButton extends StatelessWidget {
                 title,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  fontFamily: 'Montserrat',
-                  color: Colors.white
-                ),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    fontFamily: 'Montserrat',
+                    color: Colors.white),
               )
             ],
           ),
@@ -518,9 +565,7 @@ class mainButton extends StatelessWidget {
 class topBar extends StatelessWidget {
   String name;
 
-  topBar({
-    Key? key, required this.name
-  }) : super(key: key);
+  topBar({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -534,11 +579,10 @@ class topBar extends StatelessWidget {
               'Hello',
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 12,
-                fontFamily: 'Montserrat',
-                color: Colors.black
-              ),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12,
+                  fontFamily: 'Montserrat',
+                  color: Colors.black),
             ),
             SizedBox(height: 7),
             Text(
@@ -546,27 +590,21 @@ class topBar extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-                fontFamily: 'Montserrat',
-                color: Colors.black
-              ),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  fontFamily: 'Montserrat',
+                  color: Colors.black),
             ),
           ],
         ),
         IconButton(
-          onPressed: () {
-            
-          },
-          icon: Icon(
-            Icons.settings,
-            size: 23,
-            color: Colors.black,
-          )
-
-        ),
+            onPressed: () {},
+            icon: Icon(
+              Icons.settings,
+              size: 23,
+              color: Colors.black,
+            )),
       ],
     );
   }
 }
-

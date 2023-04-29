@@ -36,10 +36,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ElderlyData()),
-        ChangeNotifierProvider(create: (context) => ReminderData()),
+        ChangeNotifierProvider(
+          create: (context) => ElderlyData(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ReminderData(),
+        ),
       ],
-      builder: ((context, child) {
+      builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: "AMIDE Application",
@@ -49,7 +53,7 @@ class MyApp extends StatelessWidget {
           ),
           home: DashboardPage(),
         );
-      }),
+      },
     );
   }
 }
