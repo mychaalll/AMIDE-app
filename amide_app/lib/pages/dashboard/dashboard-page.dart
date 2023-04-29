@@ -11,10 +11,25 @@ import 'package:provider/provider.dart';
 
 import '../../provider/elderlyData.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   DashboardPage({super.key});
 
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
   String name = 'Edilberto';
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() {
+    Provider.of<ReminderData>(context, listen: false).getReminders();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +132,13 @@ class DashboardPage extends StatelessWidget {
                                       final _currentReminder =
                                           value.getReminder(index);
                                       return Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
                                         child: ListTile(
                                           leading: Text(
                                             "${_currentReminder.time}",
@@ -124,6 +146,7 @@ class DashboardPage extends StatelessWidget {
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
+                                          horizontalTitleGap: 50,
                                           title: Text(
                                             "${_currentReminder.name}",
                                             style: TextStyle(
@@ -137,26 +160,6 @@ class DashboardPage extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                          // ReminderTile(
-                          //   time: '09:00 AM',
-                          //   title: 'Reminder Title 1',
-                          //   details:
-                          //       'Proident et dolore qui proident laboris ex..',
-                          // ),
-                          // SizedBox(height: 11),
-                          // ReminderTile(
-                          //   time: '12:00 PM',
-                          //   title: 'Reminder Title 2',
-                          //   details:
-                          //       'Proident et dolore qui proident laboris ex..',
-                          // ),
-                          // SizedBox(height: 11),
-                          // ReminderTile(
-                          //   time: '06:00 PM',
-                          //   title: 'Reminder Title 3',
-                          //   details:
-                          //       'Proident et dolore qui proident laboris ex..',
-                          // ),
                           SizedBox(height: 22),
                           ElevatedButton(
                               onPressed: () {
