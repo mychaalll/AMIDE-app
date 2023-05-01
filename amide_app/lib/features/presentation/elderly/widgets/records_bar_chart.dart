@@ -17,13 +17,14 @@ class RecordsBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BarData chartData = BarData(
-        day1Amount: chartSummary[0],
-        day2Amount: chartSummary[1],
-        day3Amount: chartSummary[2],
-        day4Amount: chartSummary[3],
-        day5Amount: chartSummary[4],
-        day6Amount: chartSummary[5],
-        day7Amount: chartSummary[6]);
+      day1Amount: chartSummary[0],
+      day2Amount: chartSummary[1],
+      day3Amount: chartSummary[2],
+      day4Amount: chartSummary[3],
+      day5Amount: chartSummary[4],
+      day6Amount: chartSummary[5],
+      day7Amount: chartSummary[6],
+    );
 
     chartData.initializeBarData();
     return BarChart(BarChartData(

@@ -1,12 +1,13 @@
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/widgets/drawer.dart';
 import 'package:amide_app/features/presentation/reminder/widgets/reminder_tile.dart';
-import 'package:amide_app/features/presentation/reminder/screens/create_reminder_screen.dart';
 import 'package:amide_app/features/data/provider/reminderData.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+@RoutePage()
 class ReminderScreen extends StatefulWidget {
   ReminderScreen({super.key});
 
@@ -45,14 +46,9 @@ class _ReminderScreenState extends State<ReminderScreen> {
         foregroundColor: Colors.white,
         label: Text('Add Reminder'),
         icon: Icon(Icons.person_add_alt_1_rounded),
-        onPressed: () {
-          Navigator.of(context).push(
-            PageTransition(
-              child: CreateReminderScreen(),
-              type: PageTransitionType.rightToLeft,
-            ),
-          );
-        },
+        onPressed: () => context.pushRoute(
+          CreateReminderRoute(),
+        ),
       ),
       body: SafeArea(
         child: Container(

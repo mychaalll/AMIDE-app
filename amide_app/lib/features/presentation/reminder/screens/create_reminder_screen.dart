@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:amide_app/features/data/provider/reminderData.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../../data/models/reminder.dart';
 
+@RoutePage()
 class CreateReminderScreen extends StatefulWidget {
   CreateReminderScreen({
     super.key,
@@ -40,27 +42,6 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
   }
 
   void _addReminder() {
-    // if (formKey.currentState!.validate()) {
-    //   Provider.of<ReminderData>(context, listen: false).addReminder(
-    //     Reminder(
-    //       time: _timeController.text,
-    //       name: _nameController.text,
-    //       detail: _detailController.text,
-    //     ),
-    //   );
-    //   Navigator.of(context).pop();
-    // } else {
-    //   final snackBar = SnackBar(
-    //     content: Text("Please input all the required fields"),
-    //     duration: Duration(
-    //       milliseconds: 300,
-    //     ),
-    //     backgroundColor: Colors.red,
-    //   );
-
-    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    // }
-
     Provider.of<ReminderData>(context, listen: false).addReminder(
       Reminder(
         time: _timeController.text,
@@ -68,7 +49,7 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
         detail: _detailController.text,
       ),
     );
-    Navigator.of(context).pop();
+    context.popRoute();
   }
 
   void pickTime() async {
@@ -116,7 +97,7 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            context.popRoute();
           },
           icon: Icon(
             Icons.arrow_back,

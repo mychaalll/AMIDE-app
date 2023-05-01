@@ -1,13 +1,13 @@
-import 'package:amide_app/features/presentation/reminder/screens/edit_reminder_screen.dart';
-import 'package:amide_app/features/presentation/reminder/screens/reminder_screen.dart';
 import 'package:amide_app/features/data/provider/reminderData.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/routes/routes.gr.dart';
 import '../../../data/models/reminder.dart';
 
+@RoutePage()
 class ViewReminderScreen extends StatelessWidget {
   ViewReminderScreen({super.key});
 
@@ -26,12 +26,7 @@ class ViewReminderScreen extends StatelessWidget {
             centerTitle: true,
             leading: IconButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  PageTransition(
-                    child: ReminderScreen(),
-                    type: PageTransitionType.leftToRight,
-                  ),
-                );
+                context.popRoute();
               },
               icon: Icon(
                 Icons.arrow_back,
@@ -42,12 +37,9 @@ class ViewReminderScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    PageTransition(
-                      child: EditReminderScreen(
-                        currentReminder: currentReminder,
-                      ),
-                      type: PageTransitionType.leftToRight,
+                  context.pushRoute(
+                    EditReminderRoute(
+                      currentReminder: currentReminder,
                     ),
                   );
                 },

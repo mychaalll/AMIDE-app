@@ -1,13 +1,13 @@
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/provider/elderlyData.dart';
-import 'package:amide_app/features/presentation/elderly/screens/elderly_screen.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/core/config/toast.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../../data/models/elderly.dart';
-import '../../reminder/screens/reminder_screen.dart';
 
+@RoutePage()
 class EditElderlyScreen extends StatefulWidget {
   final Elderly currentElderly;
   const EditElderlyScreen({super.key, required this.currentElderly});
@@ -48,7 +48,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
     super.initState();
   }
 
-  void _editElderly(context) {
+  void _editElderly() {
     if (newName == null) {
       toastWidget("Give entry a name");
       return;
@@ -63,8 +63,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
       ),
       elderlyKey: widget.currentElderly.key,
     );
-
-    Navigator.of(context).pop();
+    context.popRoute();
   }
 
   @override
@@ -77,11 +76,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
           centerTitle: true,
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                PageTransition(
-                  child: ElderlyScreen(),
-                  type: PageTransitionType.leftToRight,
-                ),
+              context.pushRoute(
+                ElderlyRoute(),
               );
             },
             icon: Icon(
@@ -345,7 +341,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                       //button
                       ElevatedButton(
                         onPressed: () {
-                          _editElderly(context);
+                          _editElderly();
                         },
                         style: ButtonStyle(
                             backgroundColor:

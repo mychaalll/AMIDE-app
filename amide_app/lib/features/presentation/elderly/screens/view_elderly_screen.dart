@@ -1,16 +1,15 @@
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/presentation/elderly/widgets/elderly_details.dart';
-import 'package:amide_app/features/presentation/records/screens/recording_screen.dart';
 import 'package:amide_app/features/data/provider/elderlyData.dart';
-import 'package:amide_app/features/presentation/elderly/screens/edit_elderly_screen.dart';
-import 'package:amide_app/features/presentation/elderly/screens/elderly_screen.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/elderly.dart';
 import '../widgets/elderly_records.dart';
 
+@RoutePage()
 class ViewElderlyScreen extends StatelessWidget {
   ViewElderlyScreen({super.key});
 
@@ -68,12 +67,7 @@ class ViewElderlyScreen extends StatelessWidget {
               title: Text(currentElderly.name.toString()),
               leading: IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    PageTransition(
-                      child: ElderlyScreen(),
-                      type: PageTransitionType.leftToRight,
-                    ),
-                  );
+                  context.popRoute();
                 },
                 icon: Icon(
                   Icons.arrow_back,
@@ -85,11 +79,8 @@ class ViewElderlyScreen extends StatelessWidget {
                 todayHasRecord == true
                     ? IconButton(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            PageTransition(
-                              child: RecordingScreen(),
-                              type: PageTransitionType.leftToRight,
-                            ),
+                          context.pushRoute(
+                            RecordingRoute(),
                           );
                         },
                         icon: Icon(
@@ -101,12 +92,9 @@ class ViewElderlyScreen extends StatelessWidget {
                     : Container(),
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      PageTransition(
-                        child: EditElderlyScreen(
-                          currentElderly: currentElderly,
-                        ),
-                        type: PageTransitionType.leftToRight,
+                    context.pushRoute(
+                      EditElderlyRoute(
+                        currentElderly: currentElderly,
                       ),
                     );
                   },
@@ -127,77 +115,79 @@ class ViewElderlyScreen extends StatelessWidget {
                       height: 120,
                       color: AppColors.primBlue,
                       child: Center(
-                        child: Column(children: [
-                          Spacer(),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 15.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                    child: Column(
-                                  children: [
-                                    Text(
-                                      'Age',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey[400],
-                                        fontWeight: FontWeight.w600,
-                                        overflow: TextOverflow.ellipsis,
+                        child: Column(
+                          children: [
+                            Spacer(),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                      child: Column(
+                                    children: [
+                                      Text(
+                                        'Age',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey[400],
+                                          fontWeight: FontWeight.w600,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      currentElderly.age,
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        overflow: TextOverflow.ellipsis,
+                                      SizedBox(height: 10),
+                                      Text(
+                                        currentElderly.age,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )),
-                                Expanded(
-                                    child: Column(
-                                  children: [
-                                    Text(
-                                      'Sex',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey[400],
-                                        fontWeight: FontWeight.w600,
-                                        overflow: TextOverflow.ellipsis,
+                                    ],
+                                  )),
+                                  Expanded(
+                                      child: Column(
+                                    children: [
+                                      Text(
+                                        'Sex',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey[400],
+                                          fontWeight: FontWeight.w600,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      currentElderly.sex,
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        overflow: TextOverflow.ellipsis,
+                                      SizedBox(height: 10),
+                                      Text(
+                                        currentElderly.sex,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )),
+                                    ],
+                                  )),
+                                ],
+                              ),
+                            ),
+                            Spacer(),
+                            TabBar(
+                              tabs: [
+                                Tab(
+                                  text: 'Details',
+                                ),
+                                Tab(
+                                  text: 'Records',
+                                ),
                               ],
                             ),
-                          ),
-                          Spacer(),
-                          TabBar(
-                            tabs: [
-                              Tab(
-                                text: 'Details',
-                              ),
-                              Tab(
-                                text: 'Records',
-                              ),
-                            ],
-                          ),
-                        ]),
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(

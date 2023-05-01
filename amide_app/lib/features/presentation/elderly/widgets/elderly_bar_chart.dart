@@ -1,7 +1,7 @@
+import 'package:amide_app/features/presentation/elderly/widgets/elderly_line_chart.dart';
 import 'package:flutter/material.dart';
 
-import '../../records/widgets/bar_chart.dart';
-import 'elderly_line_chart.dart';
+import 'records_bar_chart.dart';
 
 class ElderlyBarChart extends StatelessWidget {
   ElderlyBarChart({
@@ -66,7 +66,7 @@ class ElderlyBarChart extends StatelessWidget {
                       chartMax: chartMax,
                       chartMin: chartMin,
                     )
-                  : RecordsLineChart(
+                  : ElderlyLineChart(
                       chartSummary: chartSummary,
                       chartMax: chartMax,
                       chartMin: chartMin,

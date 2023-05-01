@@ -1,8 +1,10 @@
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/all_records_listview.dart';
 
+@RoutePage()
 class AllRecordsScreen extends StatelessWidget {
   //temporary variables, remove if records from patient is available
   int listviewCount = 4;

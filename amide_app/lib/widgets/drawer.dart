@@ -1,9 +1,7 @@
-import 'package:amide_app/features/presentation/dashboard/screens/dashboard_screen.dart';
-import 'package:amide_app/features/presentation/elderly/screens/elderly_screen.dart';
-import 'package:amide_app/features/presentation/reminder/screens/reminder_screen.dart';
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
@@ -33,48 +31,39 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            drawerTile(
+            DrawerTile(
               icon: Icons.dashboard,
               title: 'Dashboard',
               navigation: () {
-                Navigator.of(context).push(
-                  PageTransition(
-                    child: DashboardScreen(),
-                    type: PageTransitionType.leftToRight,
-                  ),
+                context.pushRoute(
+                  DashboardRoute(),
                 );
               },
             ),
             SizedBox(height: 10),
-            drawerTile(
+            DrawerTile(
               icon: Icons.view_list_rounded,
               title: 'Reminders',
               navigation: () {
-                Navigator.of(context).push(
-                  PageTransition(
-                    child: ReminderScreen(),
-                    type: PageTransitionType.rightToLeft,
-                  ),
+                context.pushRoute(
+                  ReminderRoute(),
                 );
               },
             ),
             SizedBox(height: 10),
-            drawerTile(
+            DrawerTile(
               icon: Icons.elderly_sharp,
               title: 'Elderly',
               navigation: () {
-                Navigator.of(context).push(
-                  PageTransition(
-                    child: ElderlyScreen(),
-                    type: PageTransitionType.rightToLeft,
-                  ),
+                context.pushRoute(
+                  ElderlyRoute(),
                 );
               },
             ),
             SizedBox(height: 10.0),
             Container(height: 1.0, color: Colors.grey[600]),
             SizedBox(height: 10.0),
-            drawerTile(
+            DrawerTile(
               icon: Icons.settings,
               title: 'Settings',
               navigation: () {},
@@ -86,11 +75,11 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
-class drawerTile extends StatelessWidget {
+class DrawerTile extends StatelessWidget {
   final String title;
   final IconData icon;
   final Function()? navigation;
-  const drawerTile({
+  const DrawerTile({
     Key? key,
     required this.title,
     required this.icon,

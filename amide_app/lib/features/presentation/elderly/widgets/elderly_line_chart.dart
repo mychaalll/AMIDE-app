@@ -2,10 +2,10 @@ import 'package:amide_app/core/config/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class RecordsLineChart extends StatelessWidget {
+class ElderlyLineChart extends StatelessWidget {
   final List chartSummary;
   final double chartMax, chartMin;
-  const RecordsLineChart(
+  const ElderlyLineChart(
       {super.key,
       required this.chartSummary,
       required this.chartMax,

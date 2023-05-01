@@ -1,12 +1,12 @@
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/provider/elderlyData.dart';
-import 'package:amide_app/features/presentation/elderly/screens/elderly_screen.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../../data/models/elderly.dart';
-import '../../reminder/screens/reminder_screen.dart';
 
+@RoutePage()
 class CreateElderlyScreen extends StatefulWidget {
   const CreateElderlyScreen({super.key});
 
@@ -16,6 +16,7 @@ class CreateElderlyScreen extends StatefulWidget {
 
 List<String> list = <String>['Male', 'Female'];
 
+@RoutePage()
 class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
   String? name;
   String? age;
@@ -37,7 +38,7 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
         description: _descriptionController.text,
       ),
     );
-    Navigator.of(context).pop();
+    context.popRoute();
   }
 
   @override
@@ -50,11 +51,8 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
           centerTitle: true,
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                PageTransition(
-                  child: ElderlyScreen(),
-                  type: PageTransitionType.leftToRight,
-                ),
+              context.pushRoute(
+                ElderlyRoute(),
               );
             },
             icon: Icon(

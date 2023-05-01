@@ -1,12 +1,12 @@
 import 'package:amide_app/widgets/drawer.dart';
 import 'package:amide_app/features/presentation/elderly/widgets/elderly_tile.dart';
 import 'package:amide_app/features/data/provider/elderlyData.dart';
-import 'package:amide_app/features/presentation/elderly/screens/create_elderly_screen.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
+@RoutePage()
 class ElderlyScreen extends StatefulWidget {
   const ElderlyScreen({super.key});
 
@@ -45,12 +45,7 @@ class _ElderlyScreenState extends State<ElderlyScreen> {
         label: Text('Add Elderly'),
         icon: Icon(Icons.person_add_alt_1_rounded),
         onPressed: () {
-          Navigator.of(context).push(
-            PageTransition(
-              child: CreateElderlyScreen(),
-              type: PageTransitionType.rightToLeft,
-            ),
-          );
+          context.popRoute();
         },
       ),
       body: SafeArea(
