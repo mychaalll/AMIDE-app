@@ -1,5 +1,7 @@
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/provider/reminderData.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
@@ -9,6 +11,7 @@ import '../../../../core/config/toast.dart';
 import '../../../data/models/reminder.dart';
 import 'reminder_screen.dart';
 
+@RoutePage()
 class EditReminderScreen extends StatefulWidget {
   Reminder currentReminder;
   EditReminderScreen({
@@ -41,7 +44,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
     super.initState();
   }
 
-  void _editReminder(context) {
+  void _editReminder() {
     if (newName == null) {
       toastWidget("Give entry a name");
       return;
@@ -56,7 +59,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
       reminderKey: widget.currentReminder.key,
     );
 
-    Navigator.of(context).pop();
+    context.popRoute();
   }
 
   @override
@@ -69,11 +72,8 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).push(
-              PageTransition(
-                child: ReminderScreen(),
-                type: PageTransitionType.leftToRight,
-              ),
+            context.pushRoute(
+              ReminderRoute(),
             );
           },
           icon: Icon(
@@ -329,7 +329,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: ElevatedButton(
-                  onPressed: () => _editReminder(context),
+                  onPressed: () => _editReminder(),
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(AppColors.primBlue),

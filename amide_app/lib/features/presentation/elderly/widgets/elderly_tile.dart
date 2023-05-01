@@ -1,15 +1,13 @@
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/provider/elderlyData.dart';
-import 'package:amide_app/features/presentation/elderly/screens/edit_elderly_screen.dart';
-import 'package:amide_app/features/presentation/elderly/screens/view_elderly_screen.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/core/config/utils.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/elderly.dart';
-
 
 class ElderlyTile extends StatelessWidget {
   final int tileIndex;
@@ -37,13 +35,8 @@ class ElderlyTile extends StatelessWidget {
                   onPressed: (context) {
                     //go to edit
                     Log.d("Selected to edit");
-                    Navigator.of(context).push(
-                      PageTransition(
-                        child: EditElderlyScreen(
-                          currentElderly: currentElderly,
-                        ),
-                        type: PageTransitionType.rightToLeft,
-                      ),
+                    context.pushRoute(
+                      EditElderlyRoute(currentElderly: currentElderly),
                     );
                   },
                   backgroundColor: Colors.blue,
@@ -78,11 +71,8 @@ class ElderlyTile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    PageTransition(
-                      child: ViewElderlyScreen(),
-                      type: PageTransitionType.rightToLeft,
-                    ),
+                  context.pushRoute(
+                    ViewElderlyRoute(),
                   );
                   Provider.of<ElderlyData>(context, listen: false)
                       .setActiveElderly(currentElderly.key);

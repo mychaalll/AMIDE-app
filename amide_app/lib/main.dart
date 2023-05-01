@@ -1,5 +1,5 @@
+import 'package:amide_app/core/routes/routes.dart';
 import 'package:amide_app/features/data/provider/elderlyData.dart';
-import 'package:amide_app/features/presentation/dashboard/screens/dashboard_screen.dart';
 import 'package:amide_app/features/data/provider/reminderData.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,11 +18,12 @@ void main() async {
   // open a box
   var reminderBox = await Hive.openBox("myBox");
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final _appRouter = AppRouter();
 
   // This widget is the root of your application.
   @override
@@ -37,14 +38,14 @@ class MyApp extends StatelessWidget {
         ),
       ],
       builder: (context, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: "AMIDE Application",
           theme: ThemeData(
             primarySwatch: Colors.blueGrey,
             fontFamily: "Montserrat",
           ),
-          home: DashboardScreen(),
+          routerConfig: _appRouter.config(),
         );
       },
     );

@@ -1,9 +1,10 @@
-import 'package:amide_app/features/presentation/elderly/screens/elderly_screen.dart';
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
+@RoutePage()
 class RecordingScreen extends StatefulWidget {
   const RecordingScreen({super.key});
 
@@ -40,12 +41,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).push(
-              PageTransition(
-                //change this into go back to view elderly page
-                child: ElderlyScreen(),
-                type: PageTransitionType.leftToRight,
-              ),
+            context.pushRoute(
+              ElderlyRoute(),
             );
           },
           icon: Icon(
@@ -1014,16 +1011,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                     stepButton(
                                                       title: 'Finish',
                                                       onPressed: () {
-                                                        Navigator.of(context)
-                                                            .push(
-                                                          PageTransition(
-                                                            //change this into go back to view elderly page
-                                                            child:
-                                                                ElderlyScreen(),
-                                                            type:
-                                                                PageTransitionType
-                                                                    .leftToRight,
-                                                          ),
+                                                        context.pushRoute(
+                                                          ElderlyRoute(),
                                                         );
                                                       },
                                                     ),

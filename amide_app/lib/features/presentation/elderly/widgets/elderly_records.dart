@@ -1,7 +1,7 @@
-import 'package:amide_app/features/presentation/records/screens/all_records_screen.dart';
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 
 import 'elderly_bar_chart.dart';
 
@@ -153,11 +153,8 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            PageTransition(
-                              child: AllRecordsScreen(),
-                              type: PageTransitionType.rightToLeft,
-                            ),
+                          context.pushRoute(
+                            AllRecordsRoute(),
                           );
                         },
                         style: ButtonStyle(

@@ -1,11 +1,10 @@
-import 'package:amide_app/features/presentation/reminder/screens/edit_reminder_screen.dart';
-import 'package:amide_app/features/presentation/reminder/screens/view_reminder_screen.dart';
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/provider/reminderData.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/core/config/utils.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/reminder.dart';
@@ -40,12 +39,10 @@ class _ReminderTileState extends State<ReminderTile> {
                 onPressed: (context) {
                   // go to Edit
                   Log.d("Selected to edit");
-                  Navigator.of(context).push(
-                    PageTransition(
-                      child: EditReminderScreen(
-                        currentReminder: currentReminder,
-                      ),
-                      type: PageTransitionType.rightToLeft,
+
+                  context.pushRoute(
+                    EditReminderRoute(
+                      currentReminder: currentReminder,
                     ),
                   );
                 },
@@ -81,11 +78,8 @@ class _ReminderTileState extends State<ReminderTile> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                  PageTransition(
-                    child: ViewReminderScreen(),
-                    type: PageTransitionType.rightToLeft,
-                  ),
+                context.pushRoute(
+                  ViewReminderRoute(),
                 );
                 Provider.of<ReminderData>(context, listen: false)
                     .setActiveReminder(currentReminder.key);
