@@ -1,19 +1,12 @@
-import 'package:amide_app/models/elderly.dart';
-import 'package:amide_app/models/reminder.dart';
-import 'package:amide_app/pages/record/recording-page.dart';
-import 'package:amide_app/provider/elderlyData.dart';
-import 'package:amide_app/pages/create/create-elderly-page.dart';
-import 'package:amide_app/pages/create/create-reminder-page.dart';
-import 'package:amide_app/pages/dashboard/dashboard-page.dart';
-import 'package:amide_app/pages/elderly/elderly-page.dart';
-import 'package:amide_app/pages/reminder/reminder-page.dart';
-import 'package:amide_app/pages/view/view-elderly-page.dart';
-import 'package:amide_app/pages/view/view-reminder-page.dart';
-import 'package:amide_app/provider/reminderData.dart';
+import 'package:amide_app/features/data/provider/elderlyData.dart';
+import 'package:amide_app/features/presentation/dashboard/screens/dashboard_screen.dart';
+import 'package:amide_app/features/data/provider/reminderData.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'features/data/models/elderly.dart';
+import 'features/data/models/reminder.dart';
 
 void main() async {
   // init the hive
@@ -51,7 +44,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blueGrey,
             fontFamily: "Montserrat",
           ),
-          home: DashboardPage(),
+          home: DashboardScreen(),
         );
       },
     );
