@@ -1,3 +1,4 @@
+import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/widgets/drawer.dart';
 import 'package:amide_app/features/presentation/elderly/widgets/elderly_tile.dart';
 import 'package:amide_app/features/data/provider/elderlyData.dart';
@@ -44,9 +45,9 @@ class _ElderlyScreenState extends State<ElderlyScreen> {
         foregroundColor: Colors.white,
         label: Text('Add Elderly'),
         icon: Icon(Icons.person_add_alt_1_rounded),
-        onPressed: () {
-          context.popRoute();
-        },
+        onPressed: () => context.pushRoute(
+          CreateElderlyRoute(),
+        )
       ),
       body: SafeArea(
         child: Container(

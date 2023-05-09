@@ -112,7 +112,7 @@ class ViewElderlyScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 120,
+                      height: 180,
                       color: AppColors.primBlue,
                       child: Center(
                         child: Column(
@@ -125,53 +125,140 @@ class ViewElderlyScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(
-                                      child: Column(
-                                    children: [
-                                      Text(
-                                        'Age',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey[400],
-                                          fontWeight: FontWeight.w600,
-                                          overflow: TextOverflow.ellipsis,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Age',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[400],
+                                            fontWeight: FontWeight.w600,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Text(
-                                        currentElderly.age,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                          overflow: TextOverflow.ellipsis,
+                                        SizedBox(height: 10),
+                                        Text(
+                                          currentElderly.age,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  )),
+                                      ],
+                                    ),
+                                  ),
                                   Expanded(
-                                      child: Column(
-                                    children: [
-                                      Text(
-                                        'Sex',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey[400],
-                                          fontWeight: FontWeight.w600,
-                                          overflow: TextOverflow.ellipsis,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Sex',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[400],
+                                            fontWeight: FontWeight.w600,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Text(
-                                        currentElderly.sex,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                          overflow: TextOverflow.ellipsis,
+                                        SizedBox(height: 10),
+                                        Text(
+                                          currentElderly.sex,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  )),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Blood Type',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[400],
+                                            fontWeight: FontWeight.w600,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          'B+', // TODO: add a variable for blood type
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Spacer(),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Height',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[400],
+                                            fontWeight: FontWeight.w600,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          '165 cm.', // TODO: add a variable for height
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Weight',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[400],
+                                            fontWeight: FontWeight.w600,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        SizedBox(height: 10),
+                                        Text(
+                                          '70 kg.', // TODO: add a variable for weight
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
