@@ -40,7 +40,7 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           children: [
-            SizedBox(height: 15),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -64,6 +64,7 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          SizedBox(width: 30),
                           Text(
                             'Fluctuation',
                             style: TextStyle(
