@@ -1,5 +1,5 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
-import 'package:amide_app/features/data/provider/elderlyData.dart';
+import 'package:amide_app/features/data/provider/elderly_data.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/core/config/utils.dart';
 import 'package:auto_route/auto_route.dart';
@@ -28,7 +28,7 @@ class ElderlyTile extends StatelessWidget {
             closeOnScroll: true,
             startActionPane: ActionPane(
               extentRatio: 0.3,
-              motion: DrawerMotion(),
+              motion: const DrawerMotion(),
               children: [
                 SlidableAction(
                   autoClose: true,
@@ -42,7 +42,7 @@ class ElderlyTile extends StatelessWidget {
                   backgroundColor: Colors.blue,
                   icon: Icons.edit_note,
                   label: 'Edit',
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(15),
                       bottomRight: Radius.circular(15)),
                 )
@@ -50,7 +50,7 @@ class ElderlyTile extends StatelessWidget {
             ),
             endActionPane: ActionPane(
               extentRatio: 0.3,
-              motion: DrawerMotion(),
+              motion: const DrawerMotion(),
               children: [
                 SlidableAction(
                   onPressed: (context) {
@@ -61,7 +61,7 @@ class ElderlyTile extends StatelessWidget {
                   icon: Icons.delete_forever,
                   label: 'Delete',
                   backgroundColor: Colors.red,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(15),
                       bottomLeft: Radius.circular(15)),
                 )
@@ -88,12 +88,12 @@ class ElderlyTile extends StatelessWidget {
                     child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.elderly_woman,
                             color: Colors.white,
                             size: 25,
                           ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,16 +102,16 @@ class ElderlyTile extends StatelessWidget {
                                 Text(
                                   currentElderly.name,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16,
                                       fontFamily: 'Montserrat',
                                       color: Colors.white),
                                 ),
                                 Text(
-                                  currentElderly.age + ' years old',
+                                  '${currentElderly.age} years old',
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 12,
                                     fontFamily: 'Montserrat',

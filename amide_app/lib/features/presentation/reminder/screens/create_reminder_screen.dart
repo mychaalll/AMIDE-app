@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:amide_app/features/data/provider/reminderData.dart';
+import 'package:amide_app/features/data/provider/reminder_data.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
@@ -14,7 +14,7 @@ import '../../../data/models/reminder.dart';
 
 @RoutePage()
 class CreateReminderScreen extends StatefulWidget {
-  CreateReminderScreen({
+  const CreateReminderScreen({
     super.key,
   });
 
@@ -23,15 +23,15 @@ class CreateReminderScreen extends StatefulWidget {
 }
 
 class _CreateReminderScreenState extends State<CreateReminderScreen> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
-  TextEditingController _detailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
+  final TextEditingController _detailController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   FilePickerResult? result;
   PlatformFile? pickedFile;
   File? fileToDisplay;
 
-  DateTime _dateTime = DateTime.now();
+  final DateTime _dateTime = DateTime.now();
 
   @override
   void dispose() {
@@ -68,12 +68,6 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
   void pickFile() async {
     final result = await FilePicker.platform.pickFiles();
     if (result == null) return;
-
-    // open single file
-    final file = result.files.first;
-    // openFile(file);
-
-    final newFile = await saveFilePermanently(file);
   }
 
   void openFile(PlatformFile file) {
@@ -99,7 +93,7 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
           onPressed: () {
             context.popRoute();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             size: 20,
             color: Colors.white,
@@ -114,8 +108,8 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
             color: AppColors.bgColor,
             child: Column(
               children: [
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Add Reminder',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
@@ -124,207 +118,205 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Reminder Title',
-                          style: TextStyle(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Reminder Title',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      // reminder title
+                      SizedBox(
+                        height: 40,
+                        width: width - 30,
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please enter some value";
+                            }
+                            return null;
+                          },
+                          controller: _nameController,
+                          textAlignVertical: TextAlignVertical.bottom,
+                          maxLines: 1,
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.black,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                             overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        // reminder title
-                        Container(
-                          height: 40,
-                          width: width - 30,
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter some value";
-                              }
-                              return null;
-                            },
-                            controller: _nameController,
-                            textAlignVertical: TextAlignVertical.bottom,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.black,
+                                width: 5.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 5.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              hintText: 'Enter Name',
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            hintText: 'Enter Name',
+                            hintStyle: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        SizedBox(height: 22),
-                        //time textbox
-                        Text(
-                          'Time',
-                          style: TextStyle(
+                      ),
+                      const SizedBox(height: 22),
+                      //time textbox
+                      const Text(
+                        'Time',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SizedBox(
+                        height: 40,
+                        width: width - 30,
+                        child: TextField(
+                          controller: _timeController,
+                          readOnly: true,
+                          textAlignVertical: TextAlignVertical.bottom,
+                          maxLines: 1,
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.black,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                             overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        Container(
-                          height: 40,
-                          width: width - 30,
-                          child: TextField(
-                            controller: _timeController,
-                            readOnly: true,
-                            textAlignVertical: TextAlignVertical.bottom,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.watch_later),
+                              onPressed: pickTime,
                             ),
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                icon: Icon(Icons.watch_later),
-                                onPressed: pickTime,
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.black,
+                                width: 5.0,
                               ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 5.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              hintText: DateFormat.jm().format(_dateTime),
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            hintText: DateFormat.jm().format(_dateTime),
+                            hintStyle: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        SizedBox(height: 22),
-                        //music
-                        Text(
-                          'Reminder Music',
-                          style: TextStyle(
+                      ),
+                      const SizedBox(height: 22),
+                      //music
+                      const Text(
+                        'Reminder Music',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SizedBox(
+                        height: 40,
+                        width: width - 30,
+                        child: TextField(
+                          readOnly: true,
+                          textAlign: TextAlign.left,
+                          textAlignVertical: TextAlignVertical.bottom,
+                          maxLines: 1,
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Container(
-                          height: 40,
-                          width: width - 30,
-                          child: TextField(
-                            readOnly: true,
-                            textAlign: TextAlign.left,
-                            textAlignVertical: TextAlignVertical.bottom,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                icon: Icon(Icons.queue_music),
-                                onPressed: pickFile,
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 5.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              hintText: 'music.wav',
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 22),
-                        //note
-                        Text(
-                          'Reminder Detail',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                             overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        Container(
-                          width: width - 30,
-                          child: TextField(
-                            controller: _detailController,
-                            textAlign: TextAlign.left,
-                            textAlignVertical: TextAlignVertical.bottom,
-                            maxLines: 7,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.queue_music),
+                              onPressed: pickFile,
                             ),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 5.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.black,
+                                width: 5.0,
                               ),
-                              hintText: 'Some details here...',
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            hintText: 'music.wav',
+                            hintStyle: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 22),
+                      //note
+                      const Text(
+                        'Reminder Detail',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SizedBox(
+                        width: width - 30,
+                        child: TextField(
+                          controller: _detailController,
+                          textAlign: TextAlign.left,
+                          textAlignVertical: TextAlignVertical.bottom,
+                          maxLines: 7,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.black,
+                                width: 5.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            hintText: 'Some details here...',
+                            hintStyle: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
 
                 // Save reminder
                 Padding(
@@ -340,19 +332,19 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ))),
-                    child: Container(
+                    child: SizedBox(
                       height: 40,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.save_alt,
                             size: 21,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           width > 280
-                              ? Text(
+                              ? const Text(
                                   'Save Reminder',
                                   style: TextStyle(
                                     fontSize: 14,
@@ -366,7 +358,7 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
               ],
             ),
           ),

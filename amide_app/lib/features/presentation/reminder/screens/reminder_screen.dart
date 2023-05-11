@@ -1,7 +1,7 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/widgets/drawer.dart';
 import 'package:amide_app/features/presentation/reminder/widgets/reminder_tile.dart';
-import 'package:amide_app/features/data/provider/reminderData.dart';
+import 'package:amide_app/features/data/provider/reminder_data.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 @RoutePage()
 class ReminderScreen extends StatefulWidget {
-  ReminderScreen({super.key});
+  const ReminderScreen({super.key});
 
   @override
   State<ReminderScreen> createState() => _ReminderScreenState();
@@ -32,7 +32,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
       appBar: AppBar(
           backgroundColor: AppColors.primBlue,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'Reminder',
             style: TextStyle(
                 fontWeight: FontWeight.w600,
@@ -40,12 +40,12 @@ class _ReminderScreenState extends State<ReminderScreen> {
                 fontFamily: 'Montserrat',
                 color: Colors.white),
           )),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.primBlue,
         foregroundColor: Colors.white,
-        label: Text('Add Reminder'),
-        icon: Icon(Icons.person_add_alt_1_rounded),
+        label: const Text('Add Reminder'),
+        icon: const Icon(Icons.person_add_alt_1_rounded),
         onPressed: () => context.pushRoute(
           CreateReminderRoute(),
         ),
@@ -55,8 +55,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
           color: AppColors.bgColor,
           child: Column(
             children: [
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Reminder List',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -65,12 +65,12 @@ class _ReminderScreenState extends State<ReminderScreen> {
                     fontFamily: 'Montserrat',
                     color: Colors.black),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Expanded(
                 child: Provider.of<ReminderData>(context).reminderCount == 0
-                    ? Container(
+                    ? SizedBox(
                         width: width,
-                        child: Column(
+                        child: const Column(
                           children: [
                             SizedBox(height: 60),
                             Icon(

@@ -9,7 +9,7 @@ class ElderlyData extends ChangeNotifier {
 
   List<Elderly> _elderly = [];
 
-  Elderly? _activeElderly;
+  late Elderly _activeElderly;
 
   void getElderlys() async {
     var box = await Hive.openBox<Elderly>(_boxName);
@@ -35,7 +35,7 @@ class ElderlyData extends ChangeNotifier {
     await box.delete(key);
 
     _elderly = box.values.toList();
-    Log.i("Deleted member with key" + key.toString());
+    Log.i("Deleted member with key$key");
     notifyListeners();
   }
 
@@ -45,21 +45,21 @@ class ElderlyData extends ChangeNotifier {
     await box.put(elderlyKey, elderly!);
     _elderly = box.values.toList();
 
-    _activeElderly = box.get(elderlyKey);
+    _activeElderly = box.get(elderlyKey)!;
 
-    Log.i("Edited " + elderly.name);
+    Log.i("Edited ${elderly.name}");
     notifyListeners();
   }
 
   void setActiveElderly(key) async {
     var box = await Hive.openBox<Elderly>(_boxName);
 
-    _activeElderly = box.get(key);
+    _activeElderly = box.get(key)!;
     notifyListeners();
   }
 
   Elderly getActiveElderly() {
-    return _activeElderly!;
+    return _activeElderly;
   }
 
   int get elderlyCount {

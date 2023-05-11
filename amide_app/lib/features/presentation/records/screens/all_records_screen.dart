@@ -7,8 +7,8 @@ import '../widgets/all_records_listview.dart';
 @RoutePage()
 class AllRecordsScreen extends StatelessWidget {
   //temporary variables, remove if records from patient is available
-  int listviewCount = 4;
-  AllRecordsScreen({super.key});
+  final int listviewCount = 4;
+  const AllRecordsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class AllRecordsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.primBlue,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Elderly name here', // elderly name
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -33,8 +33,8 @@ class AllRecordsScreen extends StatelessWidget {
           color: AppColors.bgColor,
           child: Column(
             children: [
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Records List',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -44,12 +44,12 @@ class AllRecordsScreen extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Expanded(
                 child: listviewCount == 0
-                    ? Container(
+                    ? SizedBox(
                         width: width,
-                        child: Column(
+                        child: const Column(
                           children: [
                             SizedBox(height: 60),
                             Icon(
@@ -70,7 +70,7 @@ class AllRecordsScreen extends StatelessWidget {
                     : ListView.builder(
                         itemCount: listviewCount,
                         itemBuilder: ((context, index) {
-                          return AllRecordsListView(
+                          return const AllRecordsListView(
                             date: 'Dec. 10, 2022, 09:00 AM',
                             temp: '35.7',
                             bp: '90/80',

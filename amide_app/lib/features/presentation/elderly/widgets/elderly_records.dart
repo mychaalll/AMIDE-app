@@ -14,7 +14,7 @@ class ElderlyRecords extends StatefulWidget {
 
   final String bol;
   final List bolSummary;
-  ElderlyRecords(
+  const ElderlyRecords(
       {super.key,
       required this.tempSummary,
       required this.temp,
@@ -40,69 +40,65 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
+                const Expanded(
                     flex: 4,
-                    child: Container(
-                      child: Text(
-                        'Elderly Data',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                    child: Text(
+                      'Elderly Data',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     )),
                 Expanded(
                     flex: 6,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(width: 30),
-                          Text(
-                            'Fluctuation',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 30),
+                        const Text(
+                          'Fluctuation',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          width > 400
-                              ? Text(
-                                  ' last 7 days',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.w600,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                )
-                              : Container(),
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _chartIsBar = !_chartIsBar;
-                              });
-                            },
-                            icon: Icon(
-                              _chartIsBar
-                                  ? Icons.bar_chart_rounded
-                                  : Icons.line_axis_rounded,
-                            ),
+                        ),
+                        width > 400
+                            ? Text(
+                                ' last 7 days',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w600,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              )
+                            : Container(),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _chartIsBar = !_chartIsBar;
+                            });
+                          },
+                          icon: Icon(
+                            _chartIsBar
+                                ? Icons.bar_chart_rounded
+                                : Icons.line_axis_rounded,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ))
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: ListView(
                 children: [
@@ -116,7 +112,7 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                     chartMax: 50,
                     chartMin: 20,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   //Blood Pressure
                   ElderlyBarChart(
                     isBar: _chartIsBar,
@@ -127,7 +123,7 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                     chartMax: 50,
                     chartMin: 20,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   //Pulse Rate
                   ElderlyBarChart(
                     isBar: _chartIsBar,
@@ -138,7 +134,7 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                     chartMax: 100,
                     chartMin: 60,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   //Blood Oxygen Level
                   ElderlyBarChart(
                     isBar: _chartIsBar,
@@ -149,7 +145,7 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                     chartMax: 100,
                     chartMin: 80,
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: ElevatedButton(
@@ -162,12 +158,12 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                             backgroundColor:
                                 MaterialStateProperty.all(AppColors.primBlue),
                             overlayColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 2, 5, 27)),
+                                const Color.fromARGB(255, 2, 5, 27)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ))),
-                        child: Container(
+                        child: const SizedBox(
                           height: 40,
                           child: Center(
                             child: Text(

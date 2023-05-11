@@ -1,6 +1,6 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/presentation/elderly/widgets/elderly_details.dart';
-import 'package:amide_app/features/data/provider/elderlyData.dart';
+import 'package:amide_app/features/data/provider/elderly_data.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -48,11 +48,10 @@ class ViewElderlyScreen extends StatelessWidget {
 
   // boolean to remove the record button if theres an existing record for the day,
   // set to true if theres an available record
-  bool todayHasRecord = true;
+  final bool todayHasRecord = true;
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Consumer<ElderlyData>(
       builder: (context, value, child) {
         Elderly currentElderly = value.getActiveElderly();
@@ -69,7 +68,7 @@ class ViewElderlyScreen extends StatelessWidget {
                 onPressed: () {
                   context.popRoute();
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back,
                   size: 20,
                   color: Colors.white,
@@ -80,10 +79,10 @@ class ViewElderlyScreen extends StatelessWidget {
                     ? IconButton(
                         onPressed: () {
                           context.pushRoute(
-                            RecordingRoute(),
+                            const RecordingRoute(),
                           );
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.add_chart,
                           size: 20,
                           color: Colors.white,
@@ -98,7 +97,7 @@ class ViewElderlyScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.edit,
                     size: 20,
                     color: Colors.white,
@@ -117,7 +116,7 @@ class ViewElderlyScreen extends StatelessWidget {
                       child: Center(
                         child: Column(
                           children: [
-                            Spacer(),
+                            const Spacer(),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 15.0),
@@ -136,10 +135,10 @@ class ViewElderlyScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Text(
                                           currentElderly.age,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
@@ -161,10 +160,10 @@ class ViewElderlyScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Text(
                                           currentElderly.sex,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
@@ -186,10 +185,11 @@ class ViewElderlyScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Text(
-                                          'B+', // TODO: add a variable for blood type
-                                          style: TextStyle(
+                                          currentElderly
+                                              .bloodType,
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
@@ -202,7 +202,7 @@ class ViewElderlyScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 15.0),
@@ -221,10 +221,10 @@ class ViewElderlyScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Text(
-                                          '165 cm.', // TODO: add a variable for height
-                                          style: TextStyle(
+                                          '${currentElderly.height} cm.', 
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
@@ -246,10 +246,10 @@ class ViewElderlyScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Text(
-                                          '70 kg.', // TODO: add a variable for weight
-                                          style: TextStyle(
+                                          '${currentElderly.weight} kg.',
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
@@ -262,8 +262,8 @@ class ViewElderlyScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Spacer(),
-                            TabBar(
+                            const Spacer(),
+                            const TabBar(
                               tabs: [
                                 Tab(
                                   text: 'Details',

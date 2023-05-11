@@ -21,13 +21,16 @@ class ElderlyAdapter extends TypeAdapter<Elderly> {
       age: fields[1] as String,
       sex: fields[2] as String,
       description: fields[3] as String,
+      bloodType: fields[4] as String,
+      height: fields[5] as double,
+      weight: fields[6] as double,
     );
   }
 
   @override
   void write(BinaryWriter writer, Elderly obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -35,7 +38,13 @@ class ElderlyAdapter extends TypeAdapter<Elderly> {
       ..writeByte(2)
       ..write(obj.sex)
       ..writeByte(3)
-      ..write(obj.description);
+      ..write(obj.description)
+      ..writeByte(4)
+      ..write(obj.bloodType)
+      ..writeByte(5)
+      ..write(obj.height)
+      ..writeByte(6)
+      ..write(obj.weight);
   }
 
   @override

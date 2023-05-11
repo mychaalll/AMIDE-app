@@ -24,7 +24,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
   bool _step3Done = false;
   bool _step4Done = false;
   bool _step5Done = false;
-  bool _step6Done = false;
+  final bool _step6Done = false;
 
   //variables to store recorded stats
   String _temp = '29.0';
@@ -37,15 +37,15 @@ class _RecordingScreenState extends State<RecordingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primBlue,
-        title: Text('Sample Name'),
+        title: const Text('Sample Name'),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
             context.pushRoute(
-              ElderlyRoute(),
+              const ElderlyRoute(),
             );
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             size: 20,
             color: Colors.white,
@@ -59,8 +59,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Column(
               children: [
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Recording Data',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
@@ -69,7 +69,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // 1st part
                 TimelineTile(
                   isFirst: true,
@@ -85,7 +85,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                       width: 30,
                       decoration: BoxDecoration(
                         color: _step1Done ? Colors.green : Colors.red,
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
                       ),
                       child: Icon(_step1Done ? Icons.done : Icons.more_horiz,
                           size: 20, color: Colors.white),
@@ -117,7 +118,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
+                                    const Text(
                                       'Check all equipments',
                                       style: TextStyle(
                                         fontSize: 14,
@@ -139,7 +140,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                 visible: _step1IsExpanded,
                                 child: Expanded(
                                   child: Container(
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(12),
@@ -151,7 +152,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'To ensure accurate recording of patient statistics, it is crucial to confirm that all equipment is properly connected to the patient. Check that all devices are securely attached and functioning correctly before beginning data collection. This will help to avoid any errors or inaccuracies in the recorded data.',
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
@@ -160,7 +161,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                 fontWeight: FontWeight.w500,
                                                 height: 1.5),
                                           ),
-                                          stepButton(
+                                          StepButton(
                                             title: 'Done',
                                             onPressed: () {
                                               setState(() {
@@ -199,7 +200,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             decoration: BoxDecoration(
                               color: _step2Done ? Colors.green : Colors.red,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
+                                  const BorderRadius.all(Radius.circular(15)),
                             ),
                             child: Icon(
                                 _step2Done ? Icons.done : Icons.more_horiz,
@@ -236,7 +237,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Body Temperature',
                                             style: TextStyle(
                                               fontSize: 14,
@@ -258,7 +259,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                       visible: _step2IsExpanded,
                                       child: Expanded(
                                         child: Container(
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft: Radius.circular(12),
@@ -281,9 +282,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                           FontWeight.w500,
                                                       height: 1.5),
                                                 ),
-                                                SizedBox(height: 10.0),
+                                                const SizedBox(height: 10.0),
                                                 _temp == ''
-                                                    ? Row(
+                                                    ? const Row(
                                                         children: [
                                                           SizedBox(
                                                             height: 20,
@@ -311,18 +312,18 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                         'Temperature: $_temp° Celcius',
                                                         textAlign:
                                                             TextAlign.justify,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                             height: 1.5),
                                                       ),
-                                                SizedBox(height: 10),
+                                                const SizedBox(height: 10),
                                                 _temp != ''
                                                     ? Row(
                                                         children: [
-                                                          stepButton(
+                                                          StepButton(
                                                             title: 'Retry',
                                                             onPressed: () {
                                                               setState(() {
@@ -331,8 +332,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                               });
                                                             },
                                                           ),
-                                                          Spacer(),
-                                                          stepButton(
+                                                          const Spacer(),
+                                                          StepButton(
                                                             title: 'Done',
                                                             onPressed: () {
                                                               setState(() {
@@ -377,7 +378,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             decoration: BoxDecoration(
                               color: _step3Done ? Colors.green : Colors.red,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
+                                  const BorderRadius.all(Radius.circular(15)),
                             ),
                             child: Icon(
                                 _step3Done ? Icons.done : Icons.more_horiz,
@@ -414,7 +415,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Blood Pressure',
                                             style: TextStyle(
                                               fontSize: 14,
@@ -436,7 +437,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                       visible: _step3IsExpanded,
                                       child: Expanded(
                                         child: Container(
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft: Radius.circular(12),
@@ -459,9 +460,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                           FontWeight.w500,
                                                       height: 1.5),
                                                 ),
-                                                SizedBox(height: 10.0),
+                                                const SizedBox(height: 10.0),
                                                 _bp == ''
-                                                    ? Row(
+                                                    ? const Row(
                                                         children: [
                                                           SizedBox(
                                                             height: 20,
@@ -489,18 +490,18 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                         'Blood Pressure: $_bp mmHg',
                                                         textAlign:
                                                             TextAlign.justify,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                             height: 1.5),
                                                       ),
-                                                SizedBox(height: 10),
+                                                const SizedBox(height: 10),
                                                 _bp != ''
                                                     ? Row(
                                                         children: [
-                                                          stepButton(
+                                                          StepButton(
                                                             title: 'Retry',
                                                             onPressed: () {
                                                               setState(() {
@@ -509,8 +510,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                               });
                                                             },
                                                           ),
-                                                          Spacer(),
-                                                          stepButton(
+                                                          const Spacer(),
+                                                          StepButton(
                                                             title: 'Done',
                                                             onPressed: () {
                                                               setState(() {
@@ -555,7 +556,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             decoration: BoxDecoration(
                               color: _step4Done ? Colors.green : Colors.red,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
+                                  const BorderRadius.all(Radius.circular(15)),
                             ),
                             child: Icon(
                                 _step4Done ? Icons.done : Icons.more_horiz,
@@ -592,7 +593,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Pulse Rate',
                                             style: TextStyle(
                                               fontSize: 14,
@@ -614,7 +615,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                       visible: _step4IsExpanded,
                                       child: Expanded(
                                         child: Container(
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft: Radius.circular(12),
@@ -637,9 +638,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                           FontWeight.w500,
                                                       height: 1.5),
                                                 ),
-                                                SizedBox(height: 10.0),
+                                                const SizedBox(height: 10.0),
                                                 _bpm == ''
-                                                    ? Row(
+                                                    ? const Row(
                                                         children: [
                                                           SizedBox(
                                                             height: 20,
@@ -667,18 +668,18 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                         'Pulse Rate: $_bpm bpm',
                                                         textAlign:
                                                             TextAlign.justify,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                             height: 1.5),
                                                       ),
-                                                SizedBox(height: 10),
+                                                const SizedBox(height: 10),
                                                 _bpm != ''
                                                     ? Row(
                                                         children: [
-                                                          stepButton(
+                                                          StepButton(
                                                             title: 'Retry',
                                                             onPressed: () {
                                                               setState(() {
@@ -687,8 +688,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                               });
                                                             },
                                                           ),
-                                                          Spacer(),
-                                                          stepButton(
+                                                          const Spacer(),
+                                                          StepButton(
                                                             title: 'Done',
                                                             onPressed: () {
                                                               setState(() {
@@ -733,7 +734,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             decoration: BoxDecoration(
                               color: _step5Done ? Colors.green : Colors.red,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
+                                  const BorderRadius.all(Radius.circular(15)),
                             ),
                             child: Icon(
                                 _step5Done ? Icons.done : Icons.more_horiz,
@@ -770,7 +771,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Blood Oxygen Level',
                                             style: TextStyle(
                                               fontSize: 14,
@@ -792,7 +793,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                       visible: _step5IsExpanded,
                                       child: Expanded(
                                         child: Container(
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft: Radius.circular(12),
@@ -815,9 +816,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                           FontWeight.w500,
                                                       height: 1.5),
                                                 ),
-                                                SizedBox(height: 10.0),
+                                                const SizedBox(height: 10.0),
                                                 _bol == ''
-                                                    ? Row(
+                                                    ? const Row(
                                                         children: [
                                                           SizedBox(
                                                             height: 20,
@@ -845,18 +846,18 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                         'Blood Oxygen Level: $_bol% SpO2',
                                                         textAlign:
                                                             TextAlign.justify,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                             height: 1.5),
                                                       ),
-                                                SizedBox(height: 10),
+                                                const SizedBox(height: 10),
                                                 _bol != ''
                                                     ? Row(
                                                         children: [
-                                                          stepButton(
+                                                          StepButton(
                                                             title: 'Retry',
                                                             onPressed: () {
                                                               setState(() {
@@ -865,8 +866,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                               });
                                                             },
                                                           ),
-                                                          Spacer(),
-                                                          stepButton(
+                                                          const Spacer(),
+                                                          StepButton(
                                                             title: 'Done',
                                                             onPressed: () {
                                                               setState(() {
@@ -911,7 +912,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             decoration: BoxDecoration(
                               color: _step6Done ? Colors.green : Colors.red,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
+                                  const BorderRadius.all(Radius.circular(15)),
                             ),
                             child: Icon(
                                 _step6Done ? Icons.done : Icons.more_horiz,
@@ -948,7 +949,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                          const Text(
                                             'Finish Recording',
                                             style: TextStyle(
                                               fontSize: 14,
@@ -970,7 +971,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                       visible: _step6IsExpanded,
                                       child: Expanded(
                                         child: Container(
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft: Radius.circular(12),
@@ -983,7 +984,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Please check if all of the statistics taken are accurate.',
                                                   textAlign: TextAlign.justify,
                                                   style: TextStyle(
@@ -993,26 +994,26 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                           FontWeight.w500,
                                                       height: 1.5),
                                                 ),
-                                                SizedBox(height: 5),
+                                                const SizedBox(height: 5),
                                                 Text(
                                                   'Temperature: $_temp° Celcius\n Blood Pressure: $_bp mmHg\n Pulse Rate: $_bpm bpm\n Blood Oxygen Level: $_bol% SpO2 ',
                                                   textAlign: TextAlign.justify,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontSize: 12,
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       height: 1.5),
                                                 ),
-                                                SizedBox(height: 10),
+                                                const SizedBox(height: 10),
                                                 Row(
                                                   children: [
-                                                    Spacer(),
-                                                    stepButton(
+                                                    const Spacer(),
+                                                    StepButton(
                                                       title: 'Finish',
                                                       onPressed: () {
                                                         context.pushRoute(
-                                                          ElderlyRoute(),
+                                                          const ElderlyRoute(),
                                                         );
                                                       },
                                                     ),
@@ -1041,10 +1042,10 @@ class _RecordingScreenState extends State<RecordingScreen> {
   }
 }
 
-class stepButton extends StatelessWidget {
+class StepButton extends StatelessWidget {
   final Function()? onPressed;
   final String title;
-  const stepButton({
+  const StepButton({
     Key? key,
     required this.onPressed,
     required this.title,
@@ -1057,18 +1058,18 @@ class stepButton extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
             overlayColor:
-                MaterialStateProperty.all(Color.fromARGB(255, 2, 5, 27)),
+                MaterialStateProperty.all(const Color.fromARGB(255, 2, 5, 27)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ))),
-        child: Container(
+        child: SizedBox(
           width: 80,
           height: 30,
           child: Center(
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 12,
                 fontFamily: 'Montserrat',

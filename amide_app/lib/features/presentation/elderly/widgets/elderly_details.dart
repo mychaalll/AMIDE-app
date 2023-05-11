@@ -12,16 +12,16 @@ class ElderlyDetails extends StatelessWidget {
       color: AppColors.bgColor,
       child: Column(
         children: [
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Expanded(
-            child: Container(
+            child: SizedBox(
               width: width - 30,
               child: TextField(
                 readOnly: true,
                 textAlign: TextAlign.left,
                 textAlignVertical: TextAlignVertical.bottom,
                 maxLines: 40,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
@@ -31,14 +31,14 @@ class ElderlyDetails extends StatelessWidget {
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.black,
                       width: 5.0,
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   hintText: description,
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -47,7 +47,7 @@ class ElderlyDetails extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
         ],
       ),
     );

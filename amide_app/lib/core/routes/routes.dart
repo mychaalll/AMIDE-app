@@ -61,5 +61,11 @@ class AppRouter extends $AppRouter {
           path: "/recording",
           transitionsBuilder: TransitionsBuilders.slideLeft,
         ),
+        CustomRoute(
+          page: RealTimeRoute.page,
+          // path: "/",
+          transitionsBuilder: TransitionsBuilders.slideLeft,
+          // initial: true,
+        ),
       ];
 }

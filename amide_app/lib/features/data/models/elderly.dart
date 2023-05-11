@@ -16,10 +16,21 @@ class Elderly extends HiveObject {
   @HiveField(3)
   final String description;
 
+  @HiveField(4)
+  final String bloodType;
+
+  @HiveField(5)
+  final double height;
+
+  @HiveField(6)
+  final double weight;
   Elderly({
     required this.name,
     required this.age,
     required this.sex,
     required this.description,
+    required this.bloodType,
+    required this.height,
+    required this.weight,
   });
 }

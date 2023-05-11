@@ -1,5 +1,3 @@
-import 'package:amide_app/features/data/models/reminder.dart';
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class TodoDataBase {
@@ -9,7 +7,7 @@ class TodoDataBase {
 
   // run this method if this is the 1st time ever opening the app
   void createInitialData() {
-    List<Reminder> toDoList = [];
+    // List<Reminder> toDoList = [];
   }
 
   // load the data from database
