@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DashboardRecordTile extends StatelessWidget {
-  final name, temp, time, bp, bpm, bol;
-  DashboardRecordTile({
+  final String name, temp, time, bp, bpm, bol;
+  const DashboardRecordTile({
     Key? key,
     required this.temp,
     required this.time,
@@ -28,14 +28,14 @@ class DashboardRecordTile extends StatelessWidget {
               child: Text(
                 name,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
                     fontFamily: 'Montserrat',
                     color: Colors.black),
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             //2nd row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,18 +44,18 @@ class DashboardRecordTile extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: [
-                      SizedBox(width: 20),
-                      Icon(
+                      const SizedBox(width: 20),
+                      const Icon(
                         Icons.thermostat_outlined,
                         color: Colors.blue,
                         size: 30,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: Text(
                           '$temp° Celcius',
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                               fontFamily: 'Montserrat',
@@ -68,18 +68,18 @@ class DashboardRecordTile extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: [
-                      SizedBox(width: 40),
-                      Icon(
+                      const SizedBox(width: 40),
+                      const Icon(
                         Icons.monitor_heart_outlined,
                         color: Colors.purple,
                         size: 30,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: Text(
                           '$bp mmHg',
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                               fontFamily: 'Montserrat',
@@ -91,7 +91,7 @@ class DashboardRecordTile extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             //3rd row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,18 +100,18 @@ class DashboardRecordTile extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: [
-                      SizedBox(width: 20),
-                      Icon(
+                      const SizedBox(width: 20),
+                      const Icon(
                         Icons.favorite,
                         color: Colors.red,
                         size: 30,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: Text(
                           '$bpm BPM',
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                               fontFamily: 'Montserrat',
@@ -124,18 +124,18 @@ class DashboardRecordTile extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: [
-                      SizedBox(width: 40),
-                      Icon(
+                      const SizedBox(width: 40),
+                      const Icon(
                         Icons.water_drop_rounded,
                         color: Colors.red,
                         size: 30,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: Text(
                           '$bol% SpO2',
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                               fontFamily: 'Montserrat',

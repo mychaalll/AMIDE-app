@@ -1,7 +1,6 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
-import 'package:amide_app/features/data/provider/elderlyData.dart';
+import 'package:amide_app/features/data/provider/elderly_data.dart';
 import 'package:amide_app/core/config/colors.dart';
-import 'package:amide_app/core/config/toast.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,48 +31,53 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
   late String newName;
   late String newSex;
   late String newAge;
-  late String? newheight;
-  late String? newweight;
+  late double newHeight;
+  late double newWeight;
+  late String newBloodType;
   late bool newActive;
   late String newDescription;
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _heightController = TextEditingController();
-  TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
 
   String sex = sexList.first;
   String blood = bloodList.first;
 
   @override
   void initState() {
-    // TODO: implement initState for blood weight and height
     _nameController.text = widget.currentElderly.name;
     newName = widget.currentElderly.name;
 
     _ageController.text = widget.currentElderly.age;
     newAge = widget.currentElderly.name;
 
+    _heightController.text = (widget.currentElderly.height).toString();
+    newHeight = widget.currentElderly.height;
+
+    _weightController.text = (widget.currentElderly.weight).toString();
+    newWeight = widget.currentElderly.weight;
+
     _descriptionController.text = widget.currentElderly.description;
     newDescription = widget.currentElderly.description;
 
     newSex = widget.currentElderly.sex;
+    newBloodType = widget.currentElderly.bloodType;
     super.initState();
   }
 
   void _editElderly() {
-    if (newName == null) {
-      toastWidget("Give entry a name");
-      return;
-    }
-
     Provider.of<ElderlyData>(context, listen: false).editElderly(
       elderly: Elderly(
         name: newName,
         age: newAge,
         sex: newSex,
         description: newDescription,
+        bloodType: blood,
+        height: newHeight,
+        weight: newWeight,
       ),
       elderlyKey: widget.currentElderly.key,
     );
@@ -91,10 +95,10 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
         leading: IconButton(
           onPressed: () {
             context.pushRoute(
-              ElderlyRoute(),
+              const ElderlyRoute(),
             );
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             size: 20,
             color: Colors.white,
@@ -108,8 +112,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Column(
               children: [
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Edit Entry',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
@@ -118,8 +122,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 30),
-                Align(
+                const SizedBox(height: 30),
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Elderly Name',
@@ -131,8 +135,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
-                Container(
+                const SizedBox(height: 5),
+                SizedBox(
                   height: 40,
                   width: width - 30,
                   child: TextField(
@@ -140,7 +144,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     textAlign: TextAlign.left,
                     textAlignVertical: TextAlignVertical.bottom,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
@@ -150,14 +154,14 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                           width: 5.0,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       hintText: 'Enter Name',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -168,9 +172,9 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 //age
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Age',
@@ -182,8 +186,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
-                Container(
+                const SizedBox(height: 5),
+                SizedBox(
                   height: 40,
                   width: width - 30,
                   child: TextField(
@@ -191,7 +195,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     textAlign: TextAlign.left,
                     textAlignVertical: TextAlignVertical.bottom,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
@@ -201,14 +205,14 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.black,
                           width: 5.0,
                         ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       hintText: 'Enter Age',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -216,14 +220,14 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 Row(
                   children: [
                     //blood type
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
+                        const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Blood Type',
@@ -235,7 +239,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Container(
                           height: 40,
                           width: width / 2 - 32,
@@ -253,9 +257,9 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                               child: DropdownButton(
                                 isExpanded: true,
                                 value: blood,
-                                icon: Icon(Icons.arrow_drop_down_circle),
+                                icon: const Icon(Icons.arrow_drop_down_circle),
                                 elevation: 1,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -278,12 +282,12 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(width: 32),
+                    const SizedBox(width: 32),
                     //sex
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
+                        const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Sex',
@@ -295,7 +299,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Container(
                           height: 40,
                           width: width / 2 - 32,
@@ -313,9 +317,9 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                               child: DropdownButton(
                                 isExpanded: true,
                                 value: sex,
-                                icon: Icon(Icons.arrow_drop_down_circle),
+                                icon: const Icon(Icons.arrow_drop_down_circle),
                                 elevation: 1,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -340,14 +344,14 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 Row(
                   children: [
                     //height
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
+                        const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Height',
@@ -359,8 +363,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 5),
-                        Container(
+                        const SizedBox(height: 5),
+                        SizedBox(
                           height: 40,
                           width: width / 2 - 32,
                           child: TextField(
@@ -368,7 +372,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                             textAlign: TextAlign.left,
                             textAlignVertical: TextAlignVertical.bottom,
                             maxLines: 1,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
@@ -378,14 +382,14 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                               filled: true,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.black,
                                   width: 5.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               hintText: 'Height in cm',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -395,12 +399,12 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(width: 32),
+                    const SizedBox(width: 32),
                     //weight
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
+                        const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Weight',
@@ -412,8 +416,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 5),
-                        Container(
+                        const SizedBox(height: 5),
+                        SizedBox(
                           height: 40,
                           width: width / 2 - 32,
                           child: TextField(
@@ -421,7 +425,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                             textAlign: TextAlign.left,
                             textAlignVertical: TextAlignVertical.bottom,
                             maxLines: 1,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
@@ -431,14 +435,14 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                               filled: true,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.black,
                                   width: 5.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               hintText: 'Weight in kg',
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -450,9 +454,9 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 //note
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Journal Details',
@@ -464,16 +468,16 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Expanded(
-                  child: Container(
+                  child: SizedBox(
                     width: width - 30,
                     child: TextField(
                       controller: _descriptionController,
                       textAlign: TextAlign.left,
                       textAlignVertical: TextAlignVertical.bottom,
                       maxLines: 15,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
@@ -483,14 +487,14 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.black,
                             width: 5.0,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         hintText: 'Some important notes here...',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: Colors.grey,
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -504,7 +508,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 22),
+                const SizedBox(height: 22),
                 //button
                 ElevatedButton(
                   onPressed: () {
@@ -518,19 +522,19 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ))),
-                  child: Container(
+                  child: SizedBox(
                     height: 40,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.save_alt,
                           size: 21,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         width > 280
-                            ? Text(
+                            ? const Text(
                                 'Save Entry',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -543,7 +547,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
               ],
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
-import 'package:amide_app/features/data/provider/reminderData.dart';
+import 'package:amide_app/features/data/provider/reminder_data.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/core/config/utils.dart';
 import 'package:auto_route/auto_route.dart';
@@ -11,7 +11,7 @@ import '../../../data/models/reminder.dart';
 
 class ReminderTile extends StatefulWidget {
   final int tileIndex;
-  ReminderTile({
+  const ReminderTile({
     Key? key,
     required this.tileIndex,
   }) : super(key: key);
@@ -33,7 +33,7 @@ class _ReminderTileState extends State<ReminderTile> {
           closeOnScroll: true,
           startActionPane: ActionPane(
             extentRatio: 0.3,
-            motion: DrawerMotion(),
+            motion: const DrawerMotion(),
             children: [
               SlidableAction(
                 onPressed: (context) {
@@ -49,7 +49,7 @@ class _ReminderTileState extends State<ReminderTile> {
                 backgroundColor: Colors.blue,
                 icon: Icons.edit,
                 label: 'Edit',
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(15),
                     bottomRight: Radius.circular(15)),
               )
@@ -57,7 +57,7 @@ class _ReminderTileState extends State<ReminderTile> {
           ),
           endActionPane: ActionPane(
             extentRatio: 0.3,
-            motion: DrawerMotion(),
+            motion: const DrawerMotion(),
             children: [
               SlidableAction(
                 onPressed: (context) {
@@ -68,7 +68,7 @@ class _ReminderTileState extends State<ReminderTile> {
                 icon: Icons.delete_forever,
                 label: 'Delete',
                 backgroundColor: Colors.red,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15),
                     bottomLeft: Radius.circular(15)),
               )
@@ -101,7 +101,7 @@ class _ReminderTileState extends State<ReminderTile> {
                               _value == true ? Colors.white : Colors.grey[500],
                           size: 25,
                         ),
-                        SizedBox(width: 30),
+                        const SizedBox(width: 30),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -135,12 +135,14 @@ class _ReminderTileState extends State<ReminderTile> {
                             ],
                           ),
                         ),
-                        SizedBox(width: 15),
+                        const SizedBox(width: 15),
                         Switch.adaptive(
                           activeColor: Colors.white,
-                          activeTrackColor: Color.fromARGB(255, 20, 44, 223),
+                          activeTrackColor:
+                              const Color.fromARGB(255, 20, 44, 223),
                           inactiveThumbColor: Colors.grey[500],
-                          inactiveTrackColor: Color.fromARGB(255, 10, 23, 119),
+                          inactiveTrackColor:
+                              const Color.fromARGB(255, 10, 23, 119),
                           value: _value,
                           onChanged: ((newValue) {
                             setState(() {

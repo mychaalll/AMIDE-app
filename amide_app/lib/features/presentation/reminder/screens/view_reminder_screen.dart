@@ -1,4 +1,4 @@
-import 'package:amide_app/features/data/provider/reminderData.dart';
+import 'package:amide_app/features/data/provider/reminder_data.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +9,10 @@ import '../../../data/models/reminder.dart';
 
 @RoutePage()
 class ViewReminderScreen extends StatelessWidget {
-  ViewReminderScreen({super.key});
+  const ViewReminderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TimeOfDay _timeOfDay = TimeOfDay(hour: 8, minute: 30);
-
     var width = MediaQuery.of(context).size.width;
     return Consumer<ReminderData>(
       builder: ((context, value, child) {
@@ -28,7 +26,7 @@ class ViewReminderScreen extends StatelessWidget {
               onPressed: () {
                 context.popRoute();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 size: 20,
                 color: Colors.white,
@@ -43,7 +41,7 @@ class ViewReminderScreen extends StatelessWidget {
                     ),
                   );
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.edit,
                   size: 20,
                   color: Colors.white,
@@ -58,8 +56,8 @@ class ViewReminderScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Column(
                   children: [
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       'View Reminder',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
@@ -68,8 +66,8 @@ class ViewReminderScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: 30),
-                    Align(
+                    const SizedBox(height: 30),
+                    const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Reminder Title',
@@ -81,8 +79,8 @@ class ViewReminderScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Container(
+                    const SizedBox(height: 5),
+                    SizedBox(
                       height: 40,
                       width: width - 30,
                       child: TextField(
@@ -90,7 +88,7 @@ class ViewReminderScreen extends StatelessWidget {
                         textAlign: TextAlign.left,
                         textAlignVertical: TextAlignVertical.bottom,
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
@@ -100,14 +98,14 @@ class ViewReminderScreen extends StatelessWidget {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.black,
                               width: 5.0,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           hintText: currentReminder.name,
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -115,9 +113,9 @@ class ViewReminderScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 22),
+                    const SizedBox(height: 22),
                     //time textbox
-                    Align(
+                    const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Time',
@@ -129,8 +127,8 @@ class ViewReminderScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Container(
+                    const SizedBox(height: 5),
+                    SizedBox(
                       height: 40,
                       width: width - 30,
                       child: TextField(
@@ -138,7 +136,7 @@ class ViewReminderScreen extends StatelessWidget {
                         textAlign: TextAlign.left,
                         textAlignVertical: TextAlignVertical.bottom,
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
@@ -148,14 +146,14 @@ class ViewReminderScreen extends StatelessWidget {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.black,
                               width: 5.0,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           hintText: currentReminder.time,
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -163,9 +161,9 @@ class ViewReminderScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 22),
+                    const SizedBox(height: 22),
                     //music
-                    Align(
+                    const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Reminder Music',
@@ -177,8 +175,8 @@ class ViewReminderScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    Container(
+                    const SizedBox(height: 5),
+                    SizedBox(
                       height: 40,
                       width: width - 30,
                       child: TextField(
@@ -186,7 +184,7 @@ class ViewReminderScreen extends StatelessWidget {
                         textAlign: TextAlign.left,
                         textAlignVertical: TextAlignVertical.bottom,
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
@@ -194,18 +192,19 @@ class ViewReminderScreen extends StatelessWidget {
                         ),
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
-                              icon: Icon(Icons.queue_music), onPressed: () {}),
+                              icon: const Icon(Icons.queue_music),
+                              onPressed: () {}),
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.black,
                               width: 5.0,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           hintText: "Music",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -213,9 +212,9 @@ class ViewReminderScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 22),
+                    const SizedBox(height: 22),
                     //note
-                    Align(
+                    const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Reminder Details',
@@ -227,15 +226,15 @@ class ViewReminderScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Expanded(
-                      child: Container(
+                      child: SizedBox(
                         width: width - 30,
                         child: TextField(
                           textAlign: TextAlign.left,
                           textAlignVertical: TextAlignVertical.bottom,
                           maxLines: 10,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.black,
                             fontWeight: FontWeight.w500,
@@ -245,14 +244,14 @@ class ViewReminderScreen extends StatelessWidget {
                             filled: true,
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.black,
                                 width: 5.0,
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             hintText: currentReminder.detail,
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -261,7 +260,7 @@ class ViewReminderScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                   ],
                 ),
               ),

@@ -22,32 +22,30 @@ class MainButton extends StatelessWidget {
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
             overlayColor:
-                MaterialStateProperty.all(Color.fromARGB(255, 2, 5, 27)),
+                MaterialStateProperty.all(const Color.fromARGB(255, 2, 5, 27)),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ))),
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: Colors.white,
-                size: 30,
-              ),
-              Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                    fontFamily: 'Montserrat',
-                    color: Colors.white),
-              )
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: Colors.white,
+              size: 30,
+            ),
+            Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  fontFamily: 'Montserrat',
+                  color: Colors.white),
+            )
+          ],
         ),
       ),
     );

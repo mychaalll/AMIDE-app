@@ -11,65 +11,63 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Color.fromARGB(255, 2, 4, 22),
-      child: Container(
-        child: ListView(
-          children: [
-            Container(
-              color: Color.fromARGB(255, 2, 4, 22),
-              child: DrawerHeader(
-                child: Center(
-                  child: Text(
-                    'AMIDE',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 30,
-                        fontFamily: 'Montserrat',
-                        color: Colors.white),
-                  ),
+      backgroundColor: const Color.fromARGB(255, 2, 4, 22),
+      child: ListView(
+        children: [
+          Container(
+            color: const Color.fromARGB(255, 2, 4, 22),
+            child: const DrawerHeader(
+              child: Center(
+                child: Text(
+                  'AMIDE',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 30,
+                      fontFamily: 'Montserrat',
+                      color: Colors.white),
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            DrawerTile(
-              icon: Icons.dashboard,
-              title: 'Dashboard',
-              navigation: () {
-                context.pushRoute(
-                  DashboardRoute(),
-                );
-              },
-            ),
-            SizedBox(height: 10),
-            DrawerTile(
-              icon: Icons.view_list_rounded,
-              title: 'Reminders',
-              navigation: () {
-                context.pushRoute(
-                  ReminderRoute(),
-                );
-              },
-            ),
-            SizedBox(height: 10),
-            DrawerTile(
-              icon: Icons.elderly_sharp,
-              title: 'Elderly',
-              navigation: () {
-                context.pushRoute(
-                  ElderlyRoute(),
-                );
-              },
-            ),
-            SizedBox(height: 10.0),
-            Container(height: 1.0, color: Colors.grey[600]),
-            SizedBox(height: 10.0),
-            DrawerTile(
-              icon: Icons.settings,
-              title: 'Settings',
-              navigation: () {},
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 10),
+          DrawerTile(
+            icon: Icons.dashboard,
+            title: 'Dashboard',
+            navigation: () {
+              context.pushRoute(
+                DashboardRoute(),
+              );
+            },
+          ),
+          const SizedBox(height: 10),
+          DrawerTile(
+            icon: Icons.view_list_rounded,
+            title: 'Reminders',
+            navigation: () {
+              context.pushRoute(
+                ReminderRoute(),
+              );
+            },
+          ),
+          const SizedBox(height: 10),
+          DrawerTile(
+            icon: Icons.elderly_sharp,
+            title: 'Elderly',
+            navigation: () {
+              context.pushRoute(
+                const ElderlyRoute(),
+              );
+            },
+          ),
+          const SizedBox(height: 10.0),
+          Container(height: 1.0, color: Colors.grey[600]),
+          const SizedBox(height: 10.0),
+          DrawerTile(
+            icon: Icons.settings,
+            title: 'Settings',
+            navigation: () {},
+          ),
+        ],
       ),
     );
   }
@@ -101,7 +99,7 @@ class DrawerTile extends StatelessWidget {
           minLeadingWidth: 40,
           title: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 15,
               fontWeight: FontWeight.w600,

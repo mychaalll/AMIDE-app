@@ -1,20 +1,17 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
-import 'package:amide_app/features/data/provider/reminderData.dart';
+import 'package:amide_app/features/data/provider/reminder_data.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/config/toast.dart';
 import '../../../data/models/reminder.dart';
-import 'reminder_screen.dart';
 
 @RoutePage()
 class EditReminderScreen extends StatefulWidget {
-  Reminder currentReminder;
-  EditReminderScreen({
+  final Reminder currentReminder;
+  const EditReminderScreen({
     required this.currentReminder,
     super.key,
   });
@@ -28,10 +25,9 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
   late String newDetail;
 
   late String newDateTime = DateFormat.Hm().format(_dateTime);
-  DateTime _dateTime = DateTime.now();
-  TimeOfDay _timeOfDay = TimeOfDay.now();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _detailController = TextEditingController();
+  final DateTime _dateTime = DateTime.now();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _detailController = TextEditingController();
 
   @override
   void initState() {
@@ -45,11 +41,6 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
   }
 
   void _editReminder() {
-    if (newName == null) {
-      toastWidget("Give entry a name");
-      return;
-    }
-
     Provider.of<ReminderData>(context, listen: false).editReminder(
       reminder: Reminder(
         name: newName,
@@ -76,7 +67,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
               ReminderRoute(),
             );
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             size: 20,
             color: Colors.white,
@@ -88,8 +79,8 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
           color: AppColors.bgColor,
           child: Column(
             children: [
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Edit Reminder',
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
@@ -98,232 +89,218 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Reminder Title',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                child: Column(
+                  children: [
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Reminder Title',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      SizedBox(height: 5),
-                      // reminder title
-                      Container(
-                        height: 40,
-                        width: width - 30,
-                        child: TextFormField(
-                          controller: _nameController,
-                          textAlign: TextAlign.left,
-                          textAlignVertical: TextAlignVertical.bottom,
-                          maxLines: 1,
-                          style: TextStyle(
+                    ),
+                    const SizedBox(height: 5),
+                    // reminder title
+                    SizedBox(
+                      height: 40,
+                      width: width - 30,
+                      child: TextFormField(
+                        controller: _nameController,
+                        textAlign: TextAlign.left,
+                        textAlignVertical: TextAlignVertical.bottom,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                              width: 5.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          hintText: 'Enter Name',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
                             fontSize: 14,
-                            color: Colors.black,
                             fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 5.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            hintText: 'Enter Name',
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              newName = value;
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 22),
-                      //time textbox
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Time',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            newName = value;
+                          });
+                        },
                       ),
-                      SizedBox(height: 5),
-                      Container(
-                        height: 40,
-                        width: width - 30,
-                        child: TextField(
-                          readOnly: true,
-                          textAlign: TextAlign.left,
-                          textAlignVertical: TextAlignVertical.bottom,
-                          maxLines: 1,
-                          style: TextStyle(
+                    ),
+                    const SizedBox(height: 22),
+                    //time textbox
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Time',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      height: 40,
+                      width: width - 30,
+                      child: TextField(
+                        readOnly: true,
+                        textAlign: TextAlign.left,
+                        textAlignVertical: TextAlignVertical.bottom,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.watch_later),
+                            onPressed: () async {},
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                              width: 5.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          hintText: newDateTime,
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
                             fontSize: 14,
-                            color: Colors.black,
                             fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.watch_later),
-                              onPressed: () async {
-                                TimeOfDay? newTime = await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.now(),
-                                ).then((value) {
-                                  setState(() {
-                                    _timeOfDay = value!;
-                                    newDateTime =
-                                        _timeOfDay.format(context).toString();
-                                  });
-                                  return null;
-                                });
-                              },
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 5.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            hintText: newDateTime,
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          controller: TextEditingController(text: newDateTime),
-                          onChanged: (value) {},
-                        ),
-                      ),
-                      SizedBox(height: 22),
-                      //music
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Reminder Music',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        controller: TextEditingController(text: newDateTime),
+                        onChanged: (value) {},
                       ),
-                      SizedBox(height: 5),
-                      Container(
-                        height: 40,
-                        width: width - 30,
-                        child: TextField(
-                          readOnly: true,
-                          textAlign: TextAlign.left,
-                          textAlignVertical: TextAlignVertical.bottom,
-                          maxLines: 1,
-                          style: TextStyle(
+                    ),
+                    const SizedBox(height: 22),
+                    //music
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Reminder Music',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      height: 40,
+                      width: width - 30,
+                      child: TextField(
+                        readOnly: true,
+                        textAlign: TextAlign.left,
+                        textAlignVertical: TextAlignVertical.bottom,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                              icon: const Icon(Icons.queue_music),
+                              onPressed: () {}),
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                              width: 5.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          hintText: 'music.wav',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
                             fontSize: 14,
-                            color: Colors.black,
                             fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                                icon: Icon(Icons.queue_music),
-                                onPressed: () {}),
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 5.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            hintText: 'music.wav',
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 22),
-                      //note
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Reminder Detail',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                    ),
+                    const SizedBox(height: 22),
+                    //note
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Reminder Detail',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      SizedBox(height: 5),
-                      Container(
-                        width: width - 30,
-                        child: TextField(
-                          textAlign: TextAlign.left,
-                          textAlignVertical: TextAlignVertical.bottom,
-                          maxLines: 7,
-                          style: TextStyle(
+                    ),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: width - 30,
+                      child: TextField(
+                        textAlign: TextAlign.left,
+                        textAlignVertical: TextAlignVertical.bottom,
+                        maxLines: 7,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                              width: 5.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          hintText: 'Some details here...',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
                             fontSize: 14,
-                            color: Colors.black,
                             fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 5.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            hintText: 'Some details here...',
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              Spacer(),
+              const Spacer(),
 
               // Save reminder
               Padding(
@@ -338,19 +315,19 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                           RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ))),
-                  child: Container(
+                  child: SizedBox(
                     height: 40,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.save_alt,
                           size: 21,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         width > 280
-                            ? Text(
+                            ? const Text(
                                 'Save Reminder',
                                 style: TextStyle(
                                   fontSize: 14,
@@ -364,7 +341,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
             ],
           ),
         ),

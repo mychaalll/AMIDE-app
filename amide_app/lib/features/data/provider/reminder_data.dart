@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/reminder.dart';
 
-class ReminderChangeNotifier extends ChangeNotifier {
+class ReminderData extends ChangeNotifier {
   static const String _boxName = "reminderBox";
 
   List<Reminder> _reminder = [];
@@ -35,7 +35,7 @@ class ReminderChangeNotifier extends ChangeNotifier {
     await box.delete(key);
 
     _reminder = box.values.toList();
-    Log.i("Deleted member with key" + key.toString());
+    Log.i("Deleted member with key$key");
     notifyListeners();
   }
 
@@ -47,7 +47,7 @@ class ReminderChangeNotifier extends ChangeNotifier {
 
     _activeReminder = box.get(reminderKey);
 
-    Log.i("Edited" + reminder.name);
+    Log.i("Edited${reminder.name}");
     notifyListeners();
   }
 
