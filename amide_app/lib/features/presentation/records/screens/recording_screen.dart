@@ -284,8 +284,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                 ),
                                                 const SizedBox(height: 10.0),
                                                 _temp == ''
-                                                    ? const Row(
-                                                        children: [
+                                                    ? Row(
+                                                        children: const [
                                                           SizedBox(
                                                             height: 20,
                                                             width: 20,
@@ -462,8 +462,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                 ),
                                                 const SizedBox(height: 10.0),
                                                 _bp == ''
-                                                    ? const Row(
-                                                        children: [
+                                                    ? Row(
+                                                        children: const [
                                                           SizedBox(
                                                             height: 20,
                                                             width: 20,
@@ -640,8 +640,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                 ),
                                                 const SizedBox(height: 10.0),
                                                 _bpm == ''
-                                                    ? const Row(
-                                                        children: [
+                                                    ? Row(
+                                                        children: const [
                                                           SizedBox(
                                                             height: 20,
                                                             width: 20,
@@ -818,8 +818,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                 ),
                                                 const SizedBox(height: 10.0),
                                                 _bol == ''
-                                                    ? const Row(
-                                                        children: [
+                                                    ? Row(
+                                                        children: const [
                                                           SizedBox(
                                                             height: 20,
                                                             width: 20,

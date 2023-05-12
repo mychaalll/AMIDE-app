@@ -31,12 +31,11 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
   late String newName;
   late String newSex;
   late String newAge;
-  late String? newheight;
-  late String? newweight;
+  late double newHeight;
+  late double newWeight;
+  late String newBloodType;
   late bool newActive;
   late String newDescription;
-  late double height;
-  late double weight;
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -55,10 +54,17 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
     _ageController.text = widget.currentElderly.age;
     newAge = widget.currentElderly.name;
 
+    _heightController.text = (widget.currentElderly.height).toString();
+    newHeight = widget.currentElderly.height;
+
+    _weightController.text = (widget.currentElderly.weight).toString();
+    newWeight = widget.currentElderly.weight;
+
     _descriptionController.text = widget.currentElderly.description;
     newDescription = widget.currentElderly.description;
 
     newSex = widget.currentElderly.sex;
+    newBloodType = widget.currentElderly.bloodType;
     super.initState();
   }
 
@@ -70,8 +76,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
         sex: newSex,
         description: newDescription,
         bloodType: blood,
-        height: height,
-        weight: weight,
+        height: newHeight,
+        weight: newWeight,
       ),
       elderlyKey: widget.currentElderly.key,
     );

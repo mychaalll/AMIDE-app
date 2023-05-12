@@ -67,8 +67,8 @@ class _ElderlyScreenState extends State<ElderlyScreen> {
                 child: Provider.of<ElderlyData>(context).elderlyCount == 0
                     ? SizedBox(
                         width: width,
-                        child: const Column(
-                          children: [
+                        child: Column(
+                          children: const [
                             SizedBox(height: 60),
                             Icon(
                               Icons.cancel_sharp,
