@@ -49,8 +49,8 @@ class AllRecordsScreen extends StatelessWidget {
                 child: listviewCount == 0
                     ? SizedBox(
                         width: width,
-                        child: Column(
-                          children: const [
+                        child: const Column(
+                          children: [
                             SizedBox(height: 60),
                             Icon(
                               Icons.cancel_sharp,

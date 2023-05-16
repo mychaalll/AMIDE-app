@@ -38,7 +38,7 @@ class RealTimeScreen extends StatelessWidget {
                 query: ref,
                 itemBuilder: (context, snapshot, animation, index) {
                   return Text(
-                    "${snapshot.child("day_one")}",
+                    "${snapshot.value}",
                     style: const TextStyle(
                       fontSize: 20,
                       color: Colors.black,

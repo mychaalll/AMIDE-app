@@ -6,7 +6,6 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
         CustomRoute(
-          path: "/",
           page: DashboardRoute.page,
           initial: true,
           transitionsBuilder: TransitionsBuilders.slideLeft,

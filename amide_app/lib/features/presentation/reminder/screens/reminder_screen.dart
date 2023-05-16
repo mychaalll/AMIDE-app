@@ -70,8 +70,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
                 child: Provider.of<ReminderData>(context).reminderCount == 0
                     ? SizedBox(
                         width: width,
-                        child: Column(
-                          children: const [
+                        child: const Column(
+                          children: [
                             SizedBox(height: 60),
                             Icon(
                               Icons.cancel_sharp,
