@@ -1,8 +1,7 @@
 import 'package:amide_app/core/config/colors.dart';
+import 'package:amide_app/features/data/models/bar_data.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
-import '../../../data/models/bar_data.dart';
 
 class RecordsBarChart extends StatelessWidget {
   final List chartSummary;
@@ -44,9 +43,7 @@ class RecordsBarChart extends StatelessWidget {
             (data) => BarChartGroupData(x: data.x, barRods: [
               BarChartRodData(
                   toY: data.y,
-                  color: data.y == chartSummary[0]
-                      ? Colors.amber[400]
-                      : AppColors.primBlue,
+                  color: data.y == chartSummary[0] ? Colors.amber[400] : AppColors.primBlue,
                   width: 10,
                   borderRadius: BorderRadius.circular(4),
                   backDrawRodData: BackgroundBarChartRodData(

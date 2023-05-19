@@ -1,72 +1,99 @@
-import 'package:amide_app/features/data/provider/reminder_data.dart';
+import 'package:amide_app/core/routes/routes.gr.dart';
+import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/routes/routes.gr.dart';
 import '../../../data/models/reminder.dart';
 
 @RoutePage()
-class ViewReminderScreen extends StatelessWidget {
-  const ViewReminderScreen({super.key});
+class EditReminderScreen extends StatefulWidget {
+  final Reminder currentReminder;
+  const EditReminderScreen({
+    required this.currentReminder,
+    super.key,
+  });
+
+  @override
+  State<EditReminderScreen> createState() => _EditReminderScreenState();
+}
+
+class _EditReminderScreenState extends State<EditReminderScreen> {
+  late String newName;
+  late String newDetail;
+
+  late String newDateTime = DateFormat.Hm().format(_dateTime);
+  final DateTime _dateTime = DateTime.now();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _detailController = TextEditingController();
+
+  @override
+  void initState() {
+    _nameController.text = widget.currentReminder.name;
+    newName = widget.currentReminder.name;
+
+    _detailController.text = widget.currentReminder.detail;
+    newDetail = widget.currentReminder.detail;
+
+    super.initState();
+  }
+
+  void _editReminder() {
+    Provider.of<ReminderData>(context, listen: false).editReminder(
+      reminder: Reminder(
+        name: newName,
+        detail: newDetail,
+        time: newDateTime,
+      ),
+      reminderKey: widget.currentReminder.key,
+    );
+
+    context.popRoute();
+  }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return Consumer<ReminderData>(
-      builder: ((context, value, child) {
-        Reminder currentReminder = value.getActiveReminder();
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: AppColors.primBlue,
-            centerTitle: true,
-            leading: IconButton(
-              onPressed: () {
-                context.popRoute();
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                size: 20,
-                color: Colors.white,
-              ),
-            ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  context.pushRoute(
-                    EditReminderRoute(
-                      currentReminder: currentReminder,
-                    ),
-                  );
-                },
-                icon: const Icon(
-                  Icons.edit,
-                  size: 20,
-                  color: Colors.white,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: AppColors.primBlue,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            context.pushRoute(
+              ReminderRoute(),
+            );
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            size: 20,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Container(
+          color: AppColors.bgColor,
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              const Text(
+                'Edit Reminder',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                  fontFamily: 'Montserrat',
+                  color: Colors.black,
                 ),
               ),
-            ],
-          ),
-          body: SafeArea(
-            child: Container(
-              color: AppColors.bgColor,
-              child: Padding(
+              const SizedBox(height: 30),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Column(
                   children: [
-                    const SizedBox(height: 20),
-                    const Text(
-                      'View Reminder',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        fontFamily: 'Montserrat',
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -80,11 +107,12 @@ class ViewReminderScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
+                    // reminder title
                     SizedBox(
                       height: 40,
                       width: width - 30,
-                      child: TextField(
-                        readOnly: true,
+                      child: TextFormField(
+                        controller: _nameController,
                         textAlign: TextAlign.left,
                         textAlignVertical: TextAlignVertical.bottom,
                         maxLines: 1,
@@ -104,13 +132,18 @@ class ViewReminderScreen extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          hintText: currentReminder.name,
+                          hintText: 'Enter Name',
                           hintStyle: const TextStyle(
-                            color: Colors.black,
+                            color: Colors.grey,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            newName = value;
+                          });
+                        },
                       ),
                     ),
                     const SizedBox(height: 22),
@@ -143,6 +176,10 @@ class ViewReminderScreen extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.watch_later),
+                            onPressed: () async {},
+                          ),
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -152,13 +189,15 @@ class ViewReminderScreen extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          hintText: currentReminder.time,
+                          hintText: newDateTime,
                           hintStyle: const TextStyle(
-                            color: Colors.black,
+                            color: Colors.grey,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
+                        controller: TextEditingController(text: newDateTime),
+                        onChanged: (value) {},
                       ),
                     ),
                     const SizedBox(height: 22),
@@ -203,9 +242,9 @@ class ViewReminderScreen extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          hintText: "Music",
+                          hintText: 'music.wav',
                           hintStyle: const TextStyle(
-                            color: Colors.black,
+                            color: Colors.grey,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
@@ -217,7 +256,7 @@ class ViewReminderScreen extends StatelessWidget {
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Reminder Details',
+                        'Reminder Detail',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -227,47 +266,86 @@ class ViewReminderScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Expanded(
-                      child: SizedBox(
-                        width: width - 30,
-                        child: TextField(
-                          textAlign: TextAlign.left,
-                          textAlignVertical: TextAlignVertical.bottom,
-                          maxLines: 10,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 5.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            hintText: currentReminder.detail,
-                            hintStyle: const TextStyle(
+                    SizedBox(
+                      width: width - 30,
+                      child: TextField(
+                        textAlign: TextAlign.left,
+                        textAlignVertical: TextAlignVertical.bottom,
+                        maxLines: 7,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(
                               color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              width: 5.0,
                             ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          hintText: 'Some details here...',
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 15),
                   ],
                 ),
               ),
-            ),
+              const Spacer(),
+
+              // Save reminder
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: ElevatedButton(
+                  onPressed: () => _editReminder(),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(AppColors.primBlue),
+                      overlayColor: MaterialStateProperty.all(Colors.black),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ))),
+                  child: SizedBox(
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.save_alt,
+                          size: 21,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(width: 10),
+                        width > 280
+                            ? const Text(
+                                'Save Reminder',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Container(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+            ],
           ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

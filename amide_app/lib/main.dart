@@ -1,6 +1,8 @@
 import 'package:amide_app/core/routes/routes.dart';
-import 'package:amide_app/features/data/provider/elderly_data.dart';
-import 'package:amide_app/features/data/provider/reminder_data.dart';
+import 'package:amide_app/features/data/models/elderly.dart';
+import 'package:amide_app/features/data/models/reminder.dart';
+import 'package:amide_app/features/data/provider/elderly.dart';
+import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/features/services/firebase_notifications.dart';
 import 'package:amide_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,9 +10,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-
-import 'features/data/models/elderly.dart';
-import 'features/data/models/reminder.dart';
 
 // Notification Background
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
