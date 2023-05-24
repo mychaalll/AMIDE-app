@@ -1,32 +1,30 @@
-import 'package:amide_app/widgets/elderly/elderly_line_chart.dart';
-import 'package:amide_app/widgets/elderly/records_bar_chart.dart';
+import 'package:amide_app/features/data/models/records/graph.dart';
+import 'package:amide_app/features/data/provider/elderly.dart';
+import 'package:amide_app/widgets/elderly/records/bar_chart/bar_chart.dart';
+import 'package:amide_app/widgets/elderly/records/line_chart/line_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ElderlyBarChart extends StatelessWidget {
-  const ElderlyBarChart({
+class ElderlyGraphs extends StatelessWidget {
+  const ElderlyGraphs({
     Key? key,
-    required this.width,
-    required this.chartSummary,
-    required this.detail,
+    required this.graph,
     required this.title,
-    required this.chartMax,
-    required this.chartMin,
-    required this.isBar,
+    required this.detail,
   }) : super(key: key);
 
-  final bool isBar;
-  final String detail;
+  final Graph graph;
   final String title;
-  final double width, chartMax, chartMin;
-  final List chartSummary;
+  final String detail;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: SizedBox(
-            height: 80,
+    final ElderlyData elderlyData = Provider.of<ElderlyData>(context);
+    return SizedBox(
+      height: 200,
+      child: Row(
+        children: [
+          Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -52,26 +50,17 @@ class ElderlyBarChart extends StatelessWidget {
               ],
             ),
           ),
-        ),
-        SizedBox(
-          width: (width * 0.6) - 15,
-          height: 100,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: isBar == true
+          Expanded(
+            child: elderlyData.isBar
                 ? RecordsBarChart(
-                    chartSummary: chartSummary,
-                    chartMax: chartMax,
-                    chartMin: chartMin,
+                    graph: graph,
                   )
-                : ElderlyLineChart(
-                    chartSummary: chartSummary,
-                    chartMax: chartMax,
-                    chartMin: chartMin,
+                : RecordsLineChart(
+                    graph: graph,
                   ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

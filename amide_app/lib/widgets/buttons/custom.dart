@@ -7,11 +7,13 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     required this.label,
     this.icon,
+    this.hasIcon = true,
   }) : super(key: key);
 
   final Function() onPressed;
   final String label;
   final IconData? icon;
+  final bool hasIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +36,13 @@ class CustomButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            size: 21,
-            color: Colors.white,
-          ),
+          hasIcon
+              ? Icon(
+                  icon,
+                  size: 21,
+                  color: Colors.white,
+                )
+              : const SizedBox.shrink(),
           const SizedBox(width: 10),
           Text(
             label,

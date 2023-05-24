@@ -1,9 +1,10 @@
 import 'package:amide_app/core/routes/routes.dart';
-import 'package:amide_app/features/data/models/elderly.dart';
-import 'package:amide_app/features/data/models/reminder.dart';
+import 'package:amide_app/features/data/models/elderly/elderly.dart';
+import 'package:amide_app/features/data/models/reminder/reminder.dart';
 import 'package:amide_app/features/data/provider/elderly.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
-import 'package:amide_app/features/services/firebase_notifications.dart';
+import 'package:amide_app/features/data/provider/vital_signs.dart';
+import 'package:amide_app/features/data/services/firebase_notifications.dart';
 import 'package:amide_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -46,12 +47,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ElderlyData(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ReminderData(),
-        ),
+        ChangeNotifierProvider(create: (context) => ElderlyData()),
+        ChangeNotifierProvider(create: (context) => ReminderData()),
+        ChangeNotifierProvider(create: (context) => VitalSignsService()),
       ],
       builder: (context, child) {
         return MaterialApp.router(

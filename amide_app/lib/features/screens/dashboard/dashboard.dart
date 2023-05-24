@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/main_button.dart';
-import '../widgets/topbar.dart';
+import 'widgets/main_button.dart';
+import 'widgets/topbar.dart';
 
 @RoutePage()
 class DashboardScreen extends StatefulWidget {
@@ -52,15 +52,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     //date
                     Center(
                       child: Text(
-                        DateFormat('E, d MMM yyyy')
-                            .format(DateTime.now())
-                            .toString(),
+                        DateFormat('E, d MMM yyyy').format(DateTime.now()).toString(),
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            fontFamily: 'Montserrat',
-                            color: Colors.black),
+                            fontWeight: FontWeight.w600, fontSize: 16, fontFamily: 'Montserrat', color: Colors.black),
                       ),
                     ),
                     const SizedBox(height: 27),
@@ -74,7 +69,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             title: 'Reminders',
                             navigation: () {
                               context.pushRoute(
-                                ReminderRoute(),
+                                const ReminderRoute(),
                               );
                             },
                           ),
@@ -115,11 +110,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 height: 200,
                                 child: ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
-                                  itemCount:
-                                      reminderLength < 3 ? reminderLength : 3,
+                                  itemCount: reminderLength < 3 ? reminderLength : 3,
                                   itemBuilder: (context, index) {
-                                    final currentReminder =
-                                        value.getReminder(index);
+                                    final currentReminder = value.getReminder(index);
                                     return Container(
                                       padding: const EdgeInsets.all(10),
                                       margin: const EdgeInsets.only(bottom: 10),
@@ -152,17 +145,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ElevatedButton(
                             onPressed: () {
                               context.pushRoute(
-                                ReminderRoute(),
+                                const ReminderRoute(),
                               );
                             },
                             style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    AppColors.primBlue),
-                                overlayColor: MaterialStateProperty.all(
-                                    const Color.fromARGB(255, 2, 5, 27)),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
+                                backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
+                                overlayColor: MaterialStateProperty.all(const Color.fromARGB(255, 2, 5, 27)),
+                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ))),
                             child: const SizedBox(
@@ -191,10 +180,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                              fontFamily: 'Montserrat',
-                              color: Colors.black),
+                              fontWeight: FontWeight.w700, fontSize: 20, fontFamily: 'Montserrat', color: Colors.black),
                         ),
                       ),
                       const SizedBox(height: 22),
@@ -232,13 +218,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             );
                           },
                           style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(AppColors.primBlue),
-                              overlayColor: MaterialStateProperty.all(
-                                  const Color.fromARGB(255, 2, 5, 27)),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
+                              backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
+                              overlayColor: MaterialStateProperty.all(const Color.fromARGB(255, 2, 5, 27)),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ))),
                           child: const SizedBox(

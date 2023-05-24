@@ -21,10 +21,7 @@ class AppDrawer extends StatelessWidget {
                 child: Text(
                   'AMIDE',
                   style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 30,
-                      fontFamily: 'Montserrat',
-                      color: Colors.white),
+                      fontWeight: FontWeight.w800, fontSize: 30, fontFamily: 'Montserrat', color: Colors.white),
                 ),
               ),
             ),
@@ -35,7 +32,7 @@ class AppDrawer extends StatelessWidget {
             title: 'Dashboard',
             navigation: () {
               context.pushRoute(
-                DashboardRoute(),
+                const DashboardRoute(),
               );
             },
           ),
@@ -45,7 +42,7 @@ class AppDrawer extends StatelessWidget {
             title: 'Reminders',
             navigation: () {
               context.pushRoute(
-                ReminderRoute(),
+                const ReminderRoute(),
               );
             },
           ),

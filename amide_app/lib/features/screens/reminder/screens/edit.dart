@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../data/models/reminder.dart';
+import '../../../data/models/reminder/reminder.dart';
 
 @RoutePage()
 class EditReminderScreen extends StatefulWidget {
@@ -64,7 +64,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
         leading: IconButton(
           onPressed: () {
             context.pushRoute(
-              ReminderRoute(),
+              const ReminderRoute(),
             );
           },
           icon: const Icon(
@@ -230,9 +230,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                              icon: const Icon(Icons.queue_music),
-                              onPressed: () {}),
+                          suffixIcon: IconButton(icon: const Icon(Icons.queue_music), onPressed: () {}),
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -308,11 +306,9 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                 child: ElevatedButton(
                   onPressed: () => _editReminder(),
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(AppColors.primBlue),
+                      backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
                       overlayColor: MaterialStateProperty.all(Colors.black),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ))),
                   child: SizedBox(

@@ -3,7 +3,7 @@ import 'package:amide_app/features/data/provider/elderly.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/widgets/buttons/custom.dart';
 import 'package:amide_app/widgets/fields/custom.dart';
-import 'package:amide_app/widgets/fields/drop_down.dart';
+import 'package:amide_app/widgets/drop_down/custom.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,27 +40,6 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final _key = GlobalKey<FormState>();
 
-  void _addElderly() {
-    final ElderlyData elderlyData = Provider.of<ElderlyData>(context, listen: false);
-
-    if (_key.currentState!.validate()) {
-      // elderlyData.addElderly(
-      //   Elderly(
-      //     name: _nameController.text,
-      //     age: _ageController.text,
-      //     sex: elderlyData.sex ?? "Male",
-      //     description: _descriptionController.text,
-      //     bloodType: elderlyData.bloodType ?? "A+",
-      //     height: double.parse(_heightController.value.text),
-      //     weight: double.parse(_weightController.value.text),
-      //   ),
-      // );
-      elderlyData.sendData();
-
-      context.popRoute();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final ElderlyData elderlyData = Provider.of<ElderlyData>(context);
@@ -73,6 +52,7 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
+            elderlyData.clearText();
             context.pushRoute(
               const ElderlyRoute(),
             );
@@ -124,6 +104,7 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
                           controller: elderlyData.ageController,
                           label: "Age",
                           hintText: "Enter Age",
+                          keyboardType: TextInputType.number,
                         ),
                         //age
 
@@ -135,9 +116,9 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
                               child: CustomDropDown(
                                 item: elderlyData.bloodTypes,
                                 label: "Blood Type",
-                                value: elderlyData.bloodType ?? elderlyData.bloodTypes[0],
-                                onChanged: (String? newValue) {
-                                  elderlyData.updateBloodType(newValue!);
+                                value: null,
+                                onChanged: (value) {
+                                  elderlyData.updateBloodType(value!);
                                 },
                               ),
                             ),
@@ -147,8 +128,8 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
                               child: CustomDropDown(
                                 item: elderlyData.sexList,
                                 label: "Sex",
-                                value: elderlyData.sex ?? elderlyData.sexList[0],
-                                onChanged: (String? value) {
+                                value: null,
+                                onChanged: (value) {
                                   elderlyData.updateSex(value!);
                                 },
                               ),
@@ -195,7 +176,8 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
                           label: "Save Entry",
                           icon: Icons.save_alt,
                           onPressed: () {
-                            _addElderly();
+                            elderlyData.createData();
+                            context.popRoute();
                           },
                         ),
                         const SizedBox(height: 15),

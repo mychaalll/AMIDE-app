@@ -2,7 +2,7 @@ import 'package:amide_app/core/config/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../models/reminder.dart';
+import '../models/reminder/reminder.dart';
 
 class ReminderData extends ChangeNotifier {
   static const String _boxName = "reminderBox";

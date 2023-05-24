@@ -1,72 +1,8 @@
-import 'package:amide_app/core/config/utils.dart';
-import 'package:amide_app/features/data/models/elderly.dart';
-import 'package:amide_app/features/services/firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:amide_app/features/data/models/elderly/elderly.dart';
+import 'package:amide_app/features/data/services/firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class ElderlyData extends ChangeNotifier {
-  static const String _boxName = "elderlyBox";
-
-  List<Elderly> _elderly = [];
-
-  late Elderly _activeElderly;
-
-  void getElderlys() async {
-    var box = await Hive.openBox<Elderly>(_boxName);
-
-    _elderly = box.values.toList();
-    notifyListeners();
-  }
-
-  Elderly getElderly(index) {
-    return _elderly[index];
-  }
-
-  void addElderly(Elderly elderly) async {
-    var box = await Hive.openBox<Elderly>(_boxName);
-    await box.add(elderly);
-
-    _elderly = box.values.toList();
-    notifyListeners();
-  }
-
-  void deleteElderly(key) async {
-    var box = await Hive.openBox<Elderly>(_boxName);
-    await box.delete(key);
-
-    _elderly = box.values.toList();
-    Log.i("Deleted member with key$key");
-    notifyListeners();
-  }
-
-  void editElderly({Elderly? elderly, int? elderlyKey}) async {
-    var box = await Hive.openBox<Elderly>(_boxName);
-
-    await box.put(elderlyKey, elderly!);
-    _elderly = box.values.toList();
-
-    _activeElderly = box.get(elderlyKey)!;
-
-    Log.i("Edited ${elderly.name}");
-    notifyListeners();
-  }
-
-  void setActiveElderly(key) async {
-    var box = await Hive.openBox<Elderly>(_boxName);
-
-    _activeElderly = box.get(key)!;
-    notifyListeners();
-  }
-
-  Elderly getActiveElderly() {
-    return _activeElderly;
-  }
-
-  int get elderlyCount {
-    return _elderly.length;
-  }
-
   /// START FROM HERE ARE THE FUNCTIONS TO FIREBASE ///
 
   /// These controllers will help to
@@ -78,51 +14,38 @@ class ElderlyData extends ChangeNotifier {
   final TextEditingController weightController = TextEditingController();
   String? bloodType;
   String? sex;
-  String? id;
+  String uid = "";
   Object? data;
-  late Elderly elderly = Elderly(
-    name: "",
-    age: 0,
-    sex: "",
-    bloodType: "",
-    height: 0.0,
-    weight: 0.0,
-    id: id!,
-  );
 
-  /// [sendData] is the function to send
+  /// [createData] is the function to send
   /// data in firestore
 
-  void sendData() {
-    FireStoreServices().sendElderly(
-      name: nameController.text,
-      age: int.parse(ageController.value.text),
-      sex: sex,
-      bloodType: bloodType,
-      height: double.parse(heightController.value.text),
-      weight: double.parse(weightController.value.text),
+  void createData() {
+    DatabaseServices().sendElderly(
+      data: Elderly(
+        name: nameController.text,
+        age: int.parse(ageController.value.text),
+        sex: sex ?? sexList[0],
+        bloodType: bloodType ?? bloodTypes[0],
+        height: double.parse(heightController.value.text),
+        weight: double.parse(weightController.value.text),
+        isDeleted: false,
+      ),
     );
 
+    clearText();
+    notifyListeners();
+  }
+
+  void clearText() {
     nameController.clear();
     ageController.clear();
     heightController.clear();
     weightController.clear();
+    sex = null;
+    bloodType = null;
     notifyListeners();
   }
-
-  Future<void> fetchData() async {
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('elderly').doc(id).get();
-
-    if (snapshot.exists) {
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      elderly = Elderly.fromJson(data);
-
-      print(elderly);
-      notifyListeners();
-    }
-  }
-
-  void deleteData() {}
 
   /// [bloodList] will act as the
   /// values in bloodList dropdown
@@ -138,9 +61,8 @@ class ElderlyData extends ChangeNotifier {
     'O-',
   ];
 
-  void updateBloodType(String? blood) {
+  void updateBloodType(String blood) {
     bloodType = blood;
-    print("hi");
     notifyListeners();
   }
 
@@ -154,6 +76,13 @@ class ElderlyData extends ChangeNotifier {
 
   void updateSex(String value) {
     sex = value;
+    notifyListeners();
+  }
+
+  bool isBar = false;
+
+  void toggleBarGraph() {
+    isBar = !isBar;
     notifyListeners();
   }
 }

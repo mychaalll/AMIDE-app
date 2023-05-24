@@ -8,8 +8,9 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:amide_app/features/data/models/reminder.dart' as _i15;
-import 'package:amide_app/features/screens/dashboard/screens/dashboard.dart' as _i1;
+import 'package:amide_app/features/data/models/elderly/elderly.dart' as _i15;
+import 'package:amide_app/features/data/models/reminder/reminder.dart' as _i16;
+import 'package:amide_app/features/screens/dashboard/dashboard.dart' as _i1;
 import 'package:amide_app/features/screens/elderly/create.dart' as _i2;
 import 'package:amide_app/features/screens/elderly/edit.dart' as _i3;
 import 'package:amide_app/features/screens/elderly/elderly.dart' as _i4;
@@ -42,9 +43,13 @@ abstract class $AppRouter extends _i13.RootStackRouter {
       );
     },
     EditElderlyRoute.name: (routeData) {
+      final args = routeData.argsAs<EditElderlyRouteArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.EditElderlyScreen(),
+        child: _i3.EditElderlyScreen(
+          key: args.key,
+          elderly: args.elderly,
+        ),
       );
     },
     ElderlyRoute.name: (routeData) {
@@ -54,10 +59,13 @@ abstract class $AppRouter extends _i13.RootStackRouter {
       );
     },
     ViewElderlyRoute.name: (routeData) {
-      final args = routeData.argsAs<ViewElderlyRouteArgs>(orElse: () => const ViewElderlyRouteArgs());
+      final args = routeData.argsAs<ViewElderlyRouteArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i5.ViewElderlyScreen(key: args.key),
+        child: _i5.ViewElderlyScreen(
+          key: args.key,
+          elderly: args.elderly!,
+        ),
       );
     },
     AllRecordsRoute.name: (routeData) {
@@ -138,29 +146,40 @@ class CreateElderlyRoute extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_CreateElderlyScreenState]
-class _CreateElderlyRouteState extends _i13.PageRouteInfo<void> {
-  const _CreateElderlyRouteState({List<_i13.PageRouteInfo>? children})
-      : super(
-          _CreateElderlyRouteState.name,
-          initialChildren: children,
-        );
-
-  static const String name = '_CreateElderlyRouteState';
-}
-
-/// generated route for
 /// [_i3.EditElderlyScreen]
-class EditElderlyRoute extends _i13.PageRouteInfo<void> {
-  const EditElderlyRoute({List<_i13.PageRouteInfo>? children})
-      : super(
+class EditElderlyRoute extends _i13.PageRouteInfo<EditElderlyRouteArgs> {
+  EditElderlyRoute({
+    _i14.Key? key,
+    required _i15.Elderly elderly,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
           EditElderlyRoute.name,
+          args: EditElderlyRouteArgs(
+            key: key,
+            elderly: elderly,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'EditElderlyRoute';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static const _i13.PageInfo<EditElderlyRouteArgs> page = _i13.PageInfo<EditElderlyRouteArgs>(name);
+}
+
+class EditElderlyRouteArgs {
+  const EditElderlyRouteArgs({
+    this.key,
+    required this.elderly,
+  });
+
+  final _i14.Key? key;
+
+  final _i15.Elderly elderly;
+
+  @override
+  String toString() {
+    return 'EditElderlyRouteArgs{key: $key, elderly: $elderly}';
+  }
 }
 
 /// generated route for
@@ -182,10 +201,14 @@ class ElderlyRoute extends _i13.PageRouteInfo<void> {
 class ViewElderlyRoute extends _i13.PageRouteInfo<ViewElderlyRouteArgs> {
   ViewElderlyRoute({
     _i14.Key? key,
+    required _i15.Elderly? elderly,
     List<_i13.PageRouteInfo>? children,
   }) : super(
           ViewElderlyRoute.name,
-          args: ViewElderlyRouteArgs(key: key),
+          args: ViewElderlyRouteArgs(
+            key: key,
+            elderly: elderly,
+          ),
           initialChildren: children,
         );
 
@@ -195,13 +218,18 @@ class ViewElderlyRoute extends _i13.PageRouteInfo<ViewElderlyRouteArgs> {
 }
 
 class ViewElderlyRouteArgs {
-  const ViewElderlyRouteArgs({this.key});
+  const ViewElderlyRouteArgs({
+    this.key,
+    required this.elderly,
+  });
 
   final _i14.Key? key;
 
+  final _i15.Elderly? elderly;
+
   @override
   String toString() {
-    return 'ViewElderlyRouteArgs{key: $key}';
+    return 'ViewElderlyRouteArgs{key: $key, elderly: $elderly}';
   }
 }
 
@@ -251,7 +279,7 @@ class CreateReminderRoute extends _i13.PageRouteInfo<void> {
 /// [_i9.EditReminderScreen]
 class EditReminderRoute extends _i13.PageRouteInfo<EditReminderRouteArgs> {
   EditReminderRoute({
-    required _i15.Reminder currentReminder,
+    required _i16.Reminder currentReminder,
     _i14.Key? key,
     List<_i13.PageRouteInfo>? children,
   }) : super(
@@ -274,7 +302,7 @@ class EditReminderRouteArgs {
     this.key,
   });
 
-  final _i15.Reminder currentReminder;
+  final _i16.Reminder currentReminder;
 
   final _i14.Key? key;
 

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/routes/routes.gr.dart';
-import '../../../data/models/reminder.dart';
+import '../../../data/models/reminder/reminder.dart';
 
 @RoutePage()
 class ViewReminderScreen extends StatelessWidget {

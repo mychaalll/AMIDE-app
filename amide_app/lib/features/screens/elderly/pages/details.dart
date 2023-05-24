@@ -7,15 +7,13 @@ class ElderlyDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Container(
       color: AppColors.bgColor,
       child: Column(
         children: [
-          const SizedBox(height: 15),
           Expanded(
-            child: SizedBox(
-              width: width - 30,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
               child: TextField(
                 readOnly: true,
                 textAlign: TextAlign.left,
@@ -47,7 +45,6 @@ class ElderlyDetails extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 15),
         ],
       ),
     );

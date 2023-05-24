@@ -1,32 +1,27 @@
 import 'package:hive/hive.dart';
 
-part "elderly.g.dart";
+part 'elderly.g.dart';
 
-@HiveType(typeId: 0)
-class Elderly extends HiveObject {
+class Elderly {
   @HiveField(0)
   final String name;
 
-  @HiveField(1)
   final int age;
 
-  @HiveField(2)
   final String sex;
 
-  @HiveField(3)
   final String? description;
 
-  @HiveField(4)
   final String bloodType;
-
-  @HiveField(5)
   final double height;
 
-  @HiveField(6)
   final double weight;
 
-  @HiveField(7)
-  final String id;
+  final String uid;
+
+  final bool isDeleted;
+  final DateTime? timeStamp;
+
   Elderly({
     required this.name,
     required this.age,
@@ -35,7 +30,9 @@ class Elderly extends HiveObject {
     required this.bloodType,
     required this.height,
     required this.weight,
-    required this.id,
+    this.uid = "",
+    this.isDeleted = false,
+    this.timeStamp,
   });
 
   factory Elderly.fromJson(Map<String, dynamic> json) => Elderly(
@@ -46,7 +43,9 @@ class Elderly extends HiveObject {
         bloodType: json["bloodType"],
         height: json["height"],
         weight: json["weight"],
-        id: json["id"],
+        uid: json["id"],
+        isDeleted: json["isDeleted"],
+        timeStamp: json["timeStamp"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -57,6 +56,8 @@ class Elderly extends HiveObject {
         "bloodType": bloodType,
         "height": height,
         "weight": weight,
-        "id": id,
+        "id": uid,
+        "isDeleted": isDeleted,
+        "timeStamp": timeStamp,
       };
 }

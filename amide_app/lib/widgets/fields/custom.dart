@@ -10,6 +10,7 @@ class CustomTextField extends StatelessWidget {
     this.isRequired = true,
     this.isCustomValidator = false,
     this.keyboardType = TextInputType.name,
+    this.initialValue = "",
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -19,6 +20,7 @@ class CustomTextField extends StatelessWidget {
   final bool isRequired;
   final bool isCustomValidator;
   final TextInputType keyboardType;
+  final String initialValue;
 
   @override
   Widget build(BuildContext context) {

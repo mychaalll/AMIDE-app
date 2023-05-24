@@ -1,34 +1,21 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/core/config/colors.dart';
-import 'package:amide_app/features/data/provider/elderly.dart';
-import 'package:amide_app/widgets/elderly/elderly_details.dart';
-import 'package:amide_app/widgets/elderly/elderly_records.dart';
+import 'package:amide_app/features/data/models/elderly/elderly.dart';
+import 'package:amide_app/features/screens/elderly/pages/details.dart';
+import 'package:amide_app/features/screens/elderly/pages/records.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 @RoutePage()
-class ViewElderlyScreen extends StatefulWidget {
-  const ViewElderlyScreen({super.key});
+class ViewElderlyScreen extends StatelessWidget {
+  ViewElderlyScreen({
+    Key? key,
+    required this.elderly,
+  }) : super(key: key);
 
-  @override
-  State<ViewElderlyScreen> createState() => _ViewElderlyScreenState();
-}
+  final Elderly elderly;
 
-class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    initData();
-  }
-
-  void initData() {
-    final ElderlyData elderlyData = Provider.of<ElderlyData>(context, listen: false);
-    elderlyData.fetchData();
-  }
-
-  // sample list for temp
+// sample list for temp
   final List<double> tempSummary = [
     38.6,
     32,
@@ -39,7 +26,7 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
     36.2,
   ];
 
-  //sample list for bpm
+//sample list for bpm
   final List<double> bpmSummary = [
     69,
     87,
@@ -50,7 +37,7 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
     84,
   ];
 
-  //sample list for blood oxygen level(bol)
+//sample list for blood oxygen level(bol)
   final List<double> bolSummary = [
     99,
     97,
@@ -61,13 +48,11 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
     84,
   ];
 
-  // boolean to remove the record button if theres an existing record for the day,
+// boolean to remove the record button if theres an existing record for the day,
   final bool todayHasRecord = true;
 
   @override
   Widget build(BuildContext context) {
-    final ElderlyData elderlyData = Provider.of<ElderlyData>(context);
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -105,7 +90,9 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
             IconButton(
               onPressed: () {
                 context.pushRoute(
-                  const EditElderlyRoute(),
+                  EditElderlyRoute(
+                    elderly: elderly,
+                  ),
                 );
               },
               icon: const Icon(
@@ -137,7 +124,7 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      "${elderlyData.elderly.age}",
+                                      "Age",
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey[400],
@@ -146,9 +133,9 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 10),
-                                    const Text(
-                                      "",
-                                      style: TextStyle(
+                                    Text(
+                                      "${elderly.age}",
+                                      style: const TextStyle(
                                         fontSize: 20,
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,
@@ -172,7 +159,7 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      elderlyData.elderly.sex,
+                                      elderly.sex,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         color: Colors.white,
@@ -197,7 +184,7 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      elderlyData.elderly.bloodType,
+                                      elderly.bloodType,
                                       style: const TextStyle(
                                         fontSize: 20,
                                         color: Colors.white,
@@ -231,7 +218,7 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      '${elderlyData.elderly.height} cm.',
+                                      "${elderly.height}",
                                       style: const TextStyle(
                                         fontSize: 20,
                                         color: Colors.white,
@@ -256,7 +243,7 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      "${elderlyData.elderly.weight}",
+                                      "${elderly.weight}",
                                       style: const TextStyle(
                                         fontSize: 20,
                                         color: Colors.white,
@@ -288,17 +275,10 @@ class _ViewElderlyScreenState extends State<ViewElderlyScreen> {
                 Expanded(
                   child: TabBarView(
                     children: [
-                      const ElderlyDetails(
-                        description: "",
+                      ElderlyDetails(
+                        description: elderly.description ?? "",
                       ),
-                      ElderlyRecords(
-                        temp: '38',
-                        tempSummary: tempSummary,
-                        bpm: '69',
-                        bpmSummary: bpmSummary,
-                        bol: '97',
-                        bolSummary: bolSummary,
-                      ),
+                      const ElderlyRecords(),
                     ],
                   ),
                 ),
