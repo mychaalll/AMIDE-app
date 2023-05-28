@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'features/data/models/elderly.dart';
 import 'features/data/models/reminder.dart';
 
+import 'package:timezone/data/latest.dart' as tz;
+
 // Notification Background
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -21,6 +23,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  tz.initializeTimeZones();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FirebaseNotifications().NotifSettings(); // initialized

@@ -34,8 +34,8 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
     _nameController.text = widget.currentReminder.name;
     newName = widget.currentReminder.name;
 
-    _detailController.text = widget.currentReminder.detail;
-    newDetail = widget.currentReminder.detail;
+    _detailController.text = widget.currentReminder.detail!;
+    newDetail = widget.currentReminder.detail!;
 
     super.initState();
   }

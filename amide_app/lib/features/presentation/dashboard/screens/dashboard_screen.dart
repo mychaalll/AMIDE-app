@@ -142,7 +142,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             fontSize: 20,
                                           ),
                                         ),
-                                        subtitle: const Text("lorem ipmsum"),
+                                        subtitle: Text(currentReminder.detail!),
                                       ),
                                     );
                                   },

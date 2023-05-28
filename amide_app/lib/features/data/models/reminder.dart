@@ -11,7 +11,7 @@ class Reminder extends HiveObject {
   late String name;
 
   @HiveField(2)
-  late String detail;
+  late String? detail;
 
   Reminder({
     required this.time,

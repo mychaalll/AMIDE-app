@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/reminder.dart';
+import '../../../services/notifications.dart';
 
 @RoutePage()
 class CreateReminderScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
   PlatformFile? pickedFile;
   File? fileToDisplay;
 
-  final DateTime _dateTime = DateTime.now();
+  DateTime _dateTime = DateTime.now();
 
   @override
   void dispose() {
@@ -42,6 +43,11 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
   }
 
   void _addReminder() {
+    debugPrint(">>>> DEBUG TESTING<<<<");
+    // debugPrint("$_timeController.text");
+    debugPrint(">>>>>>>>>>>THIS IS THE SCHEDULED REMINDER: $_dateTime<<<<<<<");
+
+    NotificationService.reminderNotification(scheduledDate: _dateTime);
     Provider.of<ReminderData>(context, listen: false).addReminder(
       Reminder(
         time: _timeController.text,
@@ -58,11 +64,24 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
       initialTime: TimeOfDay.fromDateTime(_dateTime),
     );
 
-    if (newTime != null) {
-      setState(() {
-        _timeController.text = newTime.format(context);
-      });
-    }
+    if (newTime == null) return;
+    final newDateTime = DateTime(
+      _dateTime.year,
+      _dateTime.month,
+      _dateTime.day,
+      newTime.hour,
+      newTime.minute,
+    );
+    setState(() {
+      _dateTime = newDateTime;
+      _timeController.text = newTime.format(context);
+    });
+
+    // if (newTime != null) {
+    //   setState(() {
+    //     _timeController.text = newTime.format(context);
+    //   });
+    // }
   }
 
   void pickFile() async {
