@@ -1,57 +1,65 @@
-import 'package:amide_app/models/elderly.dart';
-import 'package:amide_app/models/reminder.dart';
-import 'package:amide_app/pages/record/recording-page.dart';
-import 'package:amide_app/provider/elderlyData.dart';
-import 'package:amide_app/pages/create/create-elderly-page.dart';
-import 'package:amide_app/pages/create/create-reminder-page.dart';
-import 'package:amide_app/pages/dashboard/dashboard-page.dart';
-import 'package:amide_app/pages/elderly/elderly-page.dart';
-import 'package:amide_app/pages/reminder/reminder-page.dart';
-import 'package:amide_app/pages/view/view-elderly-page.dart';
-import 'package:amide_app/pages/view/view-reminder-page.dart';
-import 'package:amide_app/provider/reminderData.dart';
+import 'package:amide_app/core/routes/routes.dart';
+import 'package:amide_app/features/data/models/elderly/elderly.dart';
+import 'package:amide_app/features/data/models/reminder/reminder.dart';
+import 'package:amide_app/features/data/provider/elderly.dart';
+import 'package:amide_app/features/data/provider/reminder.dart';
+import 'package:amide_app/features/data/provider/vital_signs.dart';
+import 'package:amide_app/features/data/services/firebase_notifications.dart';
+import 'package:amide_app/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
+// Notification Background
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  print("Handling a background message: ${message.messageId}");
+}
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  FirebaseNotifications().NotifSettings(); // initialized
+
+  FirebaseNotifications().listenNotif(); // foreground notification
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   // init the hive
   await Hive.initFlutter();
 
   Hive.registerAdapter(ElderlyAdapter());
   Hive.registerAdapter(ReminderAdapter());
 
-  // open a box
-  var reminderBox = await Hive.openBox("myBox");
-
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final _appRouter = AppRouter();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => ElderlyData(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ReminderData(),
-        ),
+        ChangeNotifierProvider(create: (context) => ElderlyData()),
+        ChangeNotifierProvider(create: (context) => ReminderData()),
+        ChangeNotifierProvider(create: (context) => VitalSignsService()),
       ],
       builder: (context, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: "AMIDE Application",
           theme: ThemeData(
             primarySwatch: Colors.blueGrey,
             fontFamily: "Montserrat",
           ),
-          home: DashboardPage(),
+          routerConfig: _appRouter.config(),
         );
       },
     );
