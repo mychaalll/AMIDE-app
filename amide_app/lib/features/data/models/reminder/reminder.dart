@@ -13,9 +13,13 @@ class Reminder extends HiveObject {
   @HiveField(2)
   late String detail;
 
-  Reminder({
-    required this.time,
-    required this.name,
-    required this.detail,
-  });
+  @HiveField(3)
+  late DateTime dateTime;
+
+  Reminder(
+      {required this.time,
+      required this.name,
+      required this.detail,
+      DateTime? dateTime})
+      : dateTime = dateTime ?? DateTime.now();
 }

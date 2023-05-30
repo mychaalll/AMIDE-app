@@ -20,19 +20,22 @@ class ReminderAdapter extends TypeAdapter<Reminder> {
       time: fields[0] as String,
       name: fields[1] as String,
       detail: fields[2] as String,
+      dateTime: fields[3] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Reminder obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.time)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.detail);
+      ..write(obj.detail)
+      ..writeByte(3)
+      ..write(obj.dateTime);
   }
 
   @override

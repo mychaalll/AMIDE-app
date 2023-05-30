@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
+// import 'package:amide_app/features/data/services/local_notifications.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
   PlatformFile? pickedFile;
   File? fileToDisplay;
 
-  final DateTime _dateTime = DateTime.now();
+  DateTime _dateTime = DateTime.now();
 
   @override
   void dispose() {
@@ -44,11 +45,13 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
   void _addReminder() {
     Provider.of<ReminderData>(context, listen: false).addReminder(
       Reminder(
-        time: _timeController.text,
-        name: _nameController.text,
-        detail: _detailController.text,
-      ),
+          time: _timeController.text,
+          name: _nameController.text,
+          detail: _detailController.text,
+          dateTime: _dateTime),
     );
+    // NotificationService().showNotification(
+    //     id: 0, title: _nameController.text, body: _detailController.text);
     context.popRoute();
   }
 
@@ -58,12 +61,37 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
       initialTime: TimeOfDay.fromDateTime(_dateTime),
     );
 
-    if (newTime != null) {
-      setState(() {
-        _timeController.text = newTime.format(context);
-      });
-    }
+    if (newTime == null) return;
+    final newDateTime = DateTime(
+      _dateTime.year,
+      _dateTime.month,
+      _dateTime.day,
+      newTime.hour,
+      newTime.minute,
+    );
+    setState(() {
+      _dateTime = newDateTime;
+      _timeController.text = newTime.format(context);
+    });
+
+    // if (newTime != null) {
+    //   setState(() {
+    //     _timeController.text = newTime.format(context);
+    //   });
+    // }
   }
+  // void pickTime() async {
+  //   TimeOfDay? newTime = await showTimePicker(
+  //     context: context,
+  //     initialTime: TimeOfDay.fromDateTime(_dateTime),
+  //   );
+
+  //   if (newTime != null) {
+  //     setState(() {
+  //       _timeController.text = newTime.format(context);
+  //     });
+  //   }
+  // }
 
   void pickFile() async {
     final result = await FilePicker.platform.pickFiles();
