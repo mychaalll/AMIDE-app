@@ -28,7 +28,11 @@ class DatabaseServices {
 
   /// [elders] get elders stream
   Stream<List<Elderly>> get elders {
-    return _db.collection("elderly").orderBy("timeStamp", descending: true).snapshots().map(_elderlyFromSnapshot);
+    return _db
+        .collection("elderly")
+        .orderBy("timeStamp", descending: true)
+        .snapshots()
+        .map(_elderlyFromSnapshot);
   }
 
   /// [_elderlyDataFromSnapshot] maps the documentSnapshot
@@ -52,7 +56,11 @@ class DatabaseServices {
   /// Elderly model stream
 
   Stream<Elderly> get elderData {
-    return _db.collection("elderly").doc("uid").snapshots().map(_elderlyDataFromSnapshot);
+    return _db
+        .collection("elderly")
+        .doc("uid")
+        .snapshots()
+        .map(_elderlyDataFromSnapshot);
   }
 
   /// [sendElderly] will send data
