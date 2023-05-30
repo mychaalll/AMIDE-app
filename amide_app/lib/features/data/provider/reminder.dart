@@ -33,21 +33,12 @@ class ReminderData extends ChangeNotifier {
     _reminder = box.values.toList();
     notifyListeners();
 
-    // NotificationService().scheduleNotification(
-    //     id: reminder.key,
-    //     body: reminder.detail,
-    //     title: reminder.name,
-    //     scheduledNotificationDateTime: reminder.dateTime);
     DateTime dateTime = reminder.dateTime;
     Time time = Time(dateTime.hour, dateTime.minute);
-    NotificationService().dailyNotification(
-        notificationTime: time,
-        id: reminder.key,
-        title: reminder.name,
-        body: reminder.detail);
+    NotificationService()
+        .dailyNotification(notificationTime: time, id: reminder.key, title: reminder.name, body: reminder.detail);
 
-    String formattedDateTime =
-        DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+    String formattedDateTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
     Log.i("Daily notification set to $formattedDateTime");
   }
 
@@ -71,13 +62,9 @@ class ReminderData extends ChangeNotifier {
 
     DateTime dateTime = reminder.dateTime;
     Time time = Time(dateTime.hour, dateTime.minute);
-    NotificationService().updateDailyNotification(
-        notificationTime: time,
-        body: reminder.detail,
-        id: reminder.key,
-        title: reminder.name);
-    String formattedDateTime =
-        DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+    NotificationService()
+        .updateDailyNotification(notificationTime: time, body: reminder.detail, id: reminder.key, title: reminder.name);
+    String formattedDateTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
     // Log.i(
     //     "Edited Daily notification set to $formattedDateTime for $reminderKey");
     // Log.i(
@@ -104,5 +91,43 @@ class ReminderData extends ChangeNotifier {
 
   int get reminderCount {
     return _reminder.length;
+  }
+
+  /// START OF REALTIME DATABASE
+
+  final musicList = [
+    "1st music",
+    "2nd music",
+    "3rd music",
+  ];
+
+  String? music;
+  int musicIndex = 0;
+
+  void updateMusic(value) {
+    music = value;
+    musicIndex = musicList.indexOf(value);
+    notifyListeners();
+  }
+
+  TextEditingController timeController = TextEditingController();
+  final DateTime now = DateTime.now();
+  int? hour;
+  int? minute;
+
+  void updateTime(value, newTime) {
+    timeController.text = value;
+    final militaryTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      newTime.hour,
+      newTime.minute,
+    );
+
+    hour = militaryTime.hour;
+    minute = militaryTime.minute;
+
+    notifyListeners();
   }
 }

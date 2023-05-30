@@ -1,6 +1,6 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/widgets/drawer.dart';
-import 'package:amide_app/features/screens/reminder/widgets/reminder_tile.dart';
+import 'package:amide_app/widgets/reminder/reminder_tile.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
@@ -34,7 +34,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
           centerTitle: true,
           title: const Text(
             'Reminder',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, fontFamily: 'Montserrat', color: Colors.white),
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                fontFamily: 'Montserrat',
+                color: Colors.white),
           )),
       drawer: const AppDrawer(),
       floatingActionButton: FloatingActionButton.extended(
@@ -55,8 +59,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
               const Text(
                 'Reminder List',
                 overflow: TextOverflow.ellipsis,
-                style:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 16, fontFamily: 'Montserrat', color: Colors.black),
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    fontFamily: 'Montserrat',
+                    color: Colors.black),
               ),
               const SizedBox(height: 20),
               Expanded(
@@ -82,7 +89,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
                         ),
                       )
                     : ListView.builder(
-                        itemCount: Provider.of<ReminderData>(context).reminderCount,
+                        itemCount:
+                            Provider.of<ReminderData>(context).reminderCount,
                         itemBuilder: ((context, index) {
                           return ReminderTile(
                             tileIndex: index,
