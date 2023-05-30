@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
-    required this.controller,
+    this.controller,
     required this.label,
     required this.hintText,
     this.maxLines = 1,
@@ -11,9 +11,11 @@ class CustomTextField extends StatelessWidget {
     this.isCustomValidator = false,
     this.keyboardType = TextInputType.name,
     this.initialValue = "",
+    this.icon,
+    this.readOnly = false,
   }) : super(key: key);
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String label;
   final String hintText;
   final int maxLines;
@@ -21,6 +23,8 @@ class CustomTextField extends StatelessWidget {
   final bool isCustomValidator;
   final TextInputType keyboardType;
   final String initialValue;
+  final Widget? icon;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,7 @@ class CustomTextField extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         TextFormField(
+          readOnly: readOnly,
           controller: controller,
           maxLines: maxLines,
           style: const TextStyle(
@@ -47,6 +52,7 @@ class CustomTextField extends StatelessWidget {
           ),
           keyboardType: keyboardType,
           decoration: InputDecoration(
+            suffixIcon: icon,
             filled: true,
             fillColor: Colors.white,
             border: OutlineInputBorder(

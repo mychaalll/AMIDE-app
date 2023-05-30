@@ -1,5 +1,5 @@
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
-import 'package:amide_app/features/data/services/firestore.dart';
+import 'package:amide_app/features/data/services/database.dart';
 import 'package:flutter/cupertino.dart';
 
 class ElderlyData extends ChangeNotifier {

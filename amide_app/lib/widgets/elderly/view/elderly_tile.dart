@@ -2,7 +2,7 @@ import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/core/config/utils.dart';
-import 'package:amide_app/features/data/services/firestore.dart';
+import 'package:amide_app/features/data/services/database.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -64,7 +64,9 @@ class ElderlyTile extends StatelessWidget {
                 icon: Icons.delete_forever,
                 label: 'Delete',
                 backgroundColor: Colors.red,
-                borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15)),
               )
             ],
           ),
@@ -86,43 +88,45 @@ class ElderlyTile extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    const Icon(
-                      Icons.elderly_woman,
-                      color: Colors.white,
-                      size: 25,
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            elderly.name,
-                            // currentElderly.name,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                fontFamily: 'Montserrat',
-                                color: Colors.white),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.elderly_woman,
+                          color: Colors.white,
+                          size: 25,
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                elderly.name,
+                                // currentElderly.name,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white),
+                              ),
+                              Text(
+                                "${elderly.age} years old",
+                                // '${currentElderly.age} years old',
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                ),
+                              )
+                            ],
                           ),
-                          Text(
-                            "${elderly.age} years old",
-                            // '${currentElderly.age} years old',
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                              fontFamily: 'Montserrat',
-                              color: Colors.white,
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ]),
+                        )
+                      ]),
                 ),
               ),
             ),

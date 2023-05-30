@@ -9,7 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
-import '../../../data/models/reminder/reminder.dart';
+import '../../features/data/models/reminder/reminder.dart';
 
 class ReminderTile extends StatefulWidget {
   final int tileIndex;
