@@ -24,7 +24,7 @@ class RecordsBarChart extends StatelessWidget {
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
         ),
-        barGroups: graph.data.map((model) {
+        barGroups: graph.data.take(7).map((model) {
           return BarChartGroupData(
             x: model.id,
             barRods: [

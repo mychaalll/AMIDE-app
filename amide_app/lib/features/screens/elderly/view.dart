@@ -8,45 +8,12 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class ViewElderlyScreen extends StatelessWidget {
-  ViewElderlyScreen({
+  const ViewElderlyScreen({
     Key? key,
     required this.elderly,
   }) : super(key: key);
 
   final Elderly elderly;
-
-// sample list for temp
-  final List<double> tempSummary = [
-    38.6,
-    32,
-    35.5,
-    37.9,
-    42.9,
-    31.4,
-    36.2,
-  ];
-
-//sample list for bpm
-  final List<double> bpmSummary = [
-    69,
-    87,
-    98,
-    64,
-    79,
-    90,
-    84,
-  ];
-
-//sample list for blood oxygen level(bol)
-  final List<double> bolSummary = [
-    99,
-    97,
-    98,
-    94,
-    92,
-    90,
-    84,
-  ];
 
 // boolean to remove the record button if theres an existing record for the day,
   final bool todayHasRecord = true;
@@ -278,7 +245,9 @@ class ViewElderlyScreen extends StatelessWidget {
                       ElderlyDetails(
                         description: elderly.description ?? "",
                       ),
-                      const ElderlyRecords(),
+                      ElderlyRecords(
+                        elderly: elderly,
+                      ),
                     ],
                   ),
                 ),

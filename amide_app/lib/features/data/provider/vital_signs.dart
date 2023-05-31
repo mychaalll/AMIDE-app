@@ -48,6 +48,11 @@ class VitalSignsService extends ChangeNotifier {
       value: 14,
       date: DateTime.now(),
     ),
+    Temperature(
+      id: 7,
+      value: 14,
+      date: DateTime.now(),
+    ),
   ];
 
   /// [systolicData] will be the temporary

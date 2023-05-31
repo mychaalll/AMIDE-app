@@ -1,4 +1,5 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
+import 'package:amide_app/features/data/models/elderly/elderly.dart';
 import 'package:amide_app/features/data/models/records/graph.dart';
 import 'package:amide_app/features/data/provider/elderly.dart';
 import 'package:amide_app/features/data/provider/vital_signs.dart';
@@ -12,8 +13,11 @@ import 'package:provider/provider.dart';
 
 class ElderlyRecords extends StatelessWidget {
   const ElderlyRecords({
+    this.elderly,
     super.key,
   });
+
+  final Elderly? elderly;
 
   @override
   Widget build(BuildContext context) {
