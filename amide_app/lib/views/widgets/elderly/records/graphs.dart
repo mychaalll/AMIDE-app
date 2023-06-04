@@ -1,7 +1,7 @@
 import 'package:amide_app/features/data/models/records/graph.dart';
 import 'package:amide_app/features/data/provider/elderly.dart';
-import 'package:amide_app/widgets/elderly/records/bar_chart/bar_chart.dart';
-import 'package:amide_app/widgets/elderly/records/line_chart/line_chart.dart';
+import 'package:amide_app/views/widgets/elderly/records/bar_chart/bar_chart.dart';
+import 'package:amide_app/views/widgets/elderly/records/line_chart/line_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,19 +1,24 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
+import 'package:amide_app/features/data/models/elderly/elderly.dart';
 import 'package:amide_app/features/data/models/records/graph.dart';
 import 'package:amide_app/features/data/provider/elderly.dart';
 import 'package:amide_app/features/data/provider/vital_signs.dart';
-import 'package:amide_app/widgets/buttons/custom.dart';
-import 'package:amide_app/widgets/elderly/records/bar_chart/blood_pressure.dart';
-import 'package:amide_app/widgets/elderly/records/graphs.dart';
-import 'package:amide_app/widgets/elderly/records/line_chart/blood_pressure.dart';
+import 'package:amide_app/features/data/services/database.dart';
+import 'package:amide_app/views/widgets/buttons/custom.dart';
+import 'package:amide_app/views/widgets/elderly/records/bar_chart/blood_pressure.dart';
+import 'package:amide_app/views/widgets/elderly/records/graphs.dart';
+import 'package:amide_app/views/widgets/elderly/records/line_chart/blood_pressure.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ElderlyRecords extends StatelessWidget {
   const ElderlyRecords({
-    super.key,
-  });
+    Key? key,
+    required this.elderly,
+  }) : super(key: key);
+
+  final Elderly elderly;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +30,13 @@ class ElderlyRecords extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           children: [
+            ElevatedButton(
+              onPressed: () {
+                DatabaseServices().getVitalSigns(elderly.uid);
+                print(elderly.uid);
+              },
+              child: const Text("Fetch vital sign"),
+            ),
             Row(
               children: [
                 const Expanded(

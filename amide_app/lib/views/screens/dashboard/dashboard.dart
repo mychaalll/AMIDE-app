@@ -1,5 +1,5 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
-import 'package:amide_app/features/screens/dashboard/widgets/elderly_tile.dart';
+import 'package:amide_app/views/widgets/dashboard/elderly_tile.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'widgets/main_button.dart';
-import 'widgets/topbar.dart';
+import '../../widgets/dashboard/main_button.dart';
+import '../../widgets/dashboard/topbar.dart';
 
 @RoutePage()
 class DashboardScreen extends StatefulWidget {

@@ -1,29 +1,33 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
-import 'package:amide_app/features/data/models/elderly/elderly.dart';
+import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/core/config/utils.dart';
-import 'package:amide_app/features/data/services/firestore.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 
-class ElderlyTile extends StatelessWidget {
-  // final int tileIndex;
+import '../../../../features/data/models/reminder/reminder.dart';
 
-  const ElderlyTile({
+class ReminderTile extends StatefulWidget {
+  final int tileIndex;
+  const ReminderTile({
     Key? key,
-    required this.elderly,
+    required this.tileIndex,
   }) : super(key: key);
 
-  final Elderly elderly;
+  @override
+  State<ReminderTile> createState() => _ReminderTileState();
+}
+
+class _ReminderTileState extends State<ReminderTile> {
+  bool _value = true;
 
   @override
   Widget build(BuildContext context) {
-    // Elderly currentElderly = value.getElderly(tileIndex);
-
-    return Visibility(
-      visible: elderly.isDeleted ? false : true,
-      child: Padding(
+    return Consumer<ReminderData>(builder: (context, value, child) {
+      Reminder currentReminder = value.getReminder(widget.tileIndex);
+      return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Slidable(
           closeOnScroll: true,
@@ -32,23 +36,20 @@ class ElderlyTile extends StatelessWidget {
             motion: const DrawerMotion(),
             children: [
               SlidableAction(
-                autoClose: true,
                 onPressed: (context) {
-                  //go to edit
-                  Log.d("Selected to edit ${elderly.uid}");
+                  // go to Edit
+                  Log.d("Selected to edit");
+
                   context.pushRoute(
-                    EditElderlyRoute(
-                      elderly: elderly,
+                    EditReminderRoute(
+                      currentReminder: currentReminder,
                     ),
                   );
                 },
                 backgroundColor: Colors.blue,
-                icon: Icons.edit_note,
+                icon: Icons.edit,
                 label: 'Edit',
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
+                borderRadius: const BorderRadius.only(topRight: Radius.circular(15), bottomRight: Radius.circular(15)),
               )
             ],
           ),
@@ -58,8 +59,8 @@ class ElderlyTile extends StatelessWidget {
             children: [
               SlidableAction(
                 onPressed: (context) {
-                  Log.d("Deleting ${elderly.name}");
-                  DatabaseServices(uid: elderly.uid).deleteElderly();
+                  Log.d("Deleting ${currentReminder.name}");
+                  Provider.of<ReminderData>(context, listen: false).deleteReminder(currentReminder.key);
                 }, //delete function
                 icon: Icons.delete_forever,
                 label: 'Delete',
@@ -73,10 +74,9 @@ class ElderlyTile extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 context.pushRoute(
-                  ViewElderlyRoute(
-                    elderly: elderly,
-                  ),
+                  const ViewReminderRoute(),
                 );
+                Provider.of<ReminderData>(context, listen: false).setActiveReminder(currentReminder.key);
               },
               child: Container(
                 height: 80,
@@ -87,48 +87,61 @@ class ElderlyTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    const Icon(
-                      Icons.elderly_woman,
-                      color: Colors.white,
+                    Icon(
+                      Icons.task,
+                      color: _value == true ? Colors.white : Colors.grey[500],
                       size: 25,
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 30),
                     Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            elderly.name,
-                            // currentElderly.name,
+                            currentReminder.time,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                fontFamily: 'Montserrat',
-                                color: Colors.white),
+                            style: TextStyle(
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              fontFamily: 'Montserrat',
+                              color: _value == true ? Colors.white : Colors.grey[500],
+                            ),
                           ),
                           Text(
-                            "${elderly.age} years old",
-                            // '${currentElderly.age} years old',
+                            currentReminder.name,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
                               fontFamily: 'Montserrat',
-                              color: Colors.white,
+                              color: _value == true ? Colors.white : Colors.grey[500],
                             ),
                           )
                         ],
                       ),
-                    )
+                    ),
+                    const SizedBox(width: 15),
+                    Switch.adaptive(
+                      activeColor: Colors.white,
+                      activeTrackColor: const Color.fromARGB(255, 20, 44, 223),
+                      inactiveThumbColor: Colors.grey[500],
+                      inactiveTrackColor: const Color.fromARGB(255, 10, 23, 119),
+                      value: _value,
+                      onChanged: ((newValue) {
+                        setState(() {
+                          _value = newValue;
+                        });
+                      }),
+                    ),
                   ]),
                 ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
+import 'package:amide_app/features/data/models/elderly/vital_sign.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
@@ -97,5 +98,26 @@ class DatabaseServices {
     await _db.collection("elderly").doc(uid).set({
       "isDeleted": true,
     }, SetOptions(merge: true));
+  }
+
+  /// VITAL SIGNS
+
+  Future<void> getVitalSigns(uid) async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await _db.collection("elderly").doc(uid).collection("vitalSign").get();
+
+    final data = snapshot.docs.map((QueryDocumentSnapshot snapshot) {
+      return VitalSign(
+        diastolic: snapshot.get("diastolic"),
+        heartRate: snapshot.get("heartRate"),
+        id: snapshot.get("id"),
+        oxygenRate: snapshot.get("oxygenRate"),
+        systolic: snapshot.get("systolic"),
+        temperature: snapshot.get("temperature"),
+        timeStamp: snapshot.get("timeStamp"),
+      );
+    }).toList();
+
+    print(data);
   }
 }

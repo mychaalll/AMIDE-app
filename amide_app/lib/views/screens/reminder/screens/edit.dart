@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../data/models/reminder/reminder.dart';
+import '../../../../features/data/models/reminder/reminder.dart';
 
 @RoutePage()
 class EditReminderScreen extends StatefulWidget {

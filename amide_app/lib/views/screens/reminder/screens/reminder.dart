@@ -1,6 +1,6 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
-import 'package:amide_app/widgets/drawer.dart';
-import 'package:amide_app/features/screens/reminder/widgets/reminder_tile.dart';
+import 'package:amide_app/views/widgets/drawer.dart';
+import 'package:amide_app/views/screens/reminder/widgets/reminder_tile.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
