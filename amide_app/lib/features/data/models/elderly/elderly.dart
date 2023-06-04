@@ -1,9 +1,4 @@
-import 'package:hive/hive.dart';
-
-part 'elderly.g.dart';
-
 class Elderly {
-  @HiveField(0)
   final String name;
 
   final int age;
@@ -13,9 +8,6 @@ class Elderly {
   final String? description;
 
   final String bloodType;
-  final double height;
-
-  final double weight;
 
   final String uid;
 
@@ -28,8 +20,6 @@ class Elderly {
     required this.sex,
     this.description,
     required this.bloodType,
-    required this.height,
-    required this.weight,
     this.uid = "",
     this.isDeleted = false,
     this.timeStamp,
@@ -41,8 +31,6 @@ class Elderly {
         sex: json["sex"],
         description: json["description"],
         bloodType: json["bloodType"],
-        height: json["height"],
-        weight: json["weight"],
         uid: json["id"],
         isDeleted: json["isDeleted"],
         timeStamp: json["timeStamp"],
@@ -54,8 +42,6 @@ class Elderly {
         "sex": sex,
         "description": description,
         "bloodType": bloodType,
-        "height": height,
-        "weight": weight,
         "id": uid,
         "isDeleted": isDeleted,
         "timeStamp": timeStamp,
