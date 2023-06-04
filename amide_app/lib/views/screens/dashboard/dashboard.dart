@@ -1,10 +1,4 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
-<<<<<<< HEAD:amide_app/lib/views/screens/dashboard/dashboard.dart
-import 'package:amide_app/views/widgets/dashboard/elderly_tile.dart';
-=======
-import 'package:amide_app/features/screens/dashboard/vital_sign.dart';
-import 'package:amide_app/features/screens/dashboard/widgets/elderly_tile.dart';
->>>>>>> 176acc8ba474f2ab4c05464403bf78d71c059f99:amide_app/lib/features/screens/dashboard/dashboard.dart
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
@@ -13,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/dashboard/elderly_tile.dart';
 import '../../widgets/dashboard/main_button.dart';
 import '../../widgets/dashboard/topbar.dart';
 
@@ -94,13 +89,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     const SizedBox(
                       height: 50,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const VitalSignScreen()));
-                      },
-                      child: const Text("Vital Sign"),
-                    ),
-                    const SizedBox(height: 27),
                     //incoming reminders
                     Column(
                       children: [

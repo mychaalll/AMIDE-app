@@ -3,15 +3,9 @@ import 'package:amide_app/core/config/utils.dart';
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
 import 'package:amide_app/features/data/provider/elderly.dart';
 import 'package:amide_app/features/data/services/database.dart';
-<<<<<<< HEAD:amide_app/lib/views/screens/elderly/edit.dart
 import 'package:amide_app/views/widgets/buttons/custom.dart';
-import 'package:amide_app/views/widgets/fields/custom.dart';
 import 'package:amide_app/views/widgets/drop_down/custom.dart';
-=======
-import 'package:amide_app/widgets/buttons/custom.dart';
-import 'package:amide_app/widgets/fields/custom.dart';
-import 'package:amide_app/widgets/drop_down/custom.dart';
->>>>>>> 176acc8ba474f2ab4c05464403bf78d71c059f99:amide_app/lib/features/screens/elderly/edit.dart
+import 'package:amide_app/views/widgets/fields/custom.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,8 +39,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
 
   @override
   void initState() {
-    final ElderlyData elderlyData =
-        Provider.of<ElderlyData>(context, listen: false);
+    final ElderlyData elderlyData = Provider.of<ElderlyData>(context, listen: false);
     _nameController.text = widget.elderly.name;
     newName = widget.elderly.name;
 
@@ -193,14 +186,12 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                 CustomButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      await DatabaseServices(uid: widget.elderly.uid)
-                          .updateElderly(
+                      await DatabaseServices(uid: widget.elderly.uid).updateElderly(
                         data: Elderly(
                           name: _nameController.text,
                           age: int.parse(_ageController.value.text),
                           sex: elderlyData.sex ?? elderlyData.sexList[0],
-                          bloodType: elderlyData.bloodType ??
-                              elderlyData.bloodType![0],
+                          bloodType: elderlyData.bloodType ?? elderlyData.bloodType![0],
                           height: double.parse(_heightController.value.text),
                           weight: double.parse(_weightController.value.text),
                         ),

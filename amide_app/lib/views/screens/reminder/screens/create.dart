@@ -3,20 +3,15 @@ import 'package:amide_app/features/data/models/reminder/music.dart';
 import 'package:amide_app/features/data/models/reminder/reminder.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/features/data/services/realtime.dart';
-import 'package:amide_app/widgets/buttons/custom.dart';
-import 'package:amide_app/widgets/drop_down/custom.dart';
-import 'package:amide_app/widgets/fields/custom.dart';
+import 'package:amide_app/views/widgets/buttons/custom.dart';
+import 'package:amide_app/views/widgets/drop_down/custom.dart';
+import 'package:amide_app/views/widgets/fields/custom.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-<<<<<<< HEAD:amide_app/lib/views/screens/reminder/screens/create.dart
-import '../../../../features/data/models/reminder/reminder.dart';
-
-=======
->>>>>>> 176acc8ba474f2ab4c05464403bf78d71c059f99:amide_app/lib/features/screens/reminder/screens/create.dart
 @RoutePage()
 class CreateReminderScreen extends StatefulWidget {
   const CreateReminderScreen({
