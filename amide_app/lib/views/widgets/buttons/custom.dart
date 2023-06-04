@@ -43,7 +43,7 @@ class CustomButton extends StatelessWidget {
                   color: Colors.white,
                 )
               : const SizedBox.shrink(),
-          const SizedBox(width: 10),
+          SizedBox(width: hasIcon ? 10 : 0),
           Text(
             label,
             style: const TextStyle(

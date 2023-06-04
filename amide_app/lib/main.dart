@@ -1,7 +1,8 @@
+import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/core/routes/routes.dart';
-import 'package:amide_app/features/data/models/elderly/elderly.dart';
 import 'package:amide_app/features/data/models/reminder/reminder.dart';
 import 'package:amide_app/features/data/provider/elderly.dart';
+import 'package:amide_app/features/data/provider/recording.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/features/data/provider/vital_signs.dart';
 import 'package:amide_app/firebase_options.dart';
@@ -20,7 +21,6 @@ void main() async {
   // init the hive
   await Hive.initFlutter();
 
-  Hive.registerAdapter(ElderlyAdapter());
   Hive.registerAdapter(ReminderAdapter());
 
   runApp(MyApp());
@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => ElderlyData()),
         ChangeNotifierProvider(create: (context) => ReminderData()),
+        ChangeNotifierProvider(create: (context) => RecordServices()),
         ChangeNotifierProvider(create: (context) => VitalSignsService()),
       ],
       builder: (context, child) {
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blueGrey,
             fontFamily: "Montserrat",
+            appBarTheme: const AppBarTheme(
+              backgroundColor: AppColors.primBlue,
+            ),
           ),
           routerConfig: _appRouter.config(),
         );

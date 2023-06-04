@@ -1,9 +1,4 @@
-import 'package:hive/hive.dart';
-
-part 'elderly.g.dart';
-
 class Elderly {
-  @HiveField(0)
   final String name;
 
   final int age;

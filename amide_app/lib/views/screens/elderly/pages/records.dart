@@ -29,12 +29,6 @@ class ElderlyRecords extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           children: [
-            ElevatedButton(
-              onPressed: () {
-                print(elderly!.uid);
-              },
-              child: const Text("Fetch vital sign"),
-            ),
             Row(
               children: [
                 const Expanded(

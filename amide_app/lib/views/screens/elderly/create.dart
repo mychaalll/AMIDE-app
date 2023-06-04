@@ -138,30 +138,29 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
                         ),
 
                         const SizedBox(height: 22),
-                        Row(
-                          children: [
-                            //height
-                            Expanded(
-                              child: CustomTextField(
-                                controller: elderlyData.heightController,
-                                label: "Height",
-                                hintText: "Height in cm",
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                            const SizedBox(width: 32),
-                            //weight
-                            Expanded(
-                              child: CustomTextField(
-                                controller: elderlyData.weightController,
-                                label: "Weight",
-                                hintText: "Weight in kg",
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 22),
+                        // Row(
+                        //   children: [
+                        //     //height
+                        //     Expanded(
+                        //       child: CustomTextField(
+                        //         controller: elderlyData.heightController,
+                        //         label: "Height",
+                        //         hintText: "Height in cm",
+                        //         keyboardType: TextInputType.number,
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 32),
+                        //     //weight
+                        //     Expanded(
+                        //       child: CustomTextField(
+                        //         controller: elderlyData.weightController,
+                        //         label: "Weight",
+                        //         hintText: "Weight in kg",
+                        //         keyboardType: TextInputType.number,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         //note
                         CustomTextField(
                           controller: _descriptionController,

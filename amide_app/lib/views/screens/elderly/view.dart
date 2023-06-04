@@ -40,20 +40,33 @@ class ViewElderlyScreen extends StatelessWidget {
             ),
           ),
           actions: [
-            todayHasRecord == true
-                ? IconButton(
-                    onPressed: () {
-                      context.pushRoute(
-                        const RecordingRoute(),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.add_chart,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                  )
-                : Container(),
+            // todayHasRecord == true
+            //     ? IconButton(
+            //         onPressed: () {
+            //           context.pushRoute(
+            //             const RecordingRoute(),
+            //           );
+            //         },
+            //         icon: const Icon(
+            //           Icons.add_chart,
+            //           size: 20,
+            //           color: Colors.white,
+            //         ),
+            //       )
+            //     : Container(),
+            IconButton(
+              onPressed: () {
+                context.pushRoute(
+                  const RecordRoute(),
+                );
+              },
+              icon: const Icon(
+                Icons.add_chart,
+                size: 20,
+                color: Colors.white,
+              ),
+            ),
+
             IconButton(
               onPressed: () {
                 context.pushRoute(
@@ -166,64 +179,64 @@ class ViewElderlyScreen extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Height',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey[400],
-                                        fontWeight: FontWeight.w600,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      "${elderly.height}",
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Weight',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey[400],
-                                        fontWeight: FontWeight.w600,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      "${elderly.weight}",
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        //   child: Row(
+                        //     crossAxisAlignment: CrossAxisAlignment.center,
+                        //     children: [
+                        //       Expanded(
+                        //         child: Column(
+                        //           children: [
+                        //             Text(
+                        //               'Height',
+                        //               style: TextStyle(
+                        //                 fontSize: 14,
+                        //                 color: Colors.grey[400],
+                        //                 fontWeight: FontWeight.w600,
+                        //                 overflow: TextOverflow.ellipsis,
+                        //               ),
+                        //             ),
+                        //             const SizedBox(height: 10),
+                        //             Text(
+                        //               "${elderly.height}",
+                        //               style: const TextStyle(
+                        //                 fontSize: 20,
+                        //                 color: Colors.white,
+                        //                 fontWeight: FontWeight.w700,
+                        //                 overflow: TextOverflow.ellipsis,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Expanded(
+                        //         child: Column(
+                        //           children: [
+                        //             Text(
+                        //               'Weight',
+                        //               style: TextStyle(
+                        //                 fontSize: 14,
+                        //                 color: Colors.grey[400],
+                        //                 fontWeight: FontWeight.w600,
+                        //                 overflow: TextOverflow.ellipsis,
+                        //               ),
+                        //             ),
+                        //             const SizedBox(height: 10),
+                        //             Text(
+                        //               "${elderly.weight}",
+                        //               style: const TextStyle(
+                        //                 fontSize: 20,
+                        //                 color: Colors.white,
+                        //                 fontWeight: FontWeight.w700,
+                        //                 overflow: TextOverflow.ellipsis,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         const Spacer(),
                         const TabBar(
                           tabs: [

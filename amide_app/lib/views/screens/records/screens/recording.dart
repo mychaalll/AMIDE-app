@@ -1,5 +1,6 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:amide_app/views/widgets/buttons/step.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:timeline_tile/timeline_tile.dart';
@@ -85,11 +86,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                       width: 30,
                       decoration: BoxDecoration(
                         color: _step1Done ? Colors.green : Colors.red,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
+                        borderRadius: const BorderRadius.all(Radius.circular(15)),
                       ),
-                      child: Icon(_step1Done ? Icons.done : Icons.more_horiz,
-                          size: 20, color: Colors.white),
+                      child: Icon(_step1Done ? Icons.done : Icons.more_horiz, size: 20, color: Colors.white),
                     ),
                   ),
                   lineXY: 0,
@@ -108,15 +107,12 @@ class _RecordingScreenState extends State<RecordingScreen> {
                         ),
                         child: Expanded(
                           child: Column(
-                            mainAxisAlignment: _step1IsExpanded
-                                ? MainAxisAlignment.start
-                                : MainAxisAlignment.center,
+                            mainAxisAlignment: _step1IsExpanded ? MainAxisAlignment.start : MainAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text(
                                       'Check all equipments',
@@ -128,9 +124,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                       ),
                                     ),
                                     Icon(
-                                      _step1IsExpanded
-                                          ? Icons.arrow_drop_up
-                                          : Icons.arrow_drop_down,
+                                      _step1IsExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                                       color: Colors.white,
                                     ),
                                   ],
@@ -143,14 +137,12 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                     decoration: const BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(12),
-                                          bottomRight: Radius.circular(12)),
+                                          bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
                                           const Text(
                                             'To ensure accurate recording of patient statistics, it is crucial to confirm that all equipment is properly connected to the patient. Check that all devices are securely attached and functioning correctly before beginning data collection. This will help to avoid any errors or inaccuracies in the recorded data.',
@@ -199,13 +191,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             width: 30,
                             decoration: BoxDecoration(
                               color: _step2Done ? Colors.green : Colors.red,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),
                             ),
-                            child: Icon(
-                                _step2Done ? Icons.done : Icons.more_horiz,
-                                size: 20,
-                                color: Colors.white),
+                            child: Icon(_step2Done ? Icons.done : Icons.more_horiz, size: 20, color: Colors.white),
                           ),
                         ),
                         lineXY: 0,
@@ -216,26 +204,21 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             });
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10.0, bottom: 10.0),
+                            padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: _step2Done
-                                    ? Colors.green
-                                    : AppColors.primBlue,
+                                color: _step2Done ? Colors.green : AppColors.primBlue,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Expanded(
                                 child: Column(
-                                  mainAxisAlignment: _step2IsExpanded
-                                      ? MainAxisAlignment.start
-                                      : MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      _step2IsExpanded ? MainAxisAlignment.start : MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             'Body Temperature',
@@ -247,9 +230,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                             ),
                                           ),
                                           Icon(
-                                            _step2IsExpanded
-                                                ? Icons.arrow_drop_up
-                                                : Icons.arrow_drop_down,
+                                            _step2IsExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                                             color: Colors.white,
                                           ),
                                         ],
@@ -262,15 +243,12 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                           decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(12),
-                                                bottomRight:
-                                                    Radius.circular(12)),
+                                                bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "Ensure that the temperature sensor is in contact with the patient's body for at least 1-2 minutes or until a temperature reading is obtained to ensure accurate measurements.",
@@ -278,8 +256,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       color: Colors.grey[700],
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                       height: 1.5),
                                                 ),
                                                 const SizedBox(height: 10.0),
@@ -289,34 +266,27 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                           SizedBox(
                                                             height: 20,
                                                             width: 20,
-                                                            child:
-                                                                CircularProgressIndicator(),
+                                                            child: CircularProgressIndicator(),
                                                           ),
                                                           SizedBox(width: 10),
                                                           Text(
                                                             "Measuring...",
-                                                            textAlign: TextAlign
-                                                                .justify,
+                                                            textAlign: TextAlign.justify,
                                                             style: TextStyle(
                                                                 fontSize: 12,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
+                                                                color: Colors.black,
+                                                                fontWeight: FontWeight.w600,
                                                                 height: 1.5),
                                                           ),
                                                         ],
                                                       )
                                                     : Text(
                                                         'Temperature: $_temp° Celcius',
-                                                        textAlign:
-                                                            TextAlign.justify,
+                                                        textAlign: TextAlign.justify,
                                                         style: const TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                            fontWeight: FontWeight.w600,
                                                             height: 1.5),
                                                       ),
                                                 const SizedBox(height: 10),
@@ -337,10 +307,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                             title: 'Done',
                                                             onPressed: () {
                                                               setState(() {
-                                                                _step2Done =
-                                                                    true;
-                                                                _step2IsExpanded =
-                                                                    false;
+                                                                _step2Done = true;
+                                                                _step2IsExpanded = false;
                                                               });
                                                             },
                                                           ),
@@ -377,13 +345,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             width: 30,
                             decoration: BoxDecoration(
                               color: _step3Done ? Colors.green : Colors.red,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),
                             ),
-                            child: Icon(
-                                _step3Done ? Icons.done : Icons.more_horiz,
-                                size: 20,
-                                color: Colors.white),
+                            child: Icon(_step3Done ? Icons.done : Icons.more_horiz, size: 20, color: Colors.white),
                           ),
                         ),
                         lineXY: 0,
@@ -394,26 +358,21 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             });
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10.0, bottom: 10.0),
+                            padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: _step3Done
-                                    ? Colors.green
-                                    : AppColors.primBlue,
+                                color: _step3Done ? Colors.green : AppColors.primBlue,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Expanded(
                                 child: Column(
-                                  mainAxisAlignment: _step3IsExpanded
-                                      ? MainAxisAlignment.start
-                                      : MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      _step3IsExpanded ? MainAxisAlignment.start : MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             'Blood Pressure',
@@ -425,9 +384,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                             ),
                                           ),
                                           Icon(
-                                            _step3IsExpanded
-                                                ? Icons.arrow_drop_up
-                                                : Icons.arrow_drop_down,
+                                            _step3IsExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                                             color: Colors.white,
                                           ),
                                         ],
@@ -440,15 +397,12 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                           decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(12),
-                                                bottomRight:
-                                                    Radius.circular(12)),
+                                                bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "Make sure the cuff is wrapped securely around the patient's arm, and that the patient is seated comfortably with their arm supported at heart level. This will help to ensure accurate blood pressure readings.",
@@ -456,8 +410,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       color: Colors.grey[700],
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                       height: 1.5),
                                                 ),
                                                 const SizedBox(height: 10.0),
@@ -467,34 +420,27 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                           SizedBox(
                                                             height: 20,
                                                             width: 20,
-                                                            child:
-                                                                CircularProgressIndicator(),
+                                                            child: CircularProgressIndicator(),
                                                           ),
                                                           SizedBox(width: 10),
                                                           Text(
                                                             "Measuring...",
-                                                            textAlign: TextAlign
-                                                                .justify,
+                                                            textAlign: TextAlign.justify,
                                                             style: TextStyle(
                                                                 fontSize: 12,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
+                                                                color: Colors.black,
+                                                                fontWeight: FontWeight.w600,
                                                                 height: 1.5),
                                                           ),
                                                         ],
                                                       )
                                                     : Text(
                                                         'Blood Pressure: $_bp mmHg',
-                                                        textAlign:
-                                                            TextAlign.justify,
+                                                        textAlign: TextAlign.justify,
                                                         style: const TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                            fontWeight: FontWeight.w600,
                                                             height: 1.5),
                                                       ),
                                                 const SizedBox(height: 10),
@@ -515,10 +461,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                             title: 'Done',
                                                             onPressed: () {
                                                               setState(() {
-                                                                _step3Done =
-                                                                    true;
-                                                                _step3IsExpanded =
-                                                                    false;
+                                                                _step3Done = true;
+                                                                _step3IsExpanded = false;
                                                               });
                                                             },
                                                           ),
@@ -555,13 +499,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             width: 30,
                             decoration: BoxDecoration(
                               color: _step4Done ? Colors.green : Colors.red,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),
                             ),
-                            child: Icon(
-                                _step4Done ? Icons.done : Icons.more_horiz,
-                                size: 20,
-                                color: Colors.white),
+                            child: Icon(_step4Done ? Icons.done : Icons.more_horiz, size: 20, color: Colors.white),
                           ),
                         ),
                         lineXY: 0,
@@ -572,26 +512,21 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             });
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10.0, bottom: 10.0),
+                            padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: _step4Done
-                                    ? Colors.green
-                                    : AppColors.primBlue,
+                                color: _step4Done ? Colors.green : AppColors.primBlue,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Expanded(
                                 child: Column(
-                                  mainAxisAlignment: _step4IsExpanded
-                                      ? MainAxisAlignment.start
-                                      : MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      _step4IsExpanded ? MainAxisAlignment.start : MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             'Pulse Rate',
@@ -603,9 +538,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                             ),
                                           ),
                                           Icon(
-                                            _step4IsExpanded
-                                                ? Icons.arrow_drop_up
-                                                : Icons.arrow_drop_down,
+                                            _step4IsExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                                             color: Colors.white,
                                           ),
                                         ],
@@ -618,15 +551,12 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                           decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(12),
-                                                bottomRight:
-                                                    Radius.circular(12)),
+                                                bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "To measure the patient's pulse rate accurately make sure it is snugly secured. Ask the patient to remain still and avoid talking during the reading for the most accurate results.",
@@ -634,8 +564,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       color: Colors.grey[700],
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                       height: 1.5),
                                                 ),
                                                 const SizedBox(height: 10.0),
@@ -645,34 +574,27 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                           SizedBox(
                                                             height: 20,
                                                             width: 20,
-                                                            child:
-                                                                CircularProgressIndicator(),
+                                                            child: CircularProgressIndicator(),
                                                           ),
                                                           SizedBox(width: 10),
                                                           Text(
                                                             "Measuring...",
-                                                            textAlign: TextAlign
-                                                                .justify,
+                                                            textAlign: TextAlign.justify,
                                                             style: TextStyle(
                                                                 fontSize: 12,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
+                                                                color: Colors.black,
+                                                                fontWeight: FontWeight.w600,
                                                                 height: 1.5),
                                                           ),
                                                         ],
                                                       )
                                                     : Text(
                                                         'Pulse Rate: $_bpm bpm',
-                                                        textAlign:
-                                                            TextAlign.justify,
+                                                        textAlign: TextAlign.justify,
                                                         style: const TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                            fontWeight: FontWeight.w600,
                                                             height: 1.5),
                                                       ),
                                                 const SizedBox(height: 10),
@@ -693,10 +615,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                             title: 'Done',
                                                             onPressed: () {
                                                               setState(() {
-                                                                _step4Done =
-                                                                    true;
-                                                                _step4IsExpanded =
-                                                                    false;
+                                                                _step4Done = true;
+                                                                _step4IsExpanded = false;
                                                               });
                                                             },
                                                           ),
@@ -733,13 +653,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             width: 30,
                             decoration: BoxDecoration(
                               color: _step5Done ? Colors.green : Colors.red,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),
                             ),
-                            child: Icon(
-                                _step5Done ? Icons.done : Icons.more_horiz,
-                                size: 20,
-                                color: Colors.white),
+                            child: Icon(_step5Done ? Icons.done : Icons.more_horiz, size: 20, color: Colors.white),
                           ),
                         ),
                         lineXY: 0,
@@ -750,26 +666,21 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             });
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10.0, bottom: 10.0),
+                            padding: const EdgeInsets.only(left: 10.0, bottom: 10.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: _step5Done
-                                    ? Colors.green
-                                    : AppColors.primBlue,
+                                color: _step5Done ? Colors.green : AppColors.primBlue,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Expanded(
                                 child: Column(
-                                  mainAxisAlignment: _step5IsExpanded
-                                      ? MainAxisAlignment.start
-                                      : MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      _step5IsExpanded ? MainAxisAlignment.start : MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             'Blood Oxygen Level',
@@ -781,9 +692,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                             ),
                                           ),
                                           Icon(
-                                            _step5IsExpanded
-                                                ? Icons.arrow_drop_up
-                                                : Icons.arrow_drop_down,
+                                            _step5IsExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                                             color: Colors.white,
                                           ),
                                         ],
@@ -796,15 +705,12 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                           decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(12),
-                                                bottomRight:
-                                                    Radius.circular(12)),
+                                                bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "To measure the patient's blood oxygen level accurately, attach the sensor to the patient's fingertip and ensure it is securely in place. Ask the patient to remain still and avoid moving the hand or finger being used for the reading. ",
@@ -812,8 +718,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       color: Colors.grey[700],
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                       height: 1.5),
                                                 ),
                                                 const SizedBox(height: 10.0),
@@ -823,34 +728,27 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                           SizedBox(
                                                             height: 20,
                                                             width: 20,
-                                                            child:
-                                                                CircularProgressIndicator(),
+                                                            child: CircularProgressIndicator(),
                                                           ),
                                                           SizedBox(width: 10),
                                                           Text(
                                                             "Measuring...",
-                                                            textAlign: TextAlign
-                                                                .justify,
+                                                            textAlign: TextAlign.justify,
                                                             style: TextStyle(
                                                                 fontSize: 12,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
+                                                                color: Colors.black,
+                                                                fontWeight: FontWeight.w600,
                                                                 height: 1.5),
                                                           ),
                                                         ],
                                                       )
                                                     : Text(
                                                         'Blood Oxygen Level: $_bol% SpO2',
-                                                        textAlign:
-                                                            TextAlign.justify,
+                                                        textAlign: TextAlign.justify,
                                                         style: const TextStyle(
                                                             fontSize: 12,
                                                             color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                            fontWeight: FontWeight.w600,
                                                             height: 1.5),
                                                       ),
                                                 const SizedBox(height: 10),
@@ -871,10 +769,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                             title: 'Done',
                                                             onPressed: () {
                                                               setState(() {
-                                                                _step5Done =
-                                                                    true;
-                                                                _step5IsExpanded =
-                                                                    false;
+                                                                _step5Done = true;
+                                                                _step5IsExpanded = false;
                                                               });
                                                             },
                                                           ),
@@ -911,13 +807,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             width: 30,
                             decoration: BoxDecoration(
                               color: _step6Done ? Colors.green : Colors.red,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
+                              borderRadius: const BorderRadius.all(Radius.circular(15)),
                             ),
-                            child: Icon(
-                                _step6Done ? Icons.done : Icons.more_horiz,
-                                size: 20,
-                                color: Colors.white),
+                            child: Icon(_step6Done ? Icons.done : Icons.more_horiz, size: 20, color: Colors.white),
                           ),
                         ),
                         lineXY: 0,
@@ -928,26 +820,21 @@ class _RecordingScreenState extends State<RecordingScreen> {
                             });
                           },
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10.0, bottom: 10),
+                            padding: const EdgeInsets.only(left: 10.0, bottom: 10),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: _step6Done
-                                    ? Colors.green
-                                    : AppColors.primBlue,
+                                color: _step6Done ? Colors.green : AppColors.primBlue,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Expanded(
                                 child: Column(
-                                  mainAxisAlignment: _step6IsExpanded
-                                      ? MainAxisAlignment.start
-                                      : MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      _step6IsExpanded ? MainAxisAlignment.start : MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Text(
                                             'Finish Recording',
@@ -959,9 +846,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                             ),
                                           ),
                                           Icon(
-                                            _step1IsExpanded
-                                                ? Icons.arrow_drop_up
-                                                : Icons.arrow_drop_down,
+                                            _step1IsExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                                             color: Colors.white,
                                           ),
                                         ],
@@ -974,15 +859,12 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                           decoration: const BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(12),
-                                                bottomRight:
-                                                    Radius.circular(12)),
+                                                bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12)),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 const Text(
                                                   'Please check if all of the statistics taken are accurate.',
@@ -990,8 +872,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                       height: 1.5),
                                                 ),
                                                 const SizedBox(height: 5),
@@ -1001,8 +882,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                   style: const TextStyle(
                                                       fontSize: 12,
                                                       color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                                      fontWeight: FontWeight.w600,
                                                       height: 1.5),
                                                 ),
                                                 const SizedBox(height: 10),
@@ -1039,44 +919,5 @@ class _RecordingScreenState extends State<RecordingScreen> {
         ),
       ),
     );
-  }
-}
-
-class StepButton extends StatelessWidget {
-  final Function()? onPressed;
-  final String title;
-  const StepButton({
-    Key? key,
-    required this.onPressed,
-    required this.title,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
-            overlayColor:
-                MaterialStateProperty.all(const Color.fromARGB(255, 2, 5, 27)),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ))),
-        child: SizedBox(
-          width: 80,
-          height: 30,
-          child: Center(
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
-                fontFamily: 'Montserrat',
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ));
   }
 }
