@@ -176,8 +176,10 @@ class _CreateElderlyScreenState extends State<CreateElderlyScreen> {
                           label: "Save Entry",
                           icon: Icons.save_alt,
                           onPressed: () {
-                            elderlyData.createData();
-                            context.popRoute();
+                            if (_key.currentState!.validate()) {
+                              elderlyData.createData();
+                              context.popRoute();
+                            }
                           },
                         ),
                         const SizedBox(height: 15),

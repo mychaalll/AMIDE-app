@@ -23,11 +23,13 @@ class EditReminderScreen extends StatefulWidget {
 class _EditReminderScreenState extends State<EditReminderScreen> {
   late String newName;
   late String newDetail;
+  late String newTime;
 
   late String newDateTime = DateFormat.Hm().format(_dateTime);
-  final DateTime _dateTime = DateTime.now();
+  DateTime _dateTime = DateTime.now();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _detailController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
 
   @override
   void initState() {
@@ -37,20 +39,43 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
     _detailController.text = widget.currentReminder.detail;
     newDetail = widget.currentReminder.detail;
 
+    _timeController.text = widget.currentReminder.time;
+    newTime = widget.currentReminder.time;
+
     super.initState();
   }
 
   void _editReminder() {
     Provider.of<ReminderData>(context, listen: false).editReminder(
       reminder: Reminder(
-        name: newName,
-        detail: newDetail,
-        time: newDateTime,
-      ),
+          name: newName,
+          detail: newDetail,
+          time: _timeController.text,
+          dateTime: _dateTime),
       reminderKey: widget.currentReminder.key,
     );
 
     context.popRoute();
+  }
+
+  void pickTime() async {
+    TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(_dateTime),
+    );
+
+    if (newTime == null) return;
+    final newDateTime = DateTime(
+      _dateTime.year,
+      _dateTime.month,
+      _dateTime.day,
+      newTime.hour,
+      newTime.minute,
+    );
+    setState(() {
+      _dateTime = newDateTime;
+      _timeController.text = newTime.format(context);
+    });
   }
 
   @override
@@ -165,40 +190,43 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                       height: 40,
                       width: width - 30,
                       child: TextField(
-                        readOnly: true,
-                        textAlign: TextAlign.left,
-                        textAlignVertical: TextAlignVertical.bottom,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.watch_later),
-                            onPressed: () async {},
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.black,
-                              width: 5.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          hintText: newDateTime,
-                          hintStyle: const TextStyle(
-                            color: Colors.grey,
+                          readOnly: true,
+                          textAlign: TextAlign.left,
+                          textAlignVertical: TextAlignVertical.bottom,
+                          maxLines: 1,
+                          style: const TextStyle(
                             fontSize: 14,
+                            color: Colors.black,
                             fontWeight: FontWeight.w500,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        controller: TextEditingController(text: newDateTime),
-                        onChanged: (value) {},
-                      ),
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.watch_later),
+                              onPressed: pickTime,
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.black,
+                                width: 5.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            hintText: newDateTime,
+                            hintStyle: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          controller: _timeController,
+                          onChanged: (value) {
+                            setState(() {
+                              newDateTime = value;
+                            });
+                          }),
                     ),
                     const SizedBox(height: 22),
                     //music
@@ -230,7 +258,9 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         decoration: InputDecoration(
-                          suffixIcon: IconButton(icon: const Icon(Icons.queue_music), onPressed: () {}),
+                          suffixIcon: IconButton(
+                              icon: const Icon(Icons.queue_music),
+                              onPressed: () {}),
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -267,6 +297,12 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                     SizedBox(
                       width: width - 30,
                       child: TextField(
+                        controller: _detailController,
+                        onChanged: (value) {
+                          setState(() {
+                            newDetail = value;
+                          });
+                        },
                         textAlign: TextAlign.left,
                         textAlignVertical: TextAlignVertical.bottom,
                         maxLines: 7,
@@ -306,9 +342,11 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                 child: ElevatedButton(
                   onPressed: () => _editReminder(),
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
+                      backgroundColor:
+                          MaterialStateProperty.all(AppColors.primBlue),
                       overlayColor: MaterialStateProperty.all(Colors.black),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ))),
                   child: SizedBox(

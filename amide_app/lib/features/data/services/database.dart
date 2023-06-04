@@ -1,5 +1,9 @@
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
+<<<<<<< HEAD:amide_app/lib/features/data/services/database.dart
 import 'package:amide_app/features/data/models/elderly/vital_sign.dart';
+=======
+import 'package:amide_app/features/data/models/records/vital.dart';
+>>>>>>> 176acc8ba474f2ab4c05464403bf78d71c059f99:amide_app/lib/features/data/services/firestore.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
@@ -100,6 +104,7 @@ class DatabaseServices {
     }, SetOptions(merge: true));
   }
 
+<<<<<<< HEAD:amide_app/lib/features/data/services/database.dart
   /// VITAL SIGNS
 
   Future<void> getVitalSigns(uid) async {
@@ -119,5 +124,26 @@ class DatabaseServices {
     }).toList();
 
     print(data);
+=======
+  /// THIS IS START OF VITAL SIGNS
+
+  List<Vital> _vitalFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Vital(
+        diastolic: doc.get("diastolic"),
+        systolic: doc.get("systolic"),
+        oxygenRate: doc.get("oxygenRate"),
+        temperature: doc.get("temperature"),
+        timeStamp: doc.get("timeStamp"),
+        heartRate: doc.get("heartRate"),
+        id: doc.get("id"),
+      );
+    }).toList();
+  }
+
+  Stream<List<Vital>> get vital {
+    final query = _db.collection("vitalSigns").snapshots().map(_vitalFromSnapshot);
+    return query;
+>>>>>>> 176acc8ba474f2ab4c05464403bf78d71c059f99:amide_app/lib/features/data/services/firestore.dart
   }
 }

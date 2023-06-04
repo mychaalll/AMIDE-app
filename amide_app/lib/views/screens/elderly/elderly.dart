@@ -1,6 +1,10 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/services/database.dart';
+<<<<<<< HEAD:amide_app/lib/views/screens/elderly/elderly.dart
 import 'package:amide_app/views/widgets/drawer.dart';
+=======
+import 'package:amide_app/widgets/drawer.dart';
+>>>>>>> 176acc8ba474f2ab4c05464403bf78d71c059f99:amide_app/lib/features/screens/elderly/elderly.dart
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/views/widgets/elderly/elderly_tile.dart';
 import 'package:auto_route/auto_route.dart';

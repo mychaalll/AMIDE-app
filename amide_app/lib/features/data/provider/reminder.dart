@@ -1,8 +1,13 @@
 import 'package:amide_app/core/config/utils.dart';
+import 'package:amide_app/features/data/services/local_notifications.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
 import '../models/reminder/reminder.dart';
+// import 'package:timezone/timezone.dart' as tz;
 
 class ReminderData extends ChangeNotifier {
   static const String _boxName = "reminderBox";
@@ -25,15 +30,23 @@ class ReminderData extends ChangeNotifier {
   void addReminder(Reminder reminder) async {
     var box = await Hive.openBox<Reminder>(_boxName);
     await box.add(reminder);
-
     _reminder = box.values.toList();
     notifyListeners();
+
+    DateTime dateTime = reminder.dateTime;
+    Time time = Time(dateTime.hour, dateTime.minute);
+    NotificationService()
+        .dailyNotification(notificationTime: time, id: reminder.key, title: reminder.name, body: reminder.detail);
+
+    String formattedDateTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+    Log.i("Daily notification set to $formattedDateTime");
   }
 
   void deleteReminder(key) async {
     var box = await Hive.openBox<Reminder>(_boxName);
     await box.delete(key);
 
+    NotificationService().cancelNotification(id: key);
     _reminder = box.values.toList();
     Log.i("Deleted member with key$key");
     notifyListeners();
@@ -47,7 +60,21 @@ class ReminderData extends ChangeNotifier {
 
     _activeReminder = box.get(reminderKey);
 
-    Log.i("Edited${reminder.name}");
+    DateTime dateTime = reminder.dateTime;
+    Time time = Time(dateTime.hour, dateTime.minute);
+    NotificationService()
+        .updateDailyNotification(notificationTime: time, body: reminder.detail, id: reminder.key, title: reminder.name);
+    String formattedDateTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+    // Log.i(
+    //     "Edited Daily notification set to $formattedDateTime for $reminderKey");
+    // Log.i(
+    //     "Daily Notification Key $reminderKey with details ${reminder.detail} and title ${reminder.name}");
+
+    Log.i("Updated Title: ${reminder.name}");
+    Log.i("Updated Details: ${reminder.detail}");
+    Log.i("Updated Time: ${reminder.time}");
+    Log.i("Updated DateTime: $formattedDateTime");
+
     notifyListeners();
   }
 
@@ -64,5 +91,43 @@ class ReminderData extends ChangeNotifier {
 
   int get reminderCount {
     return _reminder.length;
+  }
+
+  /// START OF REALTIME DATABASE
+
+  final musicList = [
+    "1st music",
+    "2nd music",
+    "3rd music",
+  ];
+
+  String? music;
+  int musicIndex = 0;
+
+  void updateMusic(value) {
+    music = value;
+    musicIndex = musicList.indexOf(value);
+    notifyListeners();
+  }
+
+  TextEditingController timeController = TextEditingController();
+  final DateTime now = DateTime.now();
+  int? hour;
+  int? minute;
+
+  void updateTime(value, newTime) {
+    timeController.text = value;
+    final militaryTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      newTime.hour,
+      newTime.minute,
+    );
+
+    hour = militaryTime.hour;
+    minute = militaryTime.minute;
+
+    notifyListeners();
   }
 }

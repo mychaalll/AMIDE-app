@@ -6,7 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 class FirebaseNotifications {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  Future NotifSettings() async {
+  Future notifSettings() async {
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
       announcement: false,
@@ -16,23 +16,15 @@ class FirebaseNotifications {
       provisional: false,
       sound: true,
     );
-
-    print("User granted permission : ${settings.authorizationStatus}");
   }
 
   listenNotif() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("Got a message whilst in th foreground!");
-      print("Message data: ${message.data}");
-
-      if (message.notification != null) {
-        print("Message also contained a notification: ${message.notification}");
-      }
+      if (message.notification != null) {}
     });
   }
 
   firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     await Firebase.initializeApp();
-    print("Handling a background message: ${message.messageId}");
   }
 }

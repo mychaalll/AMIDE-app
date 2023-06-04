@@ -1,6 +1,11 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
+<<<<<<< HEAD:amide_app/lib/views/screens/reminder/screens/reminder.dart
 import 'package:amide_app/views/widgets/drawer.dart';
 import 'package:amide_app/views/screens/reminder/widgets/reminder_tile.dart';
+=======
+import 'package:amide_app/widgets/drawer.dart';
+import 'package:amide_app/widgets/reminder/reminder_tile.dart';
+>>>>>>> 176acc8ba474f2ab4c05464403bf78d71c059f99:amide_app/lib/features/screens/reminder/screens/reminder.dart
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:auto_route/auto_route.dart';
@@ -34,7 +39,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
           centerTitle: true,
           title: const Text(
             'Reminder',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, fontFamily: 'Montserrat', color: Colors.white),
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                fontFamily: 'Montserrat',
+                color: Colors.white),
           )),
       drawer: const AppDrawer(),
       floatingActionButton: FloatingActionButton.extended(
@@ -55,8 +64,11 @@ class _ReminderScreenState extends State<ReminderScreen> {
               const Text(
                 'Reminder List',
                 overflow: TextOverflow.ellipsis,
-                style:
-                    TextStyle(fontWeight: FontWeight.w600, fontSize: 16, fontFamily: 'Montserrat', color: Colors.black),
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    fontFamily: 'Montserrat',
+                    color: Colors.black),
               ),
               const SizedBox(height: 20),
               Expanded(
@@ -82,7 +94,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
                         ),
                       )
                     : ListView.builder(
-                        itemCount: Provider.of<ReminderData>(context).reminderCount,
+                        itemCount:
+                            Provider.of<ReminderData>(context).reminderCount,
                         itemBuilder: ((context, index) {
                           return ReminderTile(
                             tileIndex: index,

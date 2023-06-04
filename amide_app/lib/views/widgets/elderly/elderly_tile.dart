@@ -19,8 +19,6 @@ class ElderlyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Elderly currentElderly = value.getElderly(tileIndex);
-
     return Visibility(
       visible: elderly.isDeleted ? false : true,
       child: Padding(
@@ -100,7 +98,6 @@ class ElderlyTile extends StatelessWidget {
                         children: [
                           Text(
                             elderly.name,
-                            // currentElderly.name,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w600,

@@ -14,11 +14,19 @@ import 'package:provider/provider.dart';
 
 class ElderlyRecords extends StatelessWidget {
   const ElderlyRecords({
+<<<<<<< HEAD:amide_app/lib/views/screens/elderly/pages/records.dart
     Key? key,
     required this.elderly,
   }) : super(key: key);
 
   final Elderly elderly;
+=======
+    this.elderly,
+    super.key,
+  });
+>>>>>>> 176acc8ba474f2ab4c05464403bf78d71c059f99:amide_app/lib/features/screens/elderly/pages/records.dart
+
+  final Elderly? elderly;
 
   @override
   Widget build(BuildContext context) {
