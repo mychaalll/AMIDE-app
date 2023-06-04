@@ -13,6 +13,8 @@ class RecordsLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double i = 0;
+
     return LineChart(
       LineChartData(
         minX: 0,
@@ -45,11 +47,9 @@ class RecordsLineChart extends StatelessWidget {
         ),
         lineBarsData: [
           LineChartBarData(
-            spots: graph.data.map(
-              (model) {
-                return FlSpot(model.id.toDouble(), model.value);
-              },
-            ).toList(),
+            spots: graph.data.map((model) {
+              return FlSpot(i++, model);
+            }).toList(),
             isCurved: true,
             color: AppColors.primBlue,
           )

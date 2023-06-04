@@ -34,8 +34,6 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _heightController = TextEditingController();
-  final TextEditingController _weightController = TextEditingController();
 
   @override
   void initState() {
@@ -45,12 +43,6 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
 
     _ageController.text = widget.elderly.age.toString();
     newAge = widget.elderly.age;
-
-    _heightController.text = (widget.elderly.height).toString();
-    newHeight = widget.elderly.height;
-
-    _weightController.text = (widget.elderly.weight).toString();
-    newWeight = widget.elderly.weight;
 
     _descriptionController.text = widget.elderly.description ?? "";
     newDescription = widget.elderly.description ?? "";
@@ -146,31 +138,33 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                   ],
                 ),
                 const SizedBox(height: 22),
-                Row(
-                  children: [
-                    //height
 
-                    //weight
-                    Expanded(
-                      child: CustomTextField(
-                        controller: _heightController,
-                        label: "Height",
-                        hintText: "Height in cm",
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
-                    const SizedBox(width: 32),
-                    //weight
-                    Expanded(
-                      child: CustomTextField(
-                        controller: _weightController,
-                        label: "Weight",
-                        hintText: "Weight in kg",
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     //height
+
+                //     //weight
+                //     Expanded(
+                //       child: CustomTextField(
+                //         controller: _heightController,
+                //         label: "Height",
+                //         hintText: "Height in cm",
+                //         keyboardType: TextInputType.number,
+                //       ),
+                //     ),
+                //     const SizedBox(width: 32),
+                //     //weight
+                //     Expanded(
+                //       child: CustomTextField(
+                //         controller: _weightController,
+                //         label: "Weight",
+                //         hintText: "Weight in kg",
+                //         keyboardType: TextInputType.number,
+                //       ),
+                //     ),
+                //   ],
+                // ),
+
                 const SizedBox(height: 22),
                 //note
                 CustomTextField(
@@ -192,8 +186,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
                           age: int.parse(_ageController.value.text),
                           sex: elderlyData.sex ?? elderlyData.sexList[0],
                           bloodType: elderlyData.bloodType ?? elderlyData.bloodType![0],
-                          height: double.parse(_heightController.value.text),
-                          weight: double.parse(_weightController.value.text),
+                          // height: double.parse(_heightController.value.text),
+                          // weight: double.parse(_weightController.value.text),
                         ),
                       );
                       context.popRoute();

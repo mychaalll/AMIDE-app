@@ -1,3 +1,5 @@
+import 'package:amide_app/features/data/models/records/vital.dart';
+import 'package:amide_app/features/data/services/database.dart';
 import 'package:flutter/material.dart';
 
 class RecordServices extends ChangeNotifier {
@@ -118,6 +120,26 @@ class RecordServices extends ChangeNotifier {
     fifthStep = false;
     doneFifthStep = false;
 
+    notifyListeners();
+  }
+
+  double? temperature;
+  double? bloodPressure;
+  double? pulseRate;
+  double? bloodOxygen;
+
+  Future<void> sendVital() async {
+    Vital vital = Vital(
+      diastolic: 0,
+      systolic: 0,
+      oxygenRate: 0,
+      temperature: 0,
+      timeStamp: DateTime.now(),
+      heartRate: 0,
+      id: "dasd",
+    );
+
+    await DatabaseServices().sendVital(vital.toJson());
     notifyListeners();
   }
 }

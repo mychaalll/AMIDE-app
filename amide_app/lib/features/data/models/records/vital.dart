@@ -3,7 +3,7 @@ class Vital {
   final int systolic;
   final int oxygenRate;
   final int temperature;
-  final String timeStamp;
+  final DateTime timeStamp;
   final int heartRate;
   final String id;
 

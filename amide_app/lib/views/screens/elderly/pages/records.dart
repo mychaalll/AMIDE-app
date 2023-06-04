@@ -1,8 +1,9 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
 import 'package:amide_app/features/data/models/records/graph.dart';
+import 'package:amide_app/features/data/models/records/vital_sub.dart';
 import 'package:amide_app/features/data/provider/elderly.dart';
-import 'package:amide_app/features/data/provider/vital_signs.dart';
+import 'package:amide_app/features/data/services/database.dart';
 import 'package:amide_app/views/widgets/buttons/custom.dart';
 import 'package:amide_app/views/widgets/elderly/records/bar_chart/blood_pressure.dart';
 import 'package:amide_app/views/widgets/elderly/records/graphs.dart';
@@ -21,7 +22,6 @@ class ElderlyRecords extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final VitalSignsService vitalSign = Provider.of<VitalSignsService>(context);
     final ElderlyData elderlyData = Provider.of<ElderlyData>(context);
 
     return SingleChildScrollView(
@@ -84,42 +84,75 @@ class ElderlyRecords extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     elderlyData.getTemperature(elderly!.uid);
+            //   },
+            //   child: const Text("Get"),
+            // ),
 
-            ElderlyGraphs(
-              title: "Temperature",
-              detail: "${vitalSign.tempData.last.value} ° Celcius",
-              graph: Graph(
-                maxY: 100,
-                minY: 0,
-                data: vitalSign.tempData,
-              ),
+            StreamBuilder(
+              stream: DatabaseServices().streamVital(elderly!.uid),
+              builder: (context, snapshot) {
+                final temperature = snapshot.data?.map((VitalSub vitalSub) => vitalSub.temperature).toList();
+                final heartRate = snapshot.data?.map((VitalSub vitalSub) => vitalSub.heartRate).toList();
+                final oxygenRate = snapshot.data?.map((VitalSub vitalSub) => vitalSub.oxygenRate).toList();
+                final systolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.systolic).toList();
+                final diastolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.diastolic).toList();
+
+                print(systolic);
+                return Column(
+                  children: [
+                    ElderlyGraphs(
+                      graph: Graph(
+                        maxY: 40,
+                        minY: 30,
+                        data: temperature ?? [],
+                      ),
+                      title: "Temperature",
+                      detail: "${temperature?.first} ° Celcius",
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElderlyGraphs(
+                      title: "Heart Rate",
+                      detail: "${heartRate?.first} bpm",
+                      graph: Graph(
+                        maxY: 100,
+                        minY: 70,
+                        data: heartRate ?? [],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    ElderlyGraphs(
+                      title: "Oxygen Saturation",
+                      detail: "${oxygenRate?.first} bpm",
+                      graph: Graph(
+                        maxY: 100,
+                        minY: 92,
+                        data: oxygenRate ?? [],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    elderlyData.isBar
+                        ? BloodPressureBarChart(
+                            systolic: systolic ?? [],
+                            diastolic: diastolic ?? [],
+                          )
+                        : BloodPressureLineChart(
+                            systolic: systolic ?? [],
+                            diastolic: diastolic ?? [],
+                          ),
+                  ],
+                );
+              },
             ),
-            const SizedBox(height: 50),
 
-            /// Graph for blood pressure
-            elderlyData.isBar ? const BloodPressureBarChart() : const BloodPressureLineChart(),
-            const SizedBox(height: 50),
-
-            ElderlyGraphs(
-              title: "Oxygen Rate",
-              detail: "${vitalSign.tempData.last.value} ° Celcius",
-              graph: Graph(
-                maxY: 100,
-                minY: 0,
-                data: vitalSign.tempData,
-              ),
-            ),
-            const SizedBox(height: 50),
-
-            ElderlyGraphs(
-              title: "Heart Rate",
-              detail: "${vitalSign.tempData.last.value} ° Celcius",
-              graph: Graph(
-                maxY: 100,
-                minY: 0,
-                data: vitalSign.tempData,
-              ),
-            ),
             const SizedBox(
               height: 40,
             ),

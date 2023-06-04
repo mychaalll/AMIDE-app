@@ -13,9 +13,10 @@ class RecordsBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int i = 0;
+
     return BarChart(
       BarChartData(
-        maxY: graph.maxY,
         minY: graph.minY,
         gridData: FlGridData(show: false),
         borderData: FlBorderData(show: false),
@@ -26,15 +27,15 @@ class RecordsBarChart extends StatelessWidget {
         ),
         barGroups: graph.data.take(7).map((model) {
           return BarChartGroupData(
-            x: model.id,
+            x: i++,
             barRods: [
               BarChartRodData(
-                toY: model.value,
+                toY: model,
                 color: AppColors.primBlue,
                 borderRadius: BorderRadius.circular(4),
                 backDrawRodData: BackgroundBarChartRodData(
                   color: Colors.grey[400],
-                  toY: 100,
+                  toY: graph.maxY,
                   show: true,
                 ),
               ),

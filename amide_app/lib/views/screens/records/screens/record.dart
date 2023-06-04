@@ -1,4 +1,5 @@
 import 'package:amide_app/core/config/colors.dart';
+import 'package:amide_app/features/data/models/elderly/elderly.dart';
 import 'package:amide_app/features/data/provider/recording.dart';
 import 'package:amide_app/views/widgets/timeline.dart/content.dart';
 import 'package:amide_app/views/widgets/timeline.dart/custom.dart';
@@ -8,7 +9,12 @@ import 'package:provider/provider.dart';
 
 @RoutePage()
 class RecordScreen extends StatefulWidget {
-  const RecordScreen({Key? key}) : super(key: key);
+  const RecordScreen({
+    Key? key,
+    this.elderly,
+  }) : super(key: key);
+
+  final Elderly? elderly;
 
   @override
   State<RecordScreen> createState() => _RecordScreenState();
@@ -22,7 +28,7 @@ class _RecordScreenState extends State<RecordScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primBlue,
-        title: const Text('Sample Name'),
+        title: Text(widget.elderly!.name),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

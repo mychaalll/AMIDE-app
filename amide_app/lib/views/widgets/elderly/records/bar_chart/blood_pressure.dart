@@ -1,20 +1,24 @@
 import 'package:amide_app/core/config/colors.dart';
-import 'package:amide_app/features/data/models/records/blood_pressure/systolic.dart';
-import 'package:amide_app/features/data/provider/vital_signs.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class BloodPressureBarChart extends StatelessWidget {
   const BloodPressureBarChart({
     Key? key,
+    required this.systolic,
+    required this.diastolic,
   }) : super(key: key);
+
+  final List systolic;
+  final List diastolic;
 
   @override
   Widget build(BuildContext context) {
-    final VitalSignsService vitalSignsService = VitalSignsService();
+    int i = 0;
+    int j = 0;
 
     return SizedBox(
-      height: 200,
+      height: 400,
       child: Row(
         children: [
           Expanded(
@@ -32,7 +36,7 @@ class BloodPressureBarChart extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "${vitalSignsService.systolicData.last.value} / ${vitalSignsService.diastolicData.last.value} mmHg",
+                  "${systolic.first} / ${diastolic.first} mmHg",
                   style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -46,11 +50,11 @@ class BloodPressureBarChart extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
+                // Systolic
                 Expanded(
                   child: BarChart(
                     BarChartData(
-                      maxY: 100,
-                      minY: 0,
+                      minY: 100,
                       gridData: FlGridData(show: false),
                       borderData: FlBorderData(show: false),
                       titlesData: FlTitlesData(
@@ -58,17 +62,17 @@ class BloodPressureBarChart extends StatelessWidget {
                         topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                         rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                       ),
-                      barGroups: vitalSignsService.systolicData.map((Systolic systolic) {
+                      barGroups: systolic.take(7).map((model) {
                         return BarChartGroupData(
-                          x: systolic.id,
+                          x: i++,
                           barRods: [
                             BarChartRodData(
-                              toY: systolic.value,
+                              toY: model,
                               color: AppColors.primBlue,
                               borderRadius: BorderRadius.circular(4),
                               backDrawRodData: BackgroundBarChartRodData(
                                 color: Colors.grey[400],
-                                toY: 100,
+                                toY: 200,
                                 show: true,
                               ),
                             ),
@@ -81,11 +85,12 @@ class BloodPressureBarChart extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+
+                // Diastolic
                 Expanded(
                   child: BarChart(
                     BarChartData(
-                      maxY: 100,
-                      minY: 0,
+                      minY: 70,
                       gridData: FlGridData(show: false),
                       borderData: FlBorderData(show: false),
                       titlesData: FlTitlesData(
@@ -93,17 +98,17 @@ class BloodPressureBarChart extends StatelessWidget {
                         topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                         rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                       ),
-                      barGroups: vitalSignsService.systolicData.map((Systolic systolic) {
+                      barGroups: diastolic.take(7).map((model) {
                         return BarChartGroupData(
-                          x: systolic.id,
+                          x: j++,
                           barRods: [
                             BarChartRodData(
-                              toY: systolic.value,
+                              toY: model,
                               color: AppColors.primBlue,
                               borderRadius: BorderRadius.circular(4),
                               backDrawRodData: BackgroundBarChartRodData(
                                 color: Colors.grey[400],
-                                toY: 100,
+                                toY: 120,
                                 show: true,
                               ),
                             ),

@@ -1,21 +1,24 @@
 import 'package:amide_app/core/config/colors.dart';
-import 'package:amide_app/features/data/models/records/temperature.dart';
-import 'package:amide_app/features/data/provider/vital_signs.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class BloodPressureLineChart extends StatelessWidget {
   const BloodPressureLineChart({
+    required this.systolic,
+    required this.diastolic,
     super.key,
   });
 
+  final List systolic;
+  final List diastolic;
+
   @override
   Widget build(BuildContext context) {
-    final VitalSignsService vitalSignsService = Provider.of<VitalSignsService>(context);
+    double i = 0;
+    double j = 0;
 
     return SizedBox(
-      height: 200,
+      height: 400,
       child: Row(
         children: [
           Expanded(
@@ -33,7 +36,7 @@ class BloodPressureLineChart extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "${vitalSignsService.systolicData.last.value} / ${vitalSignsService.diastolicData.last.value} mmHg",
+                  "${systolic.first} / ${diastolic.first} mmHg",
                   style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -44,6 +47,7 @@ class BloodPressureLineChart extends StatelessWidget {
               ],
             ),
           ),
+          // Systolic
           Expanded(
             child: Column(
               children: [
@@ -52,8 +56,8 @@ class BloodPressureLineChart extends StatelessWidget {
                     LineChartData(
                       minX: 0,
                       maxX: 7,
-                      minY: 0,
-                      maxY: 100,
+                      minY: 100,
+                      maxY: 200,
                       gridData: FlGridData(
                         show: true,
                         getDrawingHorizontalLine: (value) {
@@ -80,11 +84,9 @@ class BloodPressureLineChart extends StatelessWidget {
                       ),
                       lineBarsData: [
                         LineChartBarData(
-                          spots: vitalSignsService.tempData.map(
-                            (Temperature temperature) {
-                              return FlSpot(temperature.id.toDouble(), temperature.value);
-                            },
-                          ).toList(),
+                          spots: systolic.map((model) {
+                            return FlSpot(i++, model);
+                          }).toList(),
                           isCurved: true,
                           color: AppColors.primBlue,
                         )
@@ -95,12 +97,14 @@ class BloodPressureLineChart extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+
+                // Diastolic
                 Expanded(
                   child: LineChart(
                     LineChartData(
                       minX: 0,
                       maxX: 7,
-                      minY: 0,
+                      minY: 70,
                       maxY: 100,
                       gridData: FlGridData(
                         show: true,
@@ -128,11 +132,9 @@ class BloodPressureLineChart extends StatelessWidget {
                       ),
                       lineBarsData: [
                         LineChartBarData(
-                          spots: vitalSignsService.tempData.map(
-                            (Temperature temperature) {
-                              return FlSpot(temperature.id.toDouble(), temperature.value);
-                            },
-                          ).toList(),
+                          spots: diastolic.map((model) {
+                            return FlSpot(j++, model);
+                          }).toList(),
                           isCurved: true,
                           color: AppColors.primBlue,
                         )
