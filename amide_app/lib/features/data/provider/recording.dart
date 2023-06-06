@@ -3,6 +3,9 @@ import 'package:amide_app/features/data/services/database.dart';
 import 'package:flutter/material.dart';
 
 class RecordServices extends ChangeNotifier {
+  final TextEditingController systolic = TextEditingController();
+  final TextEditingController diastolic = TextEditingController();
+
   /// for toggle
   bool firstStep = false;
 
@@ -104,7 +107,21 @@ class RecordServices extends ChangeNotifier {
   void updateSixthStep() {
     doneSixthStep = true;
     sixthStep = false;
+    notifyListeners();
+  }
 
+  /// for toggle
+  bool finishStep = false;
+
+  void toggleFinishStep() {
+    finishStep = !finishStep;
+    notifyListeners();
+  }
+
+  /// for next step
+  bool doneFinishStep = false;
+
+  void updateFinishStep() {
     firstStep = false;
     doneFirstStep = false;
 
@@ -119,6 +136,12 @@ class RecordServices extends ChangeNotifier {
 
     fifthStep = false;
     doneFifthStep = false;
+
+    doneSixthStep = false;
+    sixthStep = false;
+
+    doneFinishStep = false;
+    finishStep = false;
 
     notifyListeners();
   }

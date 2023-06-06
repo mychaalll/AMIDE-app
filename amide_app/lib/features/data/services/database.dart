@@ -1,5 +1,4 @@
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
-import 'package:amide_app/features/data/models/records/vital.dart';
 import 'package:amide_app/features/data/models/records/vital_sub.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
@@ -68,25 +67,22 @@ class DatabaseServices {
       age: data.age,
       sex: data.sex,
       bloodType: data.bloodType,
-      // height: data.height,
-      // weight: data.weight,
       uid: uuid,
       isDeleted: data.isDeleted,
       timeStamp: DateTime.now(),
     );
 
-    Vital vital = Vital(
-      diastolic: 0,
-      systolic: 0,
-      oxygenRate: 0,
-      temperature: 0,
-      timeStamp: DateTime.now(),
-      heartRate: 0,
-      id: "",
-    );
+    // VitalSub vital = VitalSub(
+    //   diastolic: 0.0,
+    //   systolic: 0.0,
+    //   oxygenRate: 0.0,
+    //   temperature: 0.0,
+    //   timeStamp: Timestamp.now(),
+    //   heartRate: 0.0,
+    // );
 
     await _db.collection("elderly").doc(uuid).set(elderly.toJson());
-    _db.collection("elderly").doc(uuid).collection("vitalSign").doc(uuidVital).set(vital.toJson());
+    // await _db.collection("elderly").doc(uuid).collection("vitalSign").doc(uuidVital).set(vital.toJson());
   }
 
   /// [updateElderly] will update
@@ -125,6 +121,7 @@ class DatabaseServices {
         .orderBy("timeStamp", descending: true)
         .snapshots()
         .map(_vitalFromSnapshot);
+
     return query;
   }
 
@@ -140,30 +137,6 @@ class DatabaseServices {
       );
     }).toList();
   }
-
-  // Future<dynamic> getTemperature(uid) async {
-  //   final response = await _db
-  //       .collection("elderly")
-  //       .doc(uid)
-  //       .collection("vitalSign")
-  //       .orderBy(
-  //         "timeStamp",
-  //         descending: true,
-  //       )
-  //       .get();
-
-  //   final vitalSub = response.docs.map((snapshot) {
-  //     return VitalSub(
-  //       temperature: snapshot.get("temperature"),
-  //       timeStamp: snapshot.get("timeStamp"),
-  //       heartRate: snapshot.get("heartRate"),
-  //       oxygenRate: snapshot.get("oxygenRate"),
-  //       systolic: snapshot.get("systolic"),
-  //     );
-  //   }).toList();
-
-  //   return vitalSub;
-  // }
 
   Future<void> sendVital(Map<String, dynamic> object) async {
     final String uuidVital = const Uuid().v1();

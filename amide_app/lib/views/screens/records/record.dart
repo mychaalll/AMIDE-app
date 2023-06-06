@@ -30,18 +30,21 @@ class _RecordScreenState extends State<RecordScreen> {
         backgroundColor: AppColors.primBlue,
         title: Text(widget.elderly!.name),
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            record.updateFinishStep();
+            context.popRoute();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              // ElevatedButton(
-              //   onPressed: () {
-              //     context.pushRoute(const RecordingRoute());
-              //   },
-              //   child: const Text(""),
-              // ),
               const Text(
                 'Recording Data',
                 style: TextStyle(
@@ -89,6 +92,7 @@ class _RecordScreenState extends State<RecordScreen> {
                 ),
               ),
               // 3rd part
+
               Visibility(
                 visible: record.doneSecondStep,
                 child: CustomTimeline(
@@ -96,9 +100,9 @@ class _RecordScreenState extends State<RecordScreen> {
                   isLast: record.doneThirdStep ? false : true,
                   isDone: record.doneThirdStep,
                   content: TimelineContent(
-                    title: "Blood Pressure",
+                    title: "Body Mass Index",
                     bodyText:
-                        "Make sure the cuff is wrapped securely around the patient's arm, adn that the patient is seated comfortably with their arm supported at heart level. This will help to ensure accurate blood pressure readings.",
+                        "Measure the weight (kg) and measure also the height (in). The body mas index will help to indicate if you are have a normal weight. To calculate this, BMI = weight(kg)/height(in) * height(in) ) * 703",
                     bodyVitalText: "Blood Pressure: 120/80 mmHg",
                     isVisible: record.thirdStep,
                     toggleDown: () => record.toggleThirdStep(),
@@ -148,26 +152,47 @@ class _RecordScreenState extends State<RecordScreen> {
                   ),
                 ),
               ),
-              // 6th step
+
               Visibility(
                 visible: record.doneFifthStep,
                 child: CustomTimeline(
                   isFirst: record.doneFifthStep ? false : true,
-                  isLast: true,
+                  isLast: record.doneSixthStep ? false : true,
                   isDone: record.doneSixthStep,
                   content: TimelineContent(
-                    title: "Finish Recroding",
-                    bodyText: "Please check if all of the statistics taken are accurate.",
-                    bodyVitalText:
-                        "Temperature: 29.0 Celcius\nBlood Pressure: 120/80mmHg\nPulse Rate: 110 bpm\nBlood Oxygen Level: 95% SpO2",
+                    title: "Blood Pressure",
+                    bodyText:
+                        "Make sure the cuff is wrapped securely around the patient's arm, and that the patient is seated comfortably with their arm supported at heart level. This will help to ensure accurate blood pressure readings.",
+                    bodyVitalText: "Blood Pressure: 120/80 mmHg",
                     isVisible: record.sixthStep,
                     toggleDown: () => record.toggleSixthStep(),
-                    pressDone: () {
-                      record.updateSixthStep();
-                      context.popRoute();
-                    },
+                    pressDone: () => record.updateSixthStep(),
                     isDone: record.doneSixthStep,
                     isDown: record.sixthStep,
+                    isBloodPressure: true,
+                  ),
+                ),
+              ),
+              // 6th step
+              Visibility(
+                visible: record.doneSixthStep,
+                child: CustomTimeline(
+                  isFirst: record.doneSixthStep ? false : true,
+                  isLast: true,
+                  isDone: record.doneFinishStep,
+                  content: TimelineContent(
+                    title: "Finish Recording",
+                    bodyText: "Please check if all of the statistics taken are accurate.",
+                    bodyVitalText:
+                        "Temperature: 29.0 Celcius\nBody Mass Index: 20(kg), 40(in)\nPulse Rate: 110 bpm\nBlood Oxygen Level: 95% SpO2\nBlood Pressure: 120/23 mmHg",
+                    isVisible: record.finishStep,
+                    toggleDown: () => record.toggleFinishStep(),
+                    pressDone: () {
+                      record.updateFinishStep();
+                      context.popRoute();
+                    },
+                    isDone: record.doneFinishStep,
+                    isDown: record.finishStep,
                     hasRetry: false,
                     isFinish: true,
                   ),

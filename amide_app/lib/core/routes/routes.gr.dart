@@ -16,13 +16,13 @@ import 'package:amide_app/views/screens/elderly/create.dart' as _i3;
 import 'package:amide_app/views/screens/elderly/edit.dart' as _i4;
 import 'package:amide_app/views/screens/elderly/elderly.dart' as _i5;
 import 'package:amide_app/views/screens/elderly/view.dart' as _i6;
-import 'package:amide_app/views/screens/records/screens/all_records.dart' as _i7;
-import 'package:amide_app/views/screens/records/screens/record.dart' as _i8;
-import 'package:amide_app/views/screens/records/screens/recording.dart' as _i9;
-import 'package:amide_app/views/screens/reminder/screens/create.dart' as _i10;
-import 'package:amide_app/views/screens/reminder/screens/edit.dart' as _i11;
-import 'package:amide_app/views/screens/reminder/screens/reminder.dart' as _i12;
-import 'package:amide_app/views/screens/reminder/screens/view.dart' as _i13;
+import 'package:amide_app/views/screens/records/all.dart' as _i11;
+import 'package:amide_app/views/screens/records/record.dart' as _i12;
+import 'package:amide_app/views/screens/records/recording.dart' as _i13;
+import 'package:amide_app/views/screens/reminder/screens/create.dart' as _i7;
+import 'package:amide_app/views/screens/reminder/screens/edit.dart' as _i8;
+import 'package:amide_app/views/screens/reminder/screens/reminder.dart' as _i9;
+import 'package:amide_app/views/screens/reminder/screens/view.dart' as _i10;
 import 'package:auto_route/auto_route.dart' as _i14;
 import 'package:flutter/material.dart' as _i15;
 
@@ -49,6 +49,7 @@ abstract class $AppRouter extends _i14.RootStackRouter {
         child: const _i3.CreateElderlyScreen(),
       );
     },
+    
     EditElderlyRoute.name: (routeData) {
       final args = routeData.argsAs<EditElderlyRouteArgs>();
       return _i14.AutoRoutePage<dynamic>(
@@ -75,39 +76,17 @@ abstract class $AppRouter extends _i14.RootStackRouter {
         ),
       );
     },
-    AllRecordsRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i7.AllRecordsScreen(),
-      );
-    },
-    RecordRoute.name: (routeData) {
-      final args = routeData.argsAs<RecordRouteArgs>(orElse: () => const RecordRouteArgs());
-      return _i14.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i8.RecordScreen(
-          key: args.key,
-          elderly: args.elderly,
-        ),
-      );
-    },
-    RecordingRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i9.RecordingScreen(),
-      );
-    },
     CreateReminderRoute.name: (routeData) {
       return _i14.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.CreateReminderScreen(),
+        child: const _i7.CreateReminderScreen(),
       );
     },
     EditReminderRoute.name: (routeData) {
       final args = routeData.argsAs<EditReminderRouteArgs>();
       return _i14.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i11.EditReminderScreen(
+        child: _i8.EditReminderScreen(
           currentReminder: args.currentReminder,
           key: args.key,
         ),
@@ -116,13 +95,41 @@ abstract class $AppRouter extends _i14.RootStackRouter {
     ReminderRoute.name: (routeData) {
       return _i14.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i12.ReminderScreen(),
+        child: const _i9.ReminderScreen(),
       );
     },
     ViewReminderRoute.name: (routeData) {
       return _i14.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i13.ViewReminderScreen(),
+        child: const _i10.ViewReminderScreen(),
+      );
+    },
+    AllRecordsRoute.name: (routeData) {
+      final args = routeData.argsAs<AllRecordsRouteArgs>(
+          orElse: () => const AllRecordsRouteArgs());
+      return _i14.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i11.AllRecordsScreen(
+          elderly: args.elderly,
+          key: args.key,
+        ),
+      );
+    },
+    RecordRoute.name: (routeData) {
+      final args = routeData.argsAs<RecordRouteArgs>(
+          orElse: () => const RecordRouteArgs());
+      return _i14.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i12.RecordScreen(
+          key: args.key,
+          elderly: args.elderly,
+        ),
+      );
+    },
+    RecordingRoute.name: (routeData) {
+      return _i14.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i13.RecordingScreen(),
       );
     },
   };
@@ -188,7 +195,8 @@ class EditElderlyRoute extends _i14.PageRouteInfo<EditElderlyRouteArgs> {
 
   static const String name = 'EditElderlyRoute';
 
-  static const _i14.PageInfo<EditElderlyRouteArgs> page = _i14.PageInfo<EditElderlyRouteArgs>(name);
+  static const _i14.PageInfo<EditElderlyRouteArgs> page =
+      _i14.PageInfo<EditElderlyRouteArgs>(name);
 }
 
 class EditElderlyRouteArgs {
@@ -239,7 +247,8 @@ class ViewElderlyRoute extends _i14.PageRouteInfo<ViewElderlyRouteArgs> {
 
   static const String name = 'ViewElderlyRoute';
 
-  static const _i14.PageInfo<ViewElderlyRouteArgs> page = _i14.PageInfo<ViewElderlyRouteArgs>(name);
+  static const _i14.PageInfo<ViewElderlyRouteArgs> page =
+      _i14.PageInfo<ViewElderlyRouteArgs>(name);
 }
 
 class ViewElderlyRouteArgs {
@@ -259,72 +268,7 @@ class ViewElderlyRouteArgs {
 }
 
 /// generated route for
-/// [_i7.AllRecordsScreen]
-class AllRecordsRoute extends _i14.PageRouteInfo<void> {
-  const AllRecordsRoute({List<_i14.PageRouteInfo>? children})
-      : super(
-          AllRecordsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AllRecordsRoute';
-
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i8.RecordScreen]
-class RecordRoute extends _i14.PageRouteInfo<RecordRouteArgs> {
-  RecordRoute({
-    _i15.Key? key,
-    _i16.Elderly? elderly,
-    List<_i14.PageRouteInfo>? children,
-  }) : super(
-          RecordRoute.name,
-          args: RecordRouteArgs(
-            key: key,
-            elderly: elderly,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'RecordRoute';
-
-  static const _i14.PageInfo<RecordRouteArgs> page = _i14.PageInfo<RecordRouteArgs>(name);
-}
-
-class RecordRouteArgs {
-  const RecordRouteArgs({
-    this.key,
-    this.elderly,
-  });
-
-  final _i15.Key? key;
-
-  final _i16.Elderly? elderly;
-
-  @override
-  String toString() {
-    return 'RecordRouteArgs{key: $key, elderly: $elderly}';
-  }
-}
-
-/// generated route for
-/// [_i9.RecordingScreen]
-class RecordingRoute extends _i14.PageRouteInfo<void> {
-  const RecordingRoute({List<_i14.PageRouteInfo>? children})
-      : super(
-          RecordingRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'RecordingRoute';
-
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i10.CreateReminderScreen]
+/// [_i7.CreateReminderScreen]
 class CreateReminderRoute extends _i14.PageRouteInfo<void> {
   const CreateReminderRoute({List<_i14.PageRouteInfo>? children})
       : super(
@@ -338,7 +282,7 @@ class CreateReminderRoute extends _i14.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i11.EditReminderScreen]
+/// [_i8.EditReminderScreen]
 class EditReminderRoute extends _i14.PageRouteInfo<EditReminderRouteArgs> {
   EditReminderRoute({
     required _i17.Reminder currentReminder,
@@ -355,7 +299,8 @@ class EditReminderRoute extends _i14.PageRouteInfo<EditReminderRouteArgs> {
 
   static const String name = 'EditReminderRoute';
 
-  static const _i14.PageInfo<EditReminderRouteArgs> page = _i14.PageInfo<EditReminderRouteArgs>(name);
+  static const _i14.PageInfo<EditReminderRouteArgs> page =
+      _i14.PageInfo<EditReminderRouteArgs>(name);
 }
 
 class EditReminderRouteArgs {
@@ -375,7 +320,7 @@ class EditReminderRouteArgs {
 }
 
 /// generated route for
-/// [_i12.ReminderScreen]
+/// [_i9.ReminderScreen]
 class ReminderRoute extends _i14.PageRouteInfo<void> {
   const ReminderRoute({List<_i14.PageRouteInfo>? children})
       : super(
@@ -389,7 +334,7 @@ class ReminderRoute extends _i14.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.ViewReminderScreen]
+/// [_i10.ViewReminderScreen]
 class ViewReminderRoute extends _i14.PageRouteInfo<void> {
   const ViewReminderRoute({List<_i14.PageRouteInfo>? children})
       : super(
@@ -398,6 +343,96 @@ class ViewReminderRoute extends _i14.PageRouteInfo<void> {
         );
 
   static const String name = 'ViewReminderRoute';
+
+  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i11.AllRecordsScreen]
+class AllRecordsRoute extends _i14.PageRouteInfo<AllRecordsRouteArgs> {
+  AllRecordsRoute({
+    _i16.Elderly? elderly,
+    _i15.Key? key,
+    List<_i14.PageRouteInfo>? children,
+  }) : super(
+          AllRecordsRoute.name,
+          args: AllRecordsRouteArgs(
+            elderly: elderly,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AllRecordsRoute';
+
+  static const _i14.PageInfo<AllRecordsRouteArgs> page =
+      _i14.PageInfo<AllRecordsRouteArgs>(name);
+}
+
+class AllRecordsRouteArgs {
+  const AllRecordsRouteArgs({
+    this.elderly,
+    this.key,
+  });
+
+  final _i16.Elderly? elderly;
+
+  final _i15.Key? key;
+
+  @override
+  String toString() {
+    return 'AllRecordsRouteArgs{elderly: $elderly, key: $key}';
+  }
+}
+
+/// generated route for
+/// [_i12.RecordScreen]
+class RecordRoute extends _i14.PageRouteInfo<RecordRouteArgs> {
+  RecordRoute({
+    _i15.Key? key,
+    _i16.Elderly? elderly,
+    List<_i14.PageRouteInfo>? children,
+  }) : super(
+          RecordRoute.name,
+          args: RecordRouteArgs(
+            key: key,
+            elderly: elderly,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'RecordRoute';
+
+  static const _i14.PageInfo<RecordRouteArgs> page =
+      _i14.PageInfo<RecordRouteArgs>(name);
+}
+
+class RecordRouteArgs {
+  const RecordRouteArgs({
+    this.key,
+    this.elderly,
+  });
+
+  final _i15.Key? key;
+
+  final _i16.Elderly? elderly;
+
+  @override
+  String toString() {
+    return 'RecordRouteArgs{key: $key, elderly: $elderly}';
+  }
+}
+
+/// generated route for
+/// [_i13.RecordingScreen]
+class RecordingRoute extends _i14.PageRouteInfo<void> {
+  const RecordingRoute({List<_i14.PageRouteInfo>? children})
+      : super(
+          RecordingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RecordingRoute';
 
   static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
 }

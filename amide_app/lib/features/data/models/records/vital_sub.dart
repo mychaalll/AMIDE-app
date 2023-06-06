@@ -16,7 +16,7 @@ class VitalSub {
   double oxygenRate;
   double systolic;
   double diastolic;
-  Timestamp timeStamp;
+  Timestamp? timeStamp;
 
   VitalSub({
     required this.temperature,
@@ -24,7 +24,7 @@ class VitalSub {
     required this.oxygenRate,
     required this.systolic,
     required this.diastolic,
-    required this.timeStamp,
+    this.timeStamp,
   });
 
   factory VitalSub.fromJson(Map<String, dynamic> json) => VitalSub(

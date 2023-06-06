@@ -20,8 +20,19 @@ class ElderlyGraphs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ElderlyData elderlyData = Provider.of<ElderlyData>(context);
-    return SizedBox(
-      height: 200,
+    return Container(
+      height: 300,
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
       child: Row(
         children: [
           Expanded(
