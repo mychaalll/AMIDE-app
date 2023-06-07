@@ -1,6 +1,8 @@
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/features/data/provider/recording.dart';
+import 'package:amide_app/features/data/services/realtime.dart';
 import 'package:amide_app/views/widgets/buttons/step.dart';
+import 'package:amide_app/views/widgets/fields/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,9 +15,10 @@ class TimelineContent extends StatelessWidget {
     required this.title,
     required this.toggleDown,
     required this.pressDone,
+    this.pressRetry,
     this.isDown = false,
     this.hasRetry = true,
-    this.isFinish = false,
+    this.isFirst = false,
     this.isDone = false,
     this.isBloodPressure = false,
   }) : super(key: key);
@@ -26,9 +29,10 @@ class TimelineContent extends StatelessWidget {
   final String title;
   final Function()? toggleDown;
   final Function()? pressDone;
+  final Function()? pressRetry;
   final bool isDown;
   final bool hasRetry;
-  final bool isFinish;
+  final bool isFirst;
   final bool isDone;
   final bool isBloodPressure;
 
@@ -38,16 +42,16 @@ class TimelineContent extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
-      child: Container(
-        decoration: BoxDecoration(
-          color: isDone ? Colors.green : AppColors.primBlue,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: toggleDown,
-              child: Padding(
+      child: GestureDetector(
+        onTap: toggleDown,
+        child: Container(
+          decoration: BoxDecoration(
+            color: isDone ? Colors.green : AppColors.primBlue,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            children: [
+              Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,156 +72,105 @@ class TimelineContent extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            Visibility(
-              visible: isVisible,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(12),
-                    bottomRight: Radius.circular(12),
+              Visibility(
+                visible: isVisible,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      bottomRight: Radius.circular(12),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        bodyText,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          height: 1.5,
+                        ),
+                      ),
+                      Text(
+                        bodyVitalText ?? "",
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          height: 1.5,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      isBloodPressure
+                          ? Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: CustomTextField(
+                                        label: "Systolic",
+                                        hintText: "Systolic",
+                                        keyboardType: TextInputType.number,
+                                        controller: record.systolic,
+                                        icon: IconButton(
+                                          onPressed: () {},
+                                          icon: const CircleAvatar(
+                                            child: Icon(Icons.arrow_right),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                CustomTextField(
+                                  label: "Diastolic",
+                                  hintText: "Diastolic",
+                                  keyboardType: TextInputType.number,
+                                  controller: record.diastolic,
+                                  icon: IconButton(
+                                    onPressed: () {},
+                                    icon: const CircleAvatar(
+                                      child: Icon(Icons.arrow_right),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                      isFirst
+                          ? Align(
+                              alignment: Alignment.bottomRight,
+                              child: StepButton(
+                                title: "Done",
+                                onPressed: () async {
+                                  await Realtime().recordData();
+                                },
+                              ),
+                            )
+                          : Align(
+                              alignment: Alignment.bottomLeft,
+                              child: StepButton(
+                                title: "Retry",
+                                onPressed: pressRetry,
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
+                    ],
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      bodyText,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        height: 1.5,
-                      ),
-                    ),
-                    Text(
-                      bodyVitalText ?? "",
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                        height: 1.5,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    isBloodPressure
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      "Systolic",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.5,
-                                      ),
-                                    ),
-                                    Wrap(
-                                      alignment: WrapAlignment.center,
-                                      children: List.generate(
-                                        9,
-                                        (index) => GestureDetector(
-                                          onTap: () {
-                                            print(index);
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(10),
-                                            margin: const EdgeInsets.all(2),
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(8),
-                                              color: AppColors.primBlue,
-                                            ),
-                                            child: Text(
-                                              "$index",
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ).toList(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      "Diastolic",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w700,
-                                        height: 1.5,
-                                      ),
-                                    ),
-                                    Wrap(
-                                      alignment: WrapAlignment.center,
-                                      children: List.generate(
-                                        9,
-                                        (index) => GestureDetector(
-                                          onTap: () {
-                                            print(index);
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(10),
-                                            margin: const EdgeInsets.all(2),
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(8),
-                                              color: AppColors.primBlue,
-                                            ),
-                                            child: Text(
-                                              "$index",
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ).toList(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )
-                        : const SizedBox.shrink(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Visibility(
-                          visible: hasRetry,
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: StepButton(
-                              title: "Retry",
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: StepButton(
-                            title: isFinish ? "Finish" : "Done",
-                            onPressed: pressDone,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

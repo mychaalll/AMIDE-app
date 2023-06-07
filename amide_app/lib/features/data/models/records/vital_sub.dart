@@ -16,6 +16,8 @@ class VitalSub {
   double oxygenRate;
   double systolic;
   double diastolic;
+  double? height;
+  double? weight;
   Timestamp? timeStamp;
 
   VitalSub({
@@ -24,6 +26,8 @@ class VitalSub {
     required this.oxygenRate,
     required this.systolic,
     required this.diastolic,
+    this.weight,
+    this.height,
     this.timeStamp,
   });
 
@@ -33,6 +37,8 @@ class VitalSub {
         oxygenRate: json["oxygenRate"].toDouble(),
         systolic: json["systolic"].toDouble(),
         diastolic: json["diastolic"].toDouble(),
+        height: json["height"].toDouble(),
+        weight: json["weight"].toDouble(),
         timeStamp: json["timeStamp"],
       );
 
@@ -43,5 +49,7 @@ class VitalSub {
         "systolic": systolic,
         "diastolic": diastolic,
         "timeStamp": timeStamp,
+        "height": height,
+        "weight": weight,
       };
 }

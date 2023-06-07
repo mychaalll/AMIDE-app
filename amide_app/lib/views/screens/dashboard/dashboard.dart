@@ -1,6 +1,8 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:amide_app/features/data/services/database.dart';
+import 'package:amide_app/views/widgets/reminder/tile.dart';
 import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
@@ -25,18 +27,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    getData();
-  }
-
-  getData() {
-    Provider.of<ReminderData>(context, listen: false).getReminders();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<ReminderData>(builder: (context, value, child) {
-        final reminderLength = value.reminderCount;
+        // final reminderLength = value.reminderCount;
         return SafeArea(
           child: SingleChildScrollView(
             child: Container(
@@ -106,70 +103,118 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                         ),
                         const SizedBox(height: 22),
-                        reminderLength == 0
-                            ? const Text("Please input a reminder.")
-                            : SizedBox(
-                                height: 200,
-                                child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: reminderLength < 3 ? reminderLength : 3,
-                                  itemBuilder: (context, index) {
-                                    final currentReminder = value.getReminder(index);
-                                    return Container(
-                                      padding: const EdgeInsets.all(10),
-                                      margin: const EdgeInsets.only(bottom: 10),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: ListTile(
-                                        leading: Text(
-                                          currentReminder.time,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        horizontalTitleGap: 50,
-                                        title: Text(
-                                          currentReminder.name,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        subtitle: Text(currentReminder.detail),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                        const SizedBox(height: 22),
-                        ElevatedButton(
-                            onPressed: () {
-                              context.pushRoute(
-                                const ReminderRoute(),
+                        StreamBuilder(
+                          stream: DatabaseServices().reminders,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
                               );
-                            },
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
-                                overlayColor: MaterialStateProperty.all(const Color.fromARGB(255, 2, 5, 27)),
-                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ))),
-                            child: const SizedBox(
-                              height: 40,
-                              child: Center(
-                                child: Text(
-                                  'View Reminders',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ))
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text("${snapshot.error}"),
+                              );
+                            }
+
+                            return snapshot.data!.isEmpty
+                                ? const SizedBox(
+                                    width: double.infinity,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: 60),
+                                        Icon(
+                                          Icons.cancel_sharp,
+                                          size: 100,
+                                        ),
+                                        Text(
+                                          'No Reminders yet',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 18,
+                                              fontFamily: 'Montserrat',
+                                              color: Colors.black),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : SizedBox(
+                                    height: 270,
+                                    child: ListView.builder(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      itemCount: snapshot.data!.length,
+                                      itemBuilder: (context, index) {
+                                        return ReminderTile(
+                                          reminder: snapshot.data![index],
+                                        );
+                                      },
+                                    ),
+                                  );
+                          },
+                        ),
+                        //   reminderLength == 0
+                        //       ? const Text("Please input a reminder.")
+                        //       : SizedBox(
+                        //           height: 200,
+                        //           child: ListView.builder(
+                        //             physics: const NeverScrollableScrollPhysics(),
+                        //             itemCount: reminderLength < 3 ? reminderLength : 3,
+                        //             itemBuilder: (context, index) {
+                        //               final currentReminder = value.getReminder(index);
+                        //               return Container(
+                        //                 padding: const EdgeInsets.all(10),
+                        //                 margin: const EdgeInsets.only(bottom: 10),
+                        //                 decoration: BoxDecoration(
+                        //                   color: Colors.white,
+                        //                   borderRadius: BorderRadius.circular(10),
+                        //                 ),
+                        //                 child: ListTile(
+                        //                   leading: Text(
+                        //                     currentReminder.time,
+                        //                     style: const TextStyle(
+                        //                       fontWeight: FontWeight.w700,
+                        //                     ),
+                        //                   ),
+                        //                   horizontalTitleGap: 50,
+                        //                   title: Text(
+                        //                     currentReminder.name,
+                        //                     style: const TextStyle(
+                        //                       fontWeight: FontWeight.w700,
+                        //                       fontSize: 20,
+                        //                     ),
+                        //                   ),
+                        //                   subtitle: Text(currentReminder.detail),
+                        //                 ),
+                        //               );
+                        //             },
+                        //           ),
+                        //         ),
+                        //   const SizedBox(height: 22),
+                        //   ElevatedButton(
+                        //       onPressed: () {
+                        //         context.pushRoute(
+                        //           const ReminderRoute(),
+                        //         );
+                        //       },
+                        //       style: ButtonStyle(
+                        //           backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
+                        //           overlayColor: MaterialStateProperty.all(const Color.fromARGB(255, 2, 5, 27)),
+                        //           shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                        //             borderRadius: BorderRadius.circular(12),
+                        //           ))),
+                        //       child: const SizedBox(
+                        //         height: 40,
+                        //         child: Center(
+                        //           child: Text(
+                        //             'View Reminders',
+                        //             style: TextStyle(
+                        //               fontWeight: FontWeight.w600,
+                        //               fontSize: 12,
+                        //               fontFamily: 'Montserrat',
+                        //               color: Colors.white,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ))
                       ],
                     ),
                     const SizedBox(height: 26),

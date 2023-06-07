@@ -44,6 +44,7 @@ class CustomDropDown extends StatelessWidget {
                 decoration: const InputDecoration(
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
+                  enabled: false,
                 ),
                 isExpanded: true,
                 value: value ?? item[0],
