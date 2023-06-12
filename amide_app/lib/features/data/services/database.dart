@@ -57,6 +57,24 @@ class DatabaseServices {
     return _db.collection("elderly").doc("uid").snapshots().map(_elderlyDataFromSnapshot);
   }
 
+
+
+  Stream elderVital(uid) {
+    return _db
+        .collection("elderly")
+        .doc(uid)
+        .collection("vitalSign")
+        .orderBy("timeStamp", descending: true)
+        .snapshots()
+        .map(vitalFromDashboard);
+  }
+
+  List vitalFromDashboard(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return doc.get("temperature");
+    }).toList();
+  }
+
   /// [sendElderly] will send data
   /// to the firestore
   Future<dynamic> sendElderly({Elderly? data}) async {

@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 
 class DashboardRecordTile extends StatelessWidget {
   final String name;
+  final double celcius;
   const DashboardRecordTile({
     Key? key,
     required this.name,
+    required this.celcius,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -29,32 +32,32 @@ class DashboardRecordTile extends StatelessWidget {
             ),
             const SizedBox(height: 10.0),
             //2nd row
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: Row(
                     children: [
-                      SizedBox(width: 20),
-                      Icon(
+                      const SizedBox(width: 20),
+                      const Icon(
                         Icons.thermostat_outlined,
                         color: Colors.blue,
                         size: 30,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: Text(
-                          ' Celcius',
+                          '$celcius Celcius',
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Row(
                     children: [
                       SizedBox(width: 40),

@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:amide_app/features/data/models/records/vital_sub.dart';
 import 'package:amide_app/features/data/models/reminder/music.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -35,13 +37,31 @@ class Realtime {
       "oxygenRate": -1,
       "temperature": -1,
     });
+
+    print("Set to -1");
+    await sendData();
   }
 
-  // Future<dynamic> sendData() async {
-  //    vital_db.once().then((DataSnapshot snapshot) {
-  //         if (snapshot.value != null) {
-  //           print(snapshot.value);
-  //         }
-  //       };
-  // }
+  VitalSub vital = VitalSub();
+
+  Future<dynamic> sendData() async {
+    vital_db.onValue.listen(
+      (event) {
+        DataSnapshot snapshot = event.snapshot;
+        if (snapshot.value != null) {
+          String jsonString = json.encode(snapshot.value);
+
+          Map<dynamic, dynamic> data = json.decode(jsonString);
+
+          final temperature = data["temperature"];
+          final height = data["height"];
+
+          vital = VitalSub.fromJson(data as Map<String, dynamic>);
+
+          print(temperature);
+          print(height);
+        }
+      },
+    );
+  }
 }

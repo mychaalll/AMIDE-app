@@ -84,7 +84,7 @@ class _RecordScreenState extends State<RecordScreen> {
                     title: "Body Temperature",
                     bodyText:
                         "Ensure that the temperature sensor is in contact with the patient's body for at least 1-2 minutes or until a temperature reading is obtained to ensure accurate measurements.",
-                    bodyVitalText: "Temperature: 29.0 Celcius",
+                    bodyVitalText: "Temperature: ${record.temperature} Celcius",
                     isVisible: record.secondStep,
                     toggleDown: () => record.toggleSecondStep(),
                     pressDone: () => record.updateSecondStep(),

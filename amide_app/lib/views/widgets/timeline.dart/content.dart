@@ -154,6 +154,7 @@ class TimelineContent extends StatelessWidget {
                                 title: "Done",
                                 onPressed: () async {
                                   await Realtime().recordData();
+                                  record.updateFirstStep();
                                 },
                               ),
                             )
