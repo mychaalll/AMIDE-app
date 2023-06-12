@@ -17,8 +17,19 @@ class BloodPressureLineChart extends StatelessWidget {
     double i = 0;
     double j = 0;
 
-    return SizedBox(
+    return Container(
       height: 400,
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
       child: Row(
         children: [
           Expanded(

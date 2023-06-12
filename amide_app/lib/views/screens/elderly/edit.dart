@@ -39,14 +39,8 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
   void initState() {
     final ElderlyData elderlyData = Provider.of<ElderlyData>(context, listen: false);
     _nameController.text = widget.elderly.name;
-    newName = widget.elderly.name;
-
     _ageController.text = widget.elderly.age.toString();
-    newAge = widget.elderly.age;
-
     _descriptionController.text = widget.elderly.description ?? "";
-    newDescription = widget.elderly.description ?? "";
-
     elderlyData.bloodType = widget.elderly.bloodType;
     elderlyData.sex = widget.elderly.sex;
 
@@ -66,6 +60,7 @@ class _EditElderlyScreenState extends State<EditElderlyScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
+            
             context.popRoute();
           },
           icon: const Icon(

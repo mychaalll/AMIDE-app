@@ -84,13 +84,6 @@ class ElderlyRecords extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     elderlyData.getTemperature(elderly!.uid);
-            //   },
-            //   child: const Text("Get"),
-            // ),
-
             StreamBuilder(
               stream: DatabaseServices().streamVital(elderly!.uid),
               builder: (context, snapshot) {
@@ -100,72 +93,100 @@ class ElderlyRecords extends StatelessWidget {
                 final systolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.systolic).toList();
                 final diastolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.diastolic).toList();
 
-                print(systolic);
-                return Column(
-                  children: [
-                    ElderlyGraphs(
-                      graph: Graph(
-                        maxY: 40,
-                        minY: 30,
-                        data: temperature ?? [],
-                      ),
-                      title: "Temperature",
-                      detail: "${temperature?.first} ° Celcius",
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElderlyGraphs(
-                      title: "Heart Rate",
-                      detail: "${heartRate?.first} bpm",
-                      graph: Graph(
-                        maxY: 100,
-                        minY: 70,
-                        data: heartRate ?? [],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    ElderlyGraphs(
-                      title: "Oxygen Saturation",
-                      detail: "${oxygenRate?.first} bpm",
-                      graph: Graph(
-                        maxY: 100,
-                        minY: 92,
-                        data: oxygenRate ?? [],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    elderlyData.isBar
-                        ? BloodPressureBarChart(
-                            systolic: systolic ?? [],
-                            diastolic: diastolic ?? [],
-                          )
-                        : BloodPressureLineChart(
-                            systolic: systolic ?? [],
-                            diastolic: diastolic ?? [],
-                          ),
-                  ],
-                );
-              },
-            ),
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
 
-            const SizedBox(
-              height: 40,
-            ),
-
-            CustomButton(
-              label: "View All Records",
-              onPressed: () {
-                context.pushRoute(
-                  const AllRecordsRoute(),
-                );
+                if (snapshot.data!.isNotEmpty) {
+                  return Column(
+                    children: [
+                      ElderlyGraphs(
+                        graph: Graph(
+                          maxY: 40,
+                          minY: 30,
+                          data: temperature ?? [],
+                        ),
+                        title: "Temperature",
+                        detail: "${temperature?.first} ° Celcius",
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElderlyGraphs(
+                        title: "Heart Rate",
+                        detail: "${heartRate?.first} bpm",
+                        graph: Graph(
+                          maxY: 100,
+                          minY: 70,
+                          data: heartRate ?? [],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElderlyGraphs(
+                        title: "Oxygen Saturation",
+                        detail: "${oxygenRate?.first} bpm",
+                        graph: Graph(
+                          maxY: 100,
+                          minY: 92,
+                          data: oxygenRate ?? [],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      elderlyData.isBar
+                          ? BloodPressureBarChart(
+                              systolic: systolic ?? [],
+                              diastolic: diastolic ?? [],
+                            )
+                          : BloodPressureLineChart(
+                              systolic: systolic ?? [],
+                              diastolic: diastolic ?? [],
+                            ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CustomButton(
+                        label: "View All Records",
+                        onPressed: () {
+                          context.pushRoute(
+                            AllRecordsRoute(
+                              elderly: elderly,
+                            ),
+                          );
+                        },
+                        hasIcon: false,
+                      ),
+                    ],
+                  );
+                } else {
+                  return const Column(
+                    children: [
+                      SizedBox(height: 60),
+                      Icon(
+                        Icons.cancel_sharp,
+                        size: 100,
+                      ),
+                      Text(
+                        'No Records yet',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  );
+                }
               },
-              hasIcon: false,
-            ),
+            )
           ],
         ),
       ),

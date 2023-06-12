@@ -1,5 +1,4 @@
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
-import 'package:amide_app/features/data/models/records/vital_sub.dart';
 import 'package:amide_app/features/data/services/database.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -31,6 +30,7 @@ class ElderlyData extends ChangeNotifier {
         // height: double.parse(heightController.value.text),
         // weight: double.parse(weightController.value.text),
         isDeleted: false,
+        uid: uid,
       ),
     );
 
@@ -86,20 +86,4 @@ class ElderlyData extends ChangeNotifier {
     isBar = !isBar;
     notifyListeners();
   }
-
-  List vitalSub = [];
-  List temperature = [];
-  List heartRate = [];
-
-  // Future<void> getTemperature(uid) async {
-  //   final List<VitalSub> response = await DatabaseServices().getTemperature(uid);
-  //   vitalSub = response;
-
-  //   temperature = response.map((VitalSub vital) => vital.temperature).toList();
-  //   heartRate = response.map((VitalSub vital) => vital.heartRate).toList();
-
-  //   print("Vital List: $temperature");
-  //   print("Heart Rate: $heartRate");
-  //   notifyListeners();
-  // }
 }

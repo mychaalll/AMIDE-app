@@ -1,11 +1,11 @@
 class Graph {
-  final List data;
   final double maxY;
   final double minY;
+  final List data;
 
   Graph({
-    required this.data,
-    required this.maxY,
     required this.minY,
+    required this.maxY,
+    required this.data,
   });
 }

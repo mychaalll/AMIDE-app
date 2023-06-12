@@ -30,6 +30,7 @@ class RecordsBarChart extends StatelessWidget {
             x: i++,
             barRods: [
               BarChartRodData(
+                width: 10,
                 toY: model,
                 color: AppColors.primBlue,
                 borderRadius: BorderRadius.circular(4),

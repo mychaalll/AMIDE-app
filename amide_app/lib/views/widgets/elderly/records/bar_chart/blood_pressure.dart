@@ -17,8 +17,19 @@ class BloodPressureBarChart extends StatelessWidget {
     int i = 0;
     int j = 0;
 
-    return SizedBox(
+    return Container(
       height: 400,
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
       child: Row(
         children: [
           Expanded(
@@ -36,12 +47,12 @@ class BloodPressureBarChart extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
+                  textAlign: TextAlign.center,
                   "${systolic.first} / ${diastolic.first} mmHg",
                   style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
@@ -67,6 +78,7 @@ class BloodPressureBarChart extends StatelessWidget {
                           x: i++,
                           barRods: [
                             BarChartRodData(
+                              width: 10,
                               toY: model,
                               color: AppColors.primBlue,
                               borderRadius: BorderRadius.circular(4),
@@ -103,6 +115,7 @@ class BloodPressureBarChart extends StatelessWidget {
                           x: j++,
                           barRods: [
                             BarChartRodData(
+                              width: 10,
                               toY: model,
                               color: AppColors.primBlue,
                               borderRadius: BorderRadius.circular(4),

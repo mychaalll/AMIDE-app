@@ -1,6 +1,6 @@
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
-import 'package:amide_app/features/data/models/records/vital.dart';
 import 'package:amide_app/features/data/models/records/vital_sub.dart';
+import 'package:amide_app/features/data/models/reminder/reminder.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
@@ -57,36 +57,41 @@ class DatabaseServices {
     return _db.collection("elderly").doc("uid").snapshots().map(_elderlyDataFromSnapshot);
   }
 
+
+
+  Stream elderVital(uid) {
+    return _db
+        .collection("elderly")
+        .doc(uid)
+        .collection("vitalSign")
+        .orderBy("timeStamp", descending: true)
+        .snapshots()
+        .map(vitalFromDashboard);
+  }
+
+  List vitalFromDashboard(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return doc.get("temperature");
+    }).toList();
+  }
+
   /// [sendElderly] will send data
   /// to the firestore
   Future<dynamic> sendElderly({Elderly? data}) async {
     final String uuid = const Uuid().v1();
-    final String uuidVital = const Uuid().v1();
 
     Elderly elderly = Elderly(
       name: data!.name,
       age: data.age,
       sex: data.sex,
       bloodType: data.bloodType,
-      // height: data.height,
-      // weight: data.weight,
       uid: uuid,
       isDeleted: data.isDeleted,
       timeStamp: DateTime.now(),
     );
 
-    Vital vital = Vital(
-      diastolic: 0,
-      systolic: 0,
-      oxygenRate: 0,
-      temperature: 0,
-      timeStamp: DateTime.now(),
-      heartRate: 0,
-      id: "",
-    );
-
     await _db.collection("elderly").doc(uuid).set(elderly.toJson());
-    _db.collection("elderly").doc(uuid).collection("vitalSign").doc(uuidVital).set(vital.toJson());
+    // await _db.collection("elderly").doc(uuid).collection("vitalSign").doc(uuidVital).set(vital.toJson());
   }
 
   /// [updateElderly] will update
@@ -113,6 +118,36 @@ class DatabaseServices {
     }, SetOptions(merge: true));
   }
 
+  Future<void> createReminder(Reminder reminder) async {
+    await _db.collection("reminder").doc(reminder.id).set(reminder.toJson());
+  }
+
+  Future<void> editReminder(Reminder reminder) async {
+    await _db.collection("reminder").doc(reminder.id).update(reminder.toJson());
+  }
+
+  Future<void> deleteReminder(String id) async {
+    await _db.collection("reminder").doc(id).delete();
+  }
+
+  Stream<List<Reminder>> get reminders {
+    return _db.collection("reminder").orderBy("dateTime", descending: true).snapshots().map(_reminderFromSnapshot);
+  }
+
+  List<Reminder> _reminderFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      final Timestamp dateTime = doc.get("dateTime");
+
+      return Reminder(
+        name: doc.get("name"),
+        time: doc.get("time"),
+        detail: doc.get("detail"),
+        dateTime: dateTime.toDate(),
+        id: doc.get("id"),
+      );
+    }).toList();
+  }
+
   /// THIS IS START OF VITAL SIGNS
 
   /// Get stream of vital model
@@ -125,6 +160,7 @@ class DatabaseServices {
         .orderBy("timeStamp", descending: true)
         .snapshots()
         .map(_vitalFromSnapshot);
+
     return query;
   }
 
@@ -140,30 +176,6 @@ class DatabaseServices {
       );
     }).toList();
   }
-
-  // Future<dynamic> getTemperature(uid) async {
-  //   final response = await _db
-  //       .collection("elderly")
-  //       .doc(uid)
-  //       .collection("vitalSign")
-  //       .orderBy(
-  //         "timeStamp",
-  //         descending: true,
-  //       )
-  //       .get();
-
-  //   final vitalSub = response.docs.map((snapshot) {
-  //     return VitalSub(
-  //       temperature: snapshot.get("temperature"),
-  //       timeStamp: snapshot.get("timeStamp"),
-  //       heartRate: snapshot.get("heartRate"),
-  //       oxygenRate: snapshot.get("oxygenRate"),
-  //       systolic: snapshot.get("systolic"),
-  //     );
-  //   }).toList();
-
-  //   return vitalSub;
-  // }
 
   Future<void> sendVital(Map<String, dynamic> object) async {
     final String uuidVital = const Uuid().v1();
