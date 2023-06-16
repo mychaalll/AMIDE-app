@@ -20,8 +20,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  String name = 'Edilberto';
-
   @override
   void initState() {
     super.initState();
@@ -47,7 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   children: [
                     const SizedBox(height: 11),
                     //hello user, settings icon
-                    Topbar(name: name),
+                    const Topbar(name: "Guardian"),
                     const SizedBox(height: 20),
                     //date
                     Center(

@@ -16,11 +16,8 @@ class Topbar extends StatelessWidget {
             const Text(
               'Hello',
               textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
-                  fontFamily: 'Montserrat',
-                  color: Colors.black),
+              style:
+                  TextStyle(fontWeight: FontWeight.w500, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
             ),
             const SizedBox(height: 7),
             Text(
@@ -28,20 +25,18 @@ class Topbar extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
               style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  fontFamily: 'Montserrat',
-                  color: Colors.black),
+                  fontWeight: FontWeight.w600, fontSize: 16, fontFamily: 'Montserrat', color: Colors.black),
             ),
           ],
         ),
         IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.settings,
-              size: 23,
-              color: Colors.black,
-            )),
+          onPressed: () {},
+          icon: const Icon(
+            Icons.settings,
+            size: 23,
+            color: Colors.black,
+          ),
+        ),
       ],
     );
   }
