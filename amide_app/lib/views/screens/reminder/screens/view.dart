@@ -1,22 +1,45 @@
+import 'package:amide_app/core/routes/routes.gr.dart';
+import 'package:amide_app/features/data/models/reminder/reminder.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
+import 'package:amide_app/views/widgets/fields/custom.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/routes/routes.gr.dart';
-import '../../../../features/data/models/reminder/reminder.dart';
-
 @RoutePage()
-class ViewReminderScreen extends StatelessWidget {
-  const ViewReminderScreen({super.key});
+class ViewReminderScreen extends StatefulWidget {
+  const ViewReminderScreen({
+    super.key,
+    required this.reminder,
+  });
+
+  final Reminder reminder;
+
+  @override
+  State<ViewReminderScreen> createState() => _ViewReminderScreenState();
+}
+
+class _ViewReminderScreenState extends State<ViewReminderScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final ReminderData reminder = Provider.of<ReminderData>(context, listen: false);
+      reminder.name.text = widget.reminder.name;
+
+      reminder.detail.text = widget.reminder.detail;
+
+      reminder.timeController.text = widget.reminder.time;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+    final ReminderData reminder = Provider.of<ReminderData>(context);
+
     return Consumer<ReminderData>(
       builder: ((context, value, child) {
-        Reminder currentReminder = value.getActiveReminder();
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
@@ -24,6 +47,7 @@ class ViewReminderScreen extends StatelessWidget {
             centerTitle: true,
             leading: IconButton(
               onPressed: () {
+                reminder.clearForm();
                 context.popRoute();
               },
               icon: const Icon(
@@ -37,7 +61,7 @@ class ViewReminderScreen extends StatelessWidget {
                 onPressed: () {
                   context.pushRoute(
                     EditReminderRoute(
-                      currentReminder: currentReminder,
+                      reminder: widget.reminder,
                     ),
                   );
                 },
@@ -52,217 +76,67 @@ class ViewReminderScreen extends StatelessWidget {
           body: SafeArea(
             child: Container(
               color: AppColors.bgColor,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    const Text(
-                      'View Reminder',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        fontFamily: 'Montserrat',
-                        color: Colors.black,
-                      ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  const Text(
+                    'View Reminder',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                      fontFamily: 'Montserrat',
+                      color: Colors.black,
                     ),
-                    const SizedBox(height: 30),
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Reminder Title',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTextField(
+                          controller: reminder.name,
+                          label: "Reminder Title",
+                          hintText: "Enter Name",
+                          readOnly: true,
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    SizedBox(
-                      height: 40,
-                      width: width - 30,
-                      child: TextField(
-                        readOnly: true,
-                        textAlign: TextAlign.left,
-                        textAlignVertical: TextAlignVertical.bottom,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.black,
-                              width: 5.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
+                        const SizedBox(height: 22),
+                        //time textbox
+                        CustomTextField(
+                          controller: reminder.timeController,
+                          label: "Time",
+                          hintText: reminder.timeController.text,
+                          icon: const Icon(
+                            Icons.alarm,
                           ),
-                          hintText: currentReminder.name,
-                          hintStyle: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          readOnly: true,
                         ),
-                      ),
+                        const SizedBox(height: 22),
+                        //music
+                        CustomTextField(
+                          label: "Reminder Music",
+                          hintText: reminder.music ?? "",
+                          controller: TextEditingController(text: reminder.music),
+                          readOnly: true,
+                        ),
+                        const SizedBox(height: 22),
+                        //note
+                        CustomTextField(
+                          readOnly: true,
+                          controller: reminder.detail,
+                          label: "Reminder Detail",
+                          hintText: "Some details here",
+                          maxLines: 5,
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 22),
-                    //time textbox
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Time',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    SizedBox(
-                      height: 40,
-                      width: width - 30,
-                      child: TextField(
-                        readOnly: true,
-                        textAlign: TextAlign.left,
-                        textAlignVertical: TextAlignVertical.bottom,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.black,
-                              width: 5.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          hintText: currentReminder.time,
-                          hintStyle: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 22),
-                    //music
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Reminder Music',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    SizedBox(
-                      height: 40,
-                      width: width - 30,
-                      child: TextField(
-                        readOnly: true,
-                        textAlign: TextAlign.left,
-                        textAlignVertical: TextAlignVertical.bottom,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                              icon: const Icon(Icons.queue_music),
-                              onPressed: () {}),
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.black,
-                              width: 5.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          hintText: "Music",
-                          hintStyle: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 22),
-                    //note
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Reminder Details',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Expanded(
-                      child: SizedBox(
-                        width: width - 30,
-                        child: TextField(
-                          textAlign: TextAlign.left,
-                          textAlignVertical: TextAlignVertical.bottom,
-                          maxLines: 10,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 5.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            hintText: currentReminder.detail,
-                            hintStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                  ],
-                ),
+                  ),
+                  const Spacer(),
+
+                  // Save reminder
+
+                  const SizedBox(height: 15),
+                ],
               ),
             ),
           ),

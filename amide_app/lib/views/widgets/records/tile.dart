@@ -1,3 +1,4 @@
+import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/features/data/models/records/vital_sub.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +53,11 @@ class RecordTile extends StatelessWidget {
                         '${vital.temperature}° Celcius',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          fontFamily: 'Montserrat',
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ],
@@ -70,8 +75,7 @@ class RecordTile extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        '${vital.systolic / vital.diastolic} mmHg',
-                        overflow: TextOverflow.ellipsis,
+                        '${vital.systolic} /  ${vital.diastolic} mmHg',
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
                       ),
@@ -121,6 +125,57 @@ class RecordTile extends StatelessWidget {
                     Expanded(
                       child: Text(
                         '${vital.oxygenRate}% SpO2',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    const SizedBox(width: 20),
+                    const Icon(
+                      Icons.height,
+                      color: AppColors.primBlue,
+                      size: 30,
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        '${vital.heartRate} in',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  children: [
+                    const SizedBox(width: 40),
+                    const Icon(
+                      Icons.monitor_weight,
+                      color: Colors.grey,
+                      size: 30,
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        '${vital.oxygenRate} kg',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),

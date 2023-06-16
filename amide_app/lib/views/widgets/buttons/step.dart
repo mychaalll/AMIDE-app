@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 class StepButton extends StatelessWidget {
   final Function()? onPressed;
   final String title;
+  final Color? backgroundColor;
+
   const StepButton({
     Key? key,
     required this.onPressed,
     required this.title,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
@@ -15,11 +18,14 @@ class StepButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(AppColors.primBlue),
-          overlayColor: MaterialStateProperty.all(const Color.fromARGB(255, 2, 5, 27)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+        backgroundColor: MaterialStateProperty.all(backgroundColor ?? AppColors.primBlue),
+        overlayColor: MaterialStateProperty.all(const Color.fromARGB(255, 2, 5, 27)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
-          ))),
+          ),
+        ),
+      ),
       child: SizedBox(
         width: 80,
         height: 30,

@@ -1,6 +1,7 @@
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
 import 'package:amide_app/features/data/provider/recording.dart';
+import 'package:amide_app/views/widgets/buttons/step.dart';
 import 'package:amide_app/views/widgets/timeline.dart/content.dart';
 import 'package:amide_app/views/widgets/timeline.dart/custom.dart';
 import 'package:auto_route/auto_route.dart';
@@ -67,6 +68,7 @@ class _RecordScreenState extends State<RecordScreen> {
                   toggleDown: () => record.toggleFirstStep(),
                   pressDone: () => record.updateFirstStep(),
                   isDown: record.firstStep,
+                  isFirst: true,
                   isDone: record.doneFirstStep,
                   hasRetry: false,
                 ),
@@ -82,11 +84,12 @@ class _RecordScreenState extends State<RecordScreen> {
                     title: "Body Temperature",
                     bodyText:
                         "Ensure that the temperature sensor is in contact with the patient's body for at least 1-2 minutes or until a temperature reading is obtained to ensure accurate measurements.",
-                    bodyVitalText: "Temperature: 29.0 Celcius",
+                    bodyVitalText: "Temperature: ${record.temperature} Celcius",
                     isVisible: record.secondStep,
                     toggleDown: () => record.toggleSecondStep(),
                     pressDone: () => record.updateSecondStep(),
                     isDone: record.doneSecondStep,
+                    pressRetry: () {},
                     isDown: record.secondStep,
                   ),
                 ),
@@ -94,7 +97,7 @@ class _RecordScreenState extends State<RecordScreen> {
               // 3rd part
 
               Visibility(
-                visible: record.doneSecondStep,
+                visible: record.doneFirstStep,
                 child: CustomTimeline(
                   isFirst: record.doneSecondStep ? false : true,
                   isLast: record.doneThirdStep ? false : true,
@@ -108,13 +111,14 @@ class _RecordScreenState extends State<RecordScreen> {
                     toggleDown: () => record.toggleThirdStep(),
                     pressDone: () => record.updateThirdStep(),
                     isDone: record.doneThirdStep,
+                    pressRetry: () {},
                     isDown: record.thirdStep,
                   ),
                 ),
               ),
               // 4th part
               Visibility(
-                visible: record.doneThirdStep,
+                visible: record.doneFirstStep,
                 child: CustomTimeline(
                   isFirst: record.doneThirdStep ? false : true,
                   isLast: record.doneFourthStep ? false : true,
@@ -128,13 +132,14 @@ class _RecordScreenState extends State<RecordScreen> {
                     toggleDown: () => record.toggleFourthStep(),
                     pressDone: () => record.updateFourthStep(),
                     isDone: record.doneFourthStep,
+                    pressRetry: () {},
                     isDown: record.fourthStep,
                   ),
                 ),
               ),
               // 5th step
               Visibility(
-                visible: record.doneFourthStep,
+                visible: record.doneFirstStep,
                 child: CustomTimeline(
                   isFirst: record.doneFourthStep ? false : true,
                   isLast: record.doneFifthStep ? false : true,
@@ -148,13 +153,14 @@ class _RecordScreenState extends State<RecordScreen> {
                     toggleDown: () => record.toggleFifthStep(),
                     pressDone: () => record.updateFifthStep(),
                     isDone: record.doneFifthStep,
+                    pressRetry: () {},
                     isDown: record.fifthStep,
                   ),
                 ),
               ),
 
               Visibility(
-                visible: record.doneFifthStep,
+                visible: record.doneFirstStep,
                 child: CustomTimeline(
                   isFirst: record.doneFifthStep ? false : true,
                   isLast: record.doneSixthStep ? false : true,
@@ -168,6 +174,7 @@ class _RecordScreenState extends State<RecordScreen> {
                     toggleDown: () => record.toggleSixthStep(),
                     pressDone: () => record.updateSixthStep(),
                     isDone: record.doneSixthStep,
+                    pressRetry: () {},
                     isDown: record.sixthStep,
                     isBloodPressure: true,
                   ),
@@ -175,26 +182,84 @@ class _RecordScreenState extends State<RecordScreen> {
               ),
               // 6th step
               Visibility(
-                visible: record.doneSixthStep,
-                child: CustomTimeline(
-                  isFirst: record.doneSixthStep ? false : true,
-                  isLast: true,
-                  isDone: record.doneFinishStep,
-                  content: TimelineContent(
-                    title: "Finish Recording",
-                    bodyText: "Please check if all of the statistics taken are accurate.",
-                    bodyVitalText:
-                        "Temperature: 29.0 Celcius\nBody Mass Index: 20(kg), 40(in)\nPulse Rate: 110 bpm\nBlood Oxygen Level: 95% SpO2\nBlood Pressure: 120/23 mmHg",
-                    isVisible: record.finishStep,
-                    toggleDown: () => record.toggleFinishStep(),
-                    pressDone: () {
-                      record.updateFinishStep();
-                      context.popRoute();
-                    },
-                    isDone: record.doneFinishStep,
-                    isDown: record.finishStep,
-                    hasRetry: false,
-                    isFinish: true,
+                visible: record.doneFirstStep,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 40.0),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Check all the vital signs before proceeding",
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        RichText(
+                          text: const TextSpan(
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                            text: "Temperature: ",
+                            children: [
+                              TextSpan(text: "29.0 Celcius", style: TextStyle(fontWeight: FontWeight.normal)),
+                            ],
+                          ),
+                        ),
+                        RichText(
+                          text: const TextSpan(
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                            text: "Body Mass Index: ",
+                            children: [
+                              TextSpan(text: "20(kg), 40(in)", style: TextStyle(fontWeight: FontWeight.normal)),
+                            ],
+                          ),
+                        ),
+                        RichText(
+                          text: const TextSpan(
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                            text: "Pulse Rate ",
+                            children: [
+                              TextSpan(text: "110 bpm", style: TextStyle(fontWeight: FontWeight.normal)),
+                            ],
+                          ),
+                        ),
+                        RichText(
+                          text: const TextSpan(
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                            text: "Blood Oxygen Level: ",
+                            children: [
+                              TextSpan(text: "95% Spo2", style: TextStyle(fontWeight: FontWeight.normal)),
+                            ],
+                          ),
+                        ),
+                        RichText(
+                          text: const TextSpan(
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                            text: "Blood Pressure: ",
+                            children: [
+                              TextSpan(text: "120/23mmHg", style: TextStyle(fontWeight: FontWeight.normal)),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: StepButton(
+                            onPressed: () {},
+                            title: "Done",
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
 import 'package:amide_app/features/data/models/records/vital_sub.dart';
+import 'package:amide_app/features/data/models/reminder/reminder.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
@@ -56,11 +57,28 @@ class DatabaseServices {
     return _db.collection("elderly").doc("uid").snapshots().map(_elderlyDataFromSnapshot);
   }
 
+
+
+  Stream elderVital(uid) {
+    return _db
+        .collection("elderly")
+        .doc(uid)
+        .collection("vitalSign")
+        .orderBy("timeStamp", descending: true)
+        .snapshots()
+        .map(vitalFromDashboard);
+  }
+
+  List vitalFromDashboard(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return doc.get("temperature");
+    }).toList();
+  }
+
   /// [sendElderly] will send data
   /// to the firestore
   Future<dynamic> sendElderly({Elderly? data}) async {
     final String uuid = const Uuid().v1();
-    final String uuidVital = const Uuid().v1();
 
     Elderly elderly = Elderly(
       name: data!.name,
@@ -71,15 +89,6 @@ class DatabaseServices {
       isDeleted: data.isDeleted,
       timeStamp: DateTime.now(),
     );
-
-    // VitalSub vital = VitalSub(
-    //   diastolic: 0.0,
-    //   systolic: 0.0,
-    //   oxygenRate: 0.0,
-    //   temperature: 0.0,
-    //   timeStamp: Timestamp.now(),
-    //   heartRate: 0.0,
-    // );
 
     await _db.collection("elderly").doc(uuid).set(elderly.toJson());
     // await _db.collection("elderly").doc(uuid).collection("vitalSign").doc(uuidVital).set(vital.toJson());
@@ -107,6 +116,36 @@ class DatabaseServices {
     await _db.collection("elderly").doc(uid).set({
       "isDeleted": true,
     }, SetOptions(merge: true));
+  }
+
+  Future<void> createReminder(Reminder reminder) async {
+    await _db.collection("reminder").doc(reminder.id).set(reminder.toJson());
+  }
+
+  Future<void> editReminder(Reminder reminder) async {
+    await _db.collection("reminder").doc(reminder.id).update(reminder.toJson());
+  }
+
+  Future<void> deleteReminder(String id) async {
+    await _db.collection("reminder").doc(id).delete();
+  }
+
+  Stream<List<Reminder>> get reminders {
+    return _db.collection("reminder").orderBy("dateTime", descending: true).snapshots().map(_reminderFromSnapshot);
+  }
+
+  List<Reminder> _reminderFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      final Timestamp dateTime = doc.get("dateTime");
+
+      return Reminder(
+        name: doc.get("name"),
+        time: doc.get("time"),
+        detail: doc.get("detail"),
+        dateTime: dateTime.toDate(),
+        id: doc.get("id"),
+      );
+    }).toList();
   }
 
   /// THIS IS START OF VITAL SIGNS

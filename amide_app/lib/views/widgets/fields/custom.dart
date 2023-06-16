@@ -41,6 +41,7 @@ class CustomTextField extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         TextFormField(
+          
           readOnly: readOnly,
           controller: controller,
           maxLines: maxLines,

@@ -1,16 +1,13 @@
 import 'package:amide_app/core/config/colors.dart';
-import 'package:amide_app/features/data/models/reminder/music.dart';
-import 'package:amide_app/features/data/models/reminder/reminder.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
-import 'package:amide_app/features/data/services/realtime.dart';
 import 'package:amide_app/views/widgets/buttons/custom.dart';
 import 'package:amide_app/views/widgets/drop_down/custom.dart';
 import 'package:amide_app/views/widgets/fields/custom.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 @RoutePage()
 class CreateReminderScreen extends StatefulWidget {
@@ -23,19 +20,6 @@ class CreateReminderScreen extends StatefulWidget {
 }
 
 class _CreateReminderScreenState extends State<CreateReminderScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _detailController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  FilePickerResult? result;
-  PlatformFile? pickedFile;
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _detailController.dispose();
-    super.dispose();
-  }
-
   final DateTime _dateTime = DateTime.now();
 
   void pickTime() async {
@@ -57,6 +41,8 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
   @override
   Widget build(BuildContext context) {
     final ReminderData reminderData = Provider.of<ReminderData>(context);
+
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -97,7 +83,11 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomTextField(controller: _nameController, label: "Reminder Title", hintText: "Enter Name"),
+                      CustomTextField(
+                        controller: reminderData.name,
+                        label: "Reminder Title",
+                        hintText: "Enter Name",
+                      ),
                       const SizedBox(height: 22),
                       //time textbox
                       CustomTextField(
@@ -119,7 +109,7 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
                       CustomDropDown(
                         item: reminderData.musicList,
                         label: "Reminder Music",
-                        value: null,
+                        value: reminderData.music,
                         onChanged: (value) {
                           reminderData.updateMusic(value);
                         },
@@ -128,7 +118,7 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
                       //note
                       CustomTextField(
                         isRequired: false,
-                        controller: _detailController,
+                        controller: reminderData.detail,
                         label: "Reminder Detail",
                         hintText: "Some details here",
                         maxLines: 5,
@@ -143,23 +133,21 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: CustomButton(
                     onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        reminderData.addReminder(
-                          Reminder(
-                            time: reminderData.timeController.text,
-                            name: _nameController.text,
-                            detail: _detailController.text,
-                            dateTime: _dateTime,
-                          ),
-                        );
+                      final uid = const Uuid().v4();
 
-                        Realtime().createData(
-                          Music(
-                            hour: reminderData.hour ?? reminderData.now.hour,
-                            minute: reminderData.minute ?? reminderData.now.minute,
-                            musicKey: reminderData.musicIndex,
-                          ),
-                        );
+                      final String id = uid.replaceAll("-", "").substring(0, 4);
+
+                      if (formKey.currentState!.validate()) {
+                        reminderData.createReminder();
+
+                        // Realtime().createData(
+                        //   Music(
+                        //     hour: reminderData.hour ?? reminderData.now.hour,
+                        //     minute: reminderData.minute ?? reminderData.now.minute,
+                        //     musicKey: reminderData.musicIndex,
+                        //     id: id,
+                        //   ),
+                        // );
 
                         context.popRoute();
                       }
