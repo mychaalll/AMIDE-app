@@ -32,24 +32,24 @@ class VitalSub {
   });
 
   factory VitalSub.fromJson(Map<String, dynamic> json) => VitalSub(
-        temperature: json["temperature"].toDouble(),
-        // heartRate: json["heartRate"].toDouble(),
-        // oxygenRate: json["oxygenRate"].toDouble(),
+        // temperature: json["temperature"].toDouble(),
+        heartRate: json["heartRate"].toDouble(),
+        oxygenRate: json["oxygenRate"].toDouble(),
         // systolic: json["systolic"].toDouble(),
         // diastolic: json["diastolic"].toDouble(),
-        height: json["height"].toDouble(),
+        // height: json["height"].toDouble(),
         // weight: json["weight"].toDouble(),
         // timeStamp: json["timeStamp"],
       );
 
   Map<String, dynamic> toJson() => {
-        "temperature": temperature,
+        // "temperature": temperature,
         "heartRate": heartRate,
         "oxygenRate": oxygenRate,
-        "systolic": systolic,
-        "diastolic": diastolic,
-        "timeStamp": timeStamp,
-        "height": height,
-        "weight": weight,
+        // "systolic": systolic,
+        // "diastolic": diastolic,
+        // "timeStamp": timeStamp,
+        // "height": height,
+        // "weight": weight,
       };
 }

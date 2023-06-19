@@ -15,16 +15,19 @@ class TimelineContent extends StatelessWidget {
     required this.title,
     required this.toggleDown,
     required this.pressDone,
+    this.rangeOfVitalSign,
     this.pressRetry,
     this.isDown = false,
     this.hasRetry = true,
     this.isFirst = false,
     this.isDone = false,
     this.isBloodPressure = false,
+    this.isHidden = false,
   }) : super(key: key);
 
   final bool isVisible;
   final String bodyText;
+  final String? rangeOfVitalSign;
   final String? bodyVitalText;
   final String title;
   final Function()? toggleDown;
@@ -35,6 +38,7 @@ class TimelineContent extends StatelessWidget {
   final bool isFirst;
   final bool isDone;
   final bool isBloodPressure;
+  final bool isHidden;
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +100,15 @@ class TimelineContent extends StatelessWidget {
                         ),
                       ),
                       Text(
+                        rangeOfVitalSign ?? "",
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          height: 1.5,
+                        ),
+                      ),
+                      Text(
                         bodyVitalText ?? "",
                         style: const TextStyle(
                           fontSize: 12,
@@ -148,14 +161,17 @@ class TimelineContent extends StatelessWidget {
                             )
                           : const SizedBox.shrink(),
                       isFirst
-                          ? Align(
-                              alignment: Alignment.bottomRight,
-                              child: StepButton(
-                                title: "Done",
-                                onPressed: () async {
-                                  await Realtime().recordData();
-                                  record.updateFirstStep();
-                                },
+                          ? Visibility(
+                              visible: isHidden,
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: StepButton(
+                                  title: "Done",
+                                  onPressed: () async {
+                                    await Realtime().recordData(context);
+                                    record.updateFirstStep();
+                                  },
+                                ),
                               ),
                             )
                           : Align(

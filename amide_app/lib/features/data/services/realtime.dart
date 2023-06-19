@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:amide_app/features/data/models/records/vital_sub.dart';
 import 'package:amide_app/features/data/models/reminder/music.dart';
+import 'package:amide_app/features/data/provider/recording.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:provider/provider.dart';
 
 class Realtime {
   final DatabaseReference alarm_db = FirebaseDatabase.instance.ref("alarms");
@@ -29,39 +29,37 @@ class Realtime {
 
   final DatabaseReference vital_db = FirebaseDatabase.instance.ref("vitals");
 
-  Future<void> recordData() async {
+  /// [recordData] when the check all equipments tap the done
+  /// it will set the vital signs to -1
+
+  Future<void> recordData(context) async {
     await vital_db.update({
-      "heartRate": -1,
-      "height": -1,
-      "weight": -1,
-      "oxygenRate": -1,
-      "temperature": -1,
+      "heartRate": -1.0,
+      "height": -1.0,
+      "weight": -1.0,
+      "oxygenRate": -1.0,
+      "temperature": -1.0,
     });
 
-    print("Set to -1");
-    await sendData();
+    print("Set to -1.0");
+    await listenData(context);
   }
 
-  VitalSub vital = VitalSub();
+  /// [sendData] setting up the vital signs from the arduino
+  /// to change the -1 to its specific value
+  Future<dynamic> listenData(context) async {
+    vital_db.onValue.listen((event) {
+      print("hi");
+    });
+  }
 
-  Future<dynamic> sendData() async {
-    vital_db.onValue.listen(
-      (event) {
-        DataSnapshot snapshot = event.snapshot;
-        if (snapshot.value != null) {
-          String jsonString = json.encode(snapshot.value);
+  void getData(context) async {
+    final RecordServices record = Provider.of<RecordServices>(context, listen: false);
+    await vital_db.get().then((value) {
+      print(value.value);
+      Object? vital = value.value;
+      Map<String, dynamic> map = (vital as Map<dynamic, dynamic>).cast<String, dynamic>();
 
-          Map<dynamic, dynamic> data = json.decode(jsonString);
-
-          final temperature = data["temperature"];
-          final height = data["height"];
-
-          vital = VitalSub.fromJson(data as Map<String, dynamic>);
-
-          print(temperature);
-          print(height);
-        }
-      },
-    );
+    });
   }
 }

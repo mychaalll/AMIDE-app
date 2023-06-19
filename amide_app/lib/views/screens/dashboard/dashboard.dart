@@ -3,7 +3,6 @@ import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/features/data/services/database.dart';
 import 'package:amide_app/views/widgets/buttons/custom.dart';
-import 'package:amide_app/views/widgets/dashboard/dashboard_record_tile.dart';
 import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
@@ -26,6 +25,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       DatabaseServices().elders;
+      DatabaseServices().reminders;
     });
     super.initState();
   }
@@ -90,72 +90,69 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     //incoming reminders
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Incoming Reminders',
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
-                                fontFamily: 'Montserrat',
-                                color: Colors.black),
+                        const Text(
+                          'Incoming Reminders',
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            color: Colors.black,
                           ),
                         ),
                         const SizedBox(height: 22),
                         StreamBuilder(
                           stream: DatabaseServices().reminders,
                           builder: (context, snapshot) {
-                            final reminder = snapshot.data;
-
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
+                            if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                              final reminder = snapshot.data!;
+                              return snapshot.data!.isEmpty
+                                  ? const Text("Please input a reminder.")
+                                  : SizedBox(
+                                      height: 200,
+                                      child: ListView.builder(
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: snapshot.data!.length < 3 ? snapshot.data!.length : 3,
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                            padding: const EdgeInsets.all(10),
+                                            margin: const EdgeInsets.only(bottom: 10),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            child: ListTile(
+                                              leading: Text(
+                                                reminder[index].time,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                              horizontalTitleGap: 50,
+                                              title: Text(
+                                                reminder[index].name,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              subtitle: Text(reminder[index].detail),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
                             } else if (snapshot.hasError) {
                               return Center(
                                 child: Text("${snapshot.error}"),
                               );
                             }
-
-                            return snapshot.data!.isEmpty
-                                ? const Text("Please input a reminder.")
-                                : SizedBox(
-                                    height: 200,
-                                    child: ListView.builder(
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      itemCount: snapshot.data!.length < 3 ? snapshot.data!.length : 3,
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                          padding: const EdgeInsets.all(10),
-                                          margin: const EdgeInsets.only(bottom: 10),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: ListTile(
-                                            leading: Text(
-                                              reminder![index].time,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                            horizontalTitleGap: 50,
-                                            title: Text(
-                                              reminder[index].name,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            subtitle: Text(reminder[index].detail),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
                           },
                         ),
                         //   reminderLength == 0
@@ -242,7 +239,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     StreamBuilder(
                       stream: DatabaseServices().elders,
                       builder: (context, snapshot) {
-                        if (snapshot.hasData) {
+                        if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
                           final elderlyDoc = snapshot.data;
                           print(elderlyDoc);
                           return elderlyDoc!.isEmpty
@@ -273,24 +270,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     itemCount: elderlyDoc.length,
                                     itemBuilder: (context, index) {
                                       return StreamBuilder(
-                                          stream: DatabaseServices().elderVital(elderlyDoc[index].uid),
-                                          builder: (context, snapshot) {
-                                            print("Snapshot ${snapshot.data}");
+                                        stream: DatabaseServices().elderVital(elderlyDoc[index].uid),
+                                        builder: (context, snapshot) {
+                                          print("Snapshot ${snapshot.data}");
 
-                                            if (snapshot.hasData) {
-                                              return DashboardRecordTile(
-                                                name: elderlyDoc[index].name,
-                                                celcius: snapshot.data.first,
-                                              );
-                                            } else if (snapshot.hasError) {
-                                              return Center(
-                                                child: Text("${snapshot.error}"),
-                                              );
-                                            }
-                                            return const Center(
-                                              child: CircularProgressIndicator(),
+                                          if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                                            // return DashboardRecordTile(
+                                            //   name: elderlyDoc[index].name,
+                                            //   celcius: snapshot.data.first,
+                                            // );
+                                          } else if (snapshot.hasError) {
+                                            return Center(
+                                              child: Text("${snapshot.error}"),
                                             );
-                                          });
+                                          }
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        },
+                                      );
                                     },
                                   ),
                                 );

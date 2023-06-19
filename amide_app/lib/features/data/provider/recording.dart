@@ -18,12 +18,6 @@ class RecordServices extends ChangeNotifier {
 
   void updateFirstStep() {
     doneFirstStep = true;
-    firstStep = false;
-    secondStep = true;
-    thirdStep = true;
-    fourthStep = true;
-    fifthStep = true;
-    sixthStep = true;
     notifyListeners();
   }
 
@@ -65,6 +59,19 @@ class RecordServices extends ChangeNotifier {
 
   void toggleFourthStep() {
     fourthStep = !fourthStep;
+    notifyListeners();
+  }
+
+  List<bool> isDropDownList = [
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+
+  void toggleIsDropDownList(index) {
+    isDropDownList[index] = !isDropDownList[index];
     notifyListeners();
   }
 
@@ -125,34 +132,45 @@ class RecordServices extends ChangeNotifier {
   bool doneFinishStep = false;
 
   void updateFinishStep() {
-    firstStep = false;
     doneFirstStep = false;
-
-    secondStep = false;
-    doneSecondStep = false;
-
-    thirdStep = false;
-    doneThirdStep = false;
-
-    fourthStep = false;
-    doneFourthStep = false;
-
-    fifthStep = false;
-    doneFifthStep = false;
-
-    doneSixthStep = false;
-    sixthStep = false;
-
-    doneFinishStep = false;
-    finishStep = false;
 
     notifyListeners();
   }
 
   double? temperature;
-  double? bloodPressure;
-  double? pulseRate;
-  double? bloodOxygen;
+  double? oxygenRate;
+  double? heartRate;
+  double? height;
+  double? weight;
+
+  void updateTemperature(value) {
+    temperature = value.toDouble();
+    notifyListeners();
+  }
+
+  void updateHeartRate(value) {
+    heartRate = value.toDouble();
+    notifyListeners();
+  }
+
+  void updateOxygenRate(value) {
+    oxygenRate = value.toDouble();
+    notifyListeners();
+  }
+
+  void updateHeight(value) {
+    height = value.toDouble();
+    notifyListeners();
+  }
+
+  void updateWeight(value) {
+    weight = value.toDouble();
+    notifyListeners();
+  }
+
+  bool isEnabledValidation() {
+    return (heartRate != -1 && height != -1 && oxygenRate != -1 && temperature != -1 && weight != -1);
+  }
 
   // Future<void> sendVital() async {
   //   VitalSub vital = VitalSub(

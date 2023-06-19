@@ -57,8 +57,6 @@ class DatabaseServices {
     return _db.collection("elderly").doc("uid").snapshots().map(_elderlyDataFromSnapshot);
   }
 
-
-
   Stream elderVital(uid) {
     return _db
         .collection("elderly")
@@ -177,7 +175,7 @@ class DatabaseServices {
     }).toList();
   }
 
-  Future<void> sendVital(Map<String, dynamic> object) async {
+  Future<void> sendVital(uid, Map<String, dynamic> object) async {
     final String uuidVital = const Uuid().v1();
 
     await _db.collection("elderly").doc(uid).collection("vitalSign").doc(uuidVital).set(object);
