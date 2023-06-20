@@ -165,12 +165,14 @@ class DatabaseServices {
   List<VitalSub> _vitalFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return VitalSub(
-        temperature: doc.get("temperature"),
-        timeStamp: doc.get("timeStamp"),
         heartRate: doc.get("heartRate"),
+        height: doc.get("height"),
         oxygenRate: doc.get("oxygenRate"),
+        temperature: doc.get("temperature"),
+        weight: doc.get("weight"),
         systolic: doc.get("systolic"),
         diastolic: doc.get("diastolic"),
+        timeStamp: doc.get("timeStamp"),
       );
     }).toList();
   }

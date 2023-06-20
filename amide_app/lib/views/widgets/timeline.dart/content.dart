@@ -2,43 +2,26 @@ import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/features/data/provider/recording.dart';
 import 'package:amide_app/features/data/services/realtime.dart';
 import 'package:amide_app/views/widgets/buttons/step.dart';
-import 'package:amide_app/views/widgets/fields/custom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TimelineContent extends StatelessWidget {
   const TimelineContent({
     Key? key,
-    this.isVisible = false,
+    required this.index,
+    required this.label,
     required this.bodyText,
-    this.bodyVitalText,
-    required this.title,
-    required this.toggleDown,
-    required this.pressDone,
     this.rangeOfVitalSign,
-    this.pressRetry,
-    this.isDown = false,
-    this.hasRetry = true,
-    this.isFirst = false,
-    this.isDone = false,
-    this.isBloodPressure = false,
-    this.isHidden = false,
+    this.vitalSign,
+    this.hasDone = false,
   }) : super(key: key);
 
-  final bool isVisible;
+  final int index;
+  final String label;
   final String bodyText;
   final String? rangeOfVitalSign;
-  final String? bodyVitalText;
-  final String title;
-  final Function()? toggleDown;
-  final Function()? pressDone;
-  final Function()? pressRetry;
-  final bool isDown;
-  final bool hasRetry;
-  final bool isFirst;
-  final bool isDone;
-  final bool isBloodPressure;
-  final bool isHidden;
+  final String? vitalSign;
+  final bool hasDone;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +30,12 @@ class TimelineContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
       child: GestureDetector(
-        onTap: toggleDown,
+        onTap: () {
+          record.toggleRecordDropdown(index);
+        },
         child: Container(
           decoration: BoxDecoration(
-            color: isDone ? Colors.green : AppColors.primBlue,
+            color: record.doneList[index] ? Colors.green : AppColors.primBlue,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -61,7 +46,7 @@ class TimelineContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      title,
+                      label,
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.white,
@@ -70,14 +55,14 @@ class TimelineContent extends StatelessWidget {
                       ),
                     ),
                     Icon(
-                      isDown ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                      record.dropdownList[index] ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                       color: Colors.white,
                     ),
                   ],
                 ),
               ),
               Visibility(
-                visible: isVisible,
+                visible: record.dropdownList[index],
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
@@ -109,7 +94,7 @@ class TimelineContent extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        bodyVitalText ?? "",
+                        vitalSign ?? "",
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.black,
@@ -120,56 +105,57 @@ class TimelineContent extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      isBloodPressure
-                          ? Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: CustomTextField(
-                                        label: "Systolic",
-                                        hintText: "Systolic",
-                                        keyboardType: TextInputType.number,
-                                        controller: record.systolic,
-                                        icon: IconButton(
-                                          onPressed: () {},
-                                          icon: const CircleAvatar(
-                                            child: Icon(Icons.arrow_right),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                CustomTextField(
-                                  label: "Diastolic",
-                                  hintText: "Diastolic",
-                                  keyboardType: TextInputType.number,
-                                  controller: record.diastolic,
-                                  icon: IconButton(
-                                    onPressed: () {},
-                                    icon: const CircleAvatar(
-                                      child: Icon(Icons.arrow_right),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
-                      isFirst
+                      // isBloodPressure
+                      //     ? Column(
+                      //         children: [
+                      //           Row(
+                      //             crossAxisAlignment: CrossAxisAlignment.center,
+                      //             children: [
+                      //               Expanded(
+                      //                 child: CustomTextField(
+                      //                   label: "Systolic",
+                      //                   hintText: "Systolic",
+                      //                   keyboardType: TextInputType.number,
+                      //                   controller: record.systolic,
+                      //                   icon: IconButton(
+                      //                     onPressed: () {},
+                      //                     icon: const CircleAvatar(
+                      //                       child: Icon(Icons.arrow_right),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //           const SizedBox(
+                      //             height: 5,
+                      //           ),
+                      //           CustomTextField(
+                      //             label: "Diastolic",
+                      //             hintText: "Diastolic",
+                      //             keyboardType: TextInputType.number,
+                      //             controller: record.diastolic,
+                      //             icon: IconButton(
+                      //               onPressed: () {},
+                      //               icon: const CircleAvatar(
+                      //                 child: Icon(Icons.arrow_right),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       )
+                      //     : const SizedBox.shrink(),
+                      hasDone
                           ? Visibility(
-                              visible: isHidden,
+                              visible: !record.doneList[0] == true,
                               child: Align(
                                 alignment: Alignment.bottomRight,
                                 child: StepButton(
                                   title: "Done",
                                   onPressed: () async {
                                     await Realtime().recordData(context);
-                                    record.updateFirstStep();
+                                    record.toggleRecordDropdown(0);
+                                    record.toggleDone(0);
                                   },
                                 ),
                               ),
@@ -178,7 +164,9 @@ class TimelineContent extends StatelessWidget {
                               alignment: Alignment.bottomLeft,
                               child: StepButton(
                                 title: "Retry",
-                                onPressed: pressRetry,
+                                onPressed: () async {
+                                  await Realtime().resetData(context, index);
+                                },
                                 backgroundColor: Colors.red,
                               ),
                             ),

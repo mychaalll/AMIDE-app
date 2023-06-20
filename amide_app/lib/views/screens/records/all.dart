@@ -78,6 +78,7 @@ class AllRecordsScreen extends StatelessWidget {
                           oxygenRate: oxygenRate![index],
                           systolic: systolic![index],
                           diastolic: diastolic![index],
+                          timeStamp: timeStamp[index],
                         ),
                         date: date,
                       );

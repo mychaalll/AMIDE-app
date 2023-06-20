@@ -56,11 +56,6 @@ class AppRouter extends $AppRouter {
           transitionsBuilder: TransitionsBuilders.slideLeft,
         ),
         CustomRoute(
-          page: RecordingRoute.page,
-          path: "/recording",
-          transitionsBuilder: TransitionsBuilders.slideLeft,
-        ),
-        CustomRoute(
           page: RealTimeRoute.page,
           // path: "/",
           transitionsBuilder: TransitionsBuilders.slideLeft,

@@ -38,110 +38,113 @@ class _ViewReminderScreenState extends State<ViewReminderScreen> {
   Widget build(BuildContext context) {
     final ReminderData reminder = Provider.of<ReminderData>(context);
 
-    return Consumer<ReminderData>(
-      builder: ((context, value, child) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: AppColors.primBlue,
-            centerTitle: true,
-            leading: IconButton(
-              onPressed: () {
-                reminder.clearForm();
-                context.popRoute();
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                size: 20,
-                color: Colors.white,
-              ),
-            ),
-            actions: [
-              IconButton(
+    return GestureDetector(
+      onTap: () => Focus.of(context).requestFocus(FocusNode()),
+      child: Consumer<ReminderData>(
+        builder: ((context, value, child) {
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              backgroundColor: AppColors.primBlue,
+              centerTitle: true,
+              leading: IconButton(
                 onPressed: () {
-                  context.pushRoute(
-                    EditReminderRoute(
-                      reminder: widget.reminder,
-                    ),
-                  );
+                  reminder.clearForm();
+                  context.popRoute();
                 },
                 icon: const Icon(
-                  Icons.edit,
+                  Icons.arrow_back,
                   size: 20,
                   color: Colors.white,
                 ),
               ),
-            ],
-          ),
-          body: SafeArea(
-            child: Container(
-              color: AppColors.bgColor,
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  const Text(
-                    'View Reminder',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
-                      fontFamily: 'Montserrat',
-                      color: Colors.black,
-                    ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    context.pushRoute(
+                      EditReminderRoute(
+                        reminder: widget.reminder,
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.edit,
+                    size: 20,
+                    color: Colors.white,
                   ),
-                  const SizedBox(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomTextField(
-                          controller: reminder.name,
-                          label: "Reminder Title",
-                          hintText: "Enter Name",
-                          readOnly: true,
-                        ),
-                        const SizedBox(height: 22),
-                        //time textbox
-                        CustomTextField(
-                          controller: reminder.timeController,
-                          label: "Time",
-                          hintText: reminder.timeController.text,
-                          icon: const Icon(
-                            Icons.alarm,
+                ),
+              ],
+            ),
+            body: SafeArea(
+              child: Container(
+                color: AppColors.bgColor,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    const Text(
+                      'View Reminder',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontFamily: 'Montserrat',
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomTextField(
+                            controller: reminder.name,
+                            label: "Reminder Title",
+                            hintText: "Enter Name",
+                            readOnly: true,
                           ),
-                          readOnly: true,
-                        ),
-                        const SizedBox(height: 22),
-                        //music
-                        CustomTextField(
-                          label: "Reminder Music",
-                          hintText: reminder.music ?? "",
-                          controller: TextEditingController(text: reminder.music),
-                          readOnly: true,
-                        ),
-                        const SizedBox(height: 22),
-                        //note
-                        CustomTextField(
-                          readOnly: true,
-                          controller: reminder.detail,
-                          label: "Reminder Detail",
-                          hintText: "Some details here",
-                          maxLines: 5,
-                        ),
-                      ],
+                          const SizedBox(height: 22),
+                          //time textbox
+                          CustomTextField(
+                            controller: reminder.timeController,
+                            label: "Time",
+                            hintText: reminder.timeController.text,
+                            icon: const Icon(
+                              Icons.alarm,
+                            ),
+                            readOnly: true,
+                          ),
+                          const SizedBox(height: 22),
+                          //music
+                          CustomTextField(
+                            label: "Reminder Music",
+                            hintText: reminder.music ?? "",
+                            controller: TextEditingController(text: reminder.music),
+                            readOnly: true,
+                          ),
+                          const SizedBox(height: 22),
+                          //note
+                          CustomTextField(
+                            readOnly: true,
+                            controller: reminder.detail,
+                            label: "Reminder Detail",
+                            hintText: "Some details here",
+                            maxLines: 5,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Spacer(),
+                    const Spacer(),
 
-                  // Save reminder
+                    // Save reminder
 
-                  const SizedBox(height: 15),
-                ],
+                    const SizedBox(height: 15),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }

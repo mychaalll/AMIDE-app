@@ -33,6 +33,8 @@ class Realtime {
   /// it will set the vital signs to -1
 
   Future<void> recordData(context) async {
+    final RecordServices record = Provider.of<RecordServices>(context, listen: false);
+    record.resetBp();
     await vital_db.update({
       "heartRate": -1.0,
       "height": -1.0,
@@ -42,24 +44,14 @@ class Realtime {
     });
 
     print("Set to -1.0");
-    await listenData(context);
   }
 
-  /// [sendData] setting up the vital signs from the arduino
-  /// to change the -1 to its specific value
-  Future<dynamic> listenData(context) async {
-    vital_db.onValue.listen((event) {
-      print("hi");
-    });
-  }
-
-  void getData(context) async {
+  Future<void> resetData(context, index) async {
     final RecordServices record = Provider.of<RecordServices>(context, listen: false);
-    await vital_db.get().then((value) {
-      print(value.value);
-      Object? vital = value.value;
-      Map<String, dynamic> map = (vital as Map<dynamic, dynamic>).cast<String, dynamic>();
 
+    await vital_db.update({
+      // record.realtimeKey[index - 1]: -1.0,
+      record.realtimeKey[index - 1]: -1.0,
     });
   }
 }

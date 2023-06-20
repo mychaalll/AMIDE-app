@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -13,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     this.initialValue = "",
     this.icon,
     this.readOnly = false,
+    this.maskFilter,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -25,6 +28,7 @@ class CustomTextField extends StatelessWidget {
   final String initialValue;
   final Widget? icon;
   final bool readOnly;
+  final MaskTextInputFormatter? maskFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +45,6 @@ class CustomTextField extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         TextFormField(
-          
           readOnly: readOnly,
           controller: controller,
           maxLines: maxLines,
@@ -51,6 +54,7 @@ class CustomTextField extends StatelessWidget {
             fontWeight: FontWeight.w500,
             overflow: TextOverflow.ellipsis,
           ),
+        
           keyboardType: keyboardType,
           decoration: InputDecoration(
             suffixIcon: icon,

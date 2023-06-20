@@ -4,65 +4,50 @@ class RecordServices extends ChangeNotifier {
   final TextEditingController systolic = TextEditingController();
   final TextEditingController diastolic = TextEditingController();
 
-  /// for toggle
-  bool firstStep = false;
+  final realtimeKey = [
+    "heartRate",
+    "height",
+    "oxygenRate",
+    "temperature",
+    "weight",
+  ];
 
-  void toggleFirstStep() {
-    firstStep = !firstStep;
-    notifyListeners();
-  }
+  final recordTitleList = [
+    "Heart Rate",
+    "Height",
+    "Oxygen Rate",
+    "Body Temperature",
+    "Weight",
+  ];
 
-  /// for next step
+  final bodyTextList = [
+    "To measure the patient's pulse rate accurately make sure it is snugly secured. Ask the patient to remain still and avoid talking during the reading for the most accurate results.",
+    "Stand against a flat wall: Find a clear wall with no objects or decorations that might obstruct your height measurement. Read the measurement: Look at the point on the measuring tape or ruler where it intersects with the top of your head. This indicates your height in the unit of measurement being used (e.g., centimeters).",
+    "To measure the patient's blood oxygen level accurately, attach the sensor to the patient's fingertip and ensure it is securely in place. Ask the patient to remain still and avoid moving the hand or finger being used for the reading.",
+    "Ensure that the temperature sensor is in contact with the patient's body for at least 1-2 minutes or until a temperature reading is obtained to ensure accurate measurements.",
+    "Step on the scale: Instruct the person whose weight you want to measure to step onto the scale. They should stand still with their feet evenly distributed on the scale's surface. Record the weight measurement: Note down the weight measurement in the desired unit of measurement, such as kilograms or pounds. If necessary, round the measurement to the nearest whole unit.",
+  ];
 
-  bool doneFirstStep = false;
+  final rangeOfVitalSignList = [
+    "Normal Heart Rate Range is: 60bpm - 100bpm",
+    "",
+    "Normal Oxygen Rate: 95% - 100%",
+    "Normal Body Temperature: 36.2C - 37C",
+    "",
+  ];
 
-  void updateFirstStep() {
-    doneFirstStep = true;
-    notifyListeners();
-  }
+  final vitalUnit = [
+    "bpm",
+    "cm",
+    "%",
+    "Celcius",
+    "kg",
+  ];
 
-  bool secondStep = false;
+  /// drop down list
 
-  void toggleSecondStep() {
-    secondStep = !secondStep;
-    notifyListeners();
-  }
-
-  bool doneSecondStep = false;
-
-  void updateSecondStep() {
-    doneSecondStep = true;
-    secondStep = false;
-    notifyListeners();
-  }
-
-  /// for toggle
-  bool thirdStep = false;
-
-  void toggleThirdStep() {
-    thirdStep = !thirdStep;
-    notifyListeners();
-  }
-
-  /// for next step
-
-  bool doneThirdStep = false;
-
-  void updateThirdStep() {
-    doneThirdStep = true;
-    thirdStep = false;
-    notifyListeners();
-  }
-
-  /// for toggle
-  bool fourthStep = false;
-
-  void toggleFourthStep() {
-    fourthStep = !fourthStep;
-    notifyListeners();
-  }
-
-  List<bool> isDropDownList = [
+  List<bool> dropdownList = [
+    false,
     false,
     false,
     false,
@@ -70,69 +55,65 @@ class RecordServices extends ChangeNotifier {
     false,
   ];
 
-  void toggleIsDropDownList(index) {
-    isDropDownList[index] = !isDropDownList[index];
+  void toggleRecordDropdown(index) {
+    dropdownList[index] = !dropdownList[index];
     notifyListeners();
   }
 
-  /// for next step
+  /// [doneList] toggle if it is done
 
-  bool doneFourthStep = false;
+  List<bool> doneList = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
 
-  void updateFourthStep() {
-    doneFourthStep = true;
-    fourthStep = false;
+  bool isLoading = false;
+
+  void toggleDone(index) {
+    doneList[index] = !doneList[index];
+    isLoading = true;
+    Future.delayed(const Duration(seconds: 10), () {
+      isLoading = false;
+    });
     notifyListeners();
   }
 
-  /// for toggle
-  bool fifthStep = false;
+  void updateRetry() {}
 
-  void toggleFifthStep() {
-    fifthStep = !fifthStep;
+  /// blood pressure
+
+  bool dropDownBp = false;
+
+  void toggleDropdownBp() {
+    dropDownBp = !dropDownBp;
     notifyListeners();
   }
 
-  /// for next step
+  final TextEditingController bloodPressure = TextEditingController();
 
-  bool doneFifthStep = false;
+  String? bpValue;
 
-  void updateFifthStep() {
-    doneFifthStep = true;
-    fifthStep = false;
+  void updateBpValue() {
+    bpValue = ("${systolic.text}/${diastolic.text}");
     notifyListeners();
   }
 
-  /// for toggle
-  bool sixthStep = false;
-
-  void toggleSixthStep() {
-    sixthStep = !sixthStep;
+  void resetBp() {
+    bpValue = null;
     notifyListeners();
   }
 
-  /// for next step
-  bool doneSixthStep = false;
-
-  void updateSixthStep() {
-    doneSixthStep = true;
-    sixthStep = false;
-    notifyListeners();
-  }
-
-  /// for toggle
-  bool finishStep = false;
-
-  void toggleFinishStep() {
-    finishStep = !finishStep;
-    notifyListeners();
-  }
-
-  /// for next step
-  bool doneFinishStep = false;
-
-  void updateFinishStep() {
-    doneFirstStep = false;
+  void clearRecord() {
+    dropdownList = List<bool>.generate(dropdownList.length, (index) => false);
+    doneList = List<bool>.generate(doneList.length, (index) => false);
+    bpValue = null;
+    systolic.clear();
+    diastolic.clear();
+    dropDownBp = false;
 
     notifyListeners();
   }
@@ -169,21 +150,12 @@ class RecordServices extends ChangeNotifier {
   }
 
   bool isEnabledValidation() {
-    return (heartRate != -1 && height != -1 && oxygenRate != -1 && temperature != -1 && weight != -1);
+    return (heartRate != -1 &&
+        height != -1 &&
+        oxygenRate != -1 &&
+        temperature != -1 &&
+        weight != -1 &&
+        systolic.text.isNotEmpty &&
+        diastolic.text.isNotEmpty);
   }
-
-  // Future<void> sendVital() async {
-  //   VitalSub vital = VitalSub(
-  //     diastolic: 0,
-  //     systolic: 0,
-  //     oxygenRate: 0,
-  //     temperature: 0,
-  //     timeStamp: DateTime.now(),
-  //     heartRate: 0,
-  //     id: "dasd",
-  //   );
-
-  //   await DatabaseServices().sendVital(vital.toJson());
-  //   notifyListeners();
-  // }
 }

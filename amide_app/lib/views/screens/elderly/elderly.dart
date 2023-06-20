@@ -1,7 +1,7 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/features/data/services/database.dart';
 import 'package:amide_app/core/config/colors.dart';
-import 'package:amide_app/views/widgets/drawer.dart';
+import 'package:amide_app/views/widgets/drawer/drawer.dart';
 import 'package:amide_app/views/widgets/elderly/tile.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';

@@ -11,45 +11,45 @@ VitalSub vitalSubFromJson(String str) => VitalSub.fromJson(json.decode(str));
 String vitalSubToJson(VitalSub data) => json.encode(data.toJson());
 
 class VitalSub {
-  double? temperature;
-  double? heartRate;
-  double? oxygenRate;
-  double? systolic;
-  double? diastolic;
+  double heartRate;
   double? height;
+  double oxygenRate;
+  double temperature;
   double? weight;
+  double systolic;
+  double diastolic;
   Timestamp? timeStamp;
 
   VitalSub({
-    this.temperature,
-    this.heartRate,
-    this.oxygenRate,
-    this.systolic,
-    this.diastolic,
-    this.weight,
+    required this.heartRate,
     this.height,
+    required this.oxygenRate,
+    required this.temperature,
+    this.weight,
+    required this.systolic,
+    required this.diastolic,
     this.timeStamp,
   });
 
   factory VitalSub.fromJson(Map<String, dynamic> json) => VitalSub(
-        // temperature: json["temperature"].toDouble(),
         heartRate: json["heartRate"].toDouble(),
+        height: json["height"].toDouble(),
         oxygenRate: json["oxygenRate"].toDouble(),
-        // systolic: json["systolic"].toDouble(),
-        // diastolic: json["diastolic"].toDouble(),
-        // height: json["height"].toDouble(),
-        // weight: json["weight"].toDouble(),
-        // timeStamp: json["timeStamp"],
+        temperature: json["temperature"].toDouble(),
+        weight: json["weight"].toDouble(),
+        systolic: json["systolic"].toDouble(),
+        diastolic: json["diastolic"].toDouble(),
+        timeStamp: json["timeStamp"],
       );
 
   Map<String, dynamic> toJson() => {
-        // "temperature": temperature,
         "heartRate": heartRate,
+        "height": height,
         "oxygenRate": oxygenRate,
-        // "systolic": systolic,
-        // "diastolic": diastolic,
-        // "timeStamp": timeStamp,
-        // "height": height,
-        // "weight": weight,
+        "temperature": temperature,
+        "weight": weight,
+        "systolic": systolic,
+        "diastolic": diastolic,
+        "timeStamp": timeStamp,
       };
 }
