@@ -57,7 +57,7 @@ class DatabaseServices {
     return _db.collection("elderly").doc("uid").snapshots().map(_elderlyDataFromSnapshot);
   }
 
-  Stream elderVital(uid) {
+  Stream<List<VitalSub>> elderVital(uid) {
     return _db
         .collection("elderly")
         .doc(uid)
@@ -67,9 +67,18 @@ class DatabaseServices {
         .map(vitalFromDashboard);
   }
 
-  List vitalFromDashboard(QuerySnapshot snapshot) {
+  List<VitalSub> vitalFromDashboard(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
-      return doc.get("temperature");
+      return VitalSub(
+        heartRate: doc.get("heartRate"),
+        oxygenRate: doc.get("oxygenRate"),
+        temperature: doc.get("temperature"),
+        systolic: doc.get("systolic"),
+        diastolic: doc.get("diastolic"),
+        height: doc.get("height"),
+        weight: doc.get("weight"),
+        timeStamp: doc.get("timeStamp"),
+      );
     }).toList();
   }
 

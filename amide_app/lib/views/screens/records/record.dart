@@ -6,8 +6,8 @@ import 'package:amide_app/features/data/services/database.dart';
 import 'package:amide_app/features/data/services/realtime.dart';
 import 'package:amide_app/views/widgets/buttons/step.dart';
 import 'package:amide_app/views/widgets/fields/custom.dart';
-import 'package:amide_app/views/widgets/timeline.dart/content.dart';
-import 'package:amide_app/views/widgets/timeline.dart/custom.dart';
+import 'package:amide_app/views/widgets/timeline/content.dart';
+import 'package:amide_app/views/widgets/timeline/custom.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -398,20 +398,23 @@ class _RecordScreenState extends State<RecordScreen> {
                                         alignment: Alignment.bottomRight,
                                         child: StepButton(
                                           onPressed: () async {
-                                            record.clearRecord();
-                                            context.popRoute();
-                                            await DatabaseServices().sendVital(
-                                                widget.elderly!.uid,
-                                                VitalSub(
-                                                  heartRate: record.heartRate!,
-                                                  height: record.height,
-                                                  oxygenRate: record.oxygenRate!,
-                                                  temperature: record.temperature!,
-                                                  weight: record.weight,
-                                                  systolic: double.parse(record.systolic.text),
-                                                  diastolic: double.parse(record.diastolic.text),
-                                                  timeStamp: Timestamp.fromDate(DateTime.now()),
-                                                ).toJson());
+                                            await DatabaseServices()
+                                                .sendVital(
+                                                    widget.elderly!.uid,
+                                                    VitalSub(
+                                                      heartRate: record.heartRate!,
+                                                      height: record.height!,
+                                                      oxygenRate: record.oxygenRate!,
+                                                      temperature: record.temperature!,
+                                                      weight: record.weight!,
+                                                      systolic: double.parse(record.systolic.text),
+                                                      diastolic: double.parse(record.diastolic.text),
+                                                      timeStamp: Timestamp.fromDate(DateTime.now()),
+                                                    ).toJson())
+                                                .then((value) {
+                                              record.clearRecord();
+                                              context.popRoute();
+                                            });
                                           },
                                           title: "Finish",
                                           isEnabled: record.isEnabledValidation(),

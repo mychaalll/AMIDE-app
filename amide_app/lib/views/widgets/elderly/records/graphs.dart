@@ -30,6 +30,7 @@ class ElderlyGraphs extends StatelessWidget {
           BoxShadow(
             color: Colors.grey,
             offset: Offset(0, 4),
+            blurRadius: 4,
           ),
         ],
       ),

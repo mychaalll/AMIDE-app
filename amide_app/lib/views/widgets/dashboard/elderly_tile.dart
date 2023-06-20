@@ -1,17 +1,16 @@
+import 'package:amide_app/features/data/models/records/vital_sub.dart';
 import 'package:amide_app/views/widgets/dashboard/elderly_record/detail.dart';
 import 'package:flutter/material.dart';
 
 class DashboardRecordTile extends StatelessWidget {
-  final String? name, temp, time, bp, bpm, bol;
   const DashboardRecordTile({
     Key? key,
-    this.temp,
-    this.time,
-    this.bpm,
-    this.bp,
-    this.bol,
-    this.name,
+    required this.name,
+    required this.data,
   }) : super(key: key);
+
+  final String name;
+  final VitalSub data;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class DashboardRecordTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              name!,
+              name,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontWeight: FontWeight.w700,
@@ -42,7 +41,7 @@ class DashboardRecordTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElderlyVitalRecordDetail(
-                  label: '$temp° Celcius',
+                  label: '${data.temperature}° Celcius',
                   iconData: const Icon(
                     Icons.thermostat_outlined,
                     color: Colors.blue,
@@ -50,7 +49,7 @@ class DashboardRecordTile extends StatelessWidget {
                   ),
                 ),
                 ElderlyVitalRecordDetail(
-                  label: '$bp mmHg',
+                  label: '${data.systolic}/${data.diastolic} mmHg',
                   iconData: const Icon(
                     Icons.monitor_heart_outlined,
                     color: Colors.purple,
@@ -65,7 +64,7 @@ class DashboardRecordTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElderlyVitalRecordDetail(
-                  label: '$bpm BPM',
+                  label: '${data.heartRate} BPM',
                   iconData: const Icon(
                     Icons.favorite,
                     color: Colors.red,
@@ -73,7 +72,7 @@ class DashboardRecordTile extends StatelessWidget {
                   ),
                 ),
                 ElderlyVitalRecordDetail(
-                  label: '$bol% SpO2',
+                  label: '${data.oxygenRate}% SpO2',
                   iconData: const Icon(
                     Icons.water_drop_rounded,
                     color: Colors.red,

@@ -1,12 +1,22 @@
 import 'package:admin/core/strings/dimen.dart';
 import 'package:admin/core/theme/color.dart';
+import 'package:admin/models/reminder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReminderTile extends StatelessWidget {
-  const ReminderTile({Key? key}) : super(key: key);
+  const ReminderTile({
+    Key? key,
+    required this.reminder,
+  }) : super(key: key);
+
+  final Reminder reminder;
 
   @override
   Widget build(BuildContext context) {
+    final DateTime dateTime = reminder.dateTime.toDate();
+    final String date = DateFormat("MMMM dd, yyyy hh:mm").format(dateTime);
     return Container(
       width: 400,
       padding: EdgeInsets.all(Dimen.defaultPadding),
@@ -21,42 +31,56 @@ class ReminderTile extends StatelessWidget {
           )
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "hi",
-            style: TextStyle(
-              color: CustomColor.primBlue,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    reminder.name,
+                    style: TextStyle(
+                      color: CustomColor.primBlue,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.red,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      CupertinoIcons.delete,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          SizedBox(height: Dimen.defaultPadding),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Datetime"),
-              Text("Music"),
-            ],
-          ),
-          SizedBox(height: Dimen.defaultPadding),
-          const Text("Details"),
-          SizedBox(height: Dimen.defaultPadding),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(Dimen.defaultPadding),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: CustomColor.borderColor.withOpacity(0.3),
+            SizedBox(height: Dimen.defaultPadding),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [Text(date)],
+            ),
+            SizedBox(height: Dimen.defaultPadding),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(Dimen.defaultPadding),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: CustomColor.borderColor.withOpacity(0.3),
+                ),
+                color: Colors.white,
               ),
-              color: Colors.white,
+              child: Text(reminder.detail),
             ),
-            child: const Text(
-                "DetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetailsDetails"),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

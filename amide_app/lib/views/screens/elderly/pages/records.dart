@@ -12,7 +12,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ElderlyRecords extends StatelessWidget {
+class ElderlyRecords extends StatefulWidget {
   const ElderlyRecords({
     this.elderly,
     super.key,
@@ -20,6 +20,11 @@ class ElderlyRecords extends StatelessWidget {
 
   final Elderly? elderly;
 
+  @override
+  State<ElderlyRecords> createState() => _ElderlyRecordsState();
+}
+
+class _ElderlyRecordsState extends State<ElderlyRecords> {
   @override
   Widget build(BuildContext context) {
     final ElderlyData elderlyData = Provider.of<ElderlyData>(context);
@@ -85,13 +90,15 @@ class ElderlyRecords extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             StreamBuilder(
-              stream: DatabaseServices().streamVital(elderly!.uid),
+              stream: DatabaseServices().streamVital(widget.elderly!.uid),
               builder: (context, snapshot) {
                 final temperature = snapshot.data?.map((VitalSub vitalSub) => vitalSub.temperature).toList();
                 final heartRate = snapshot.data?.map((VitalSub vitalSub) => vitalSub.heartRate).toList();
                 final oxygenRate = snapshot.data?.map((VitalSub vitalSub) => vitalSub.oxygenRate).toList();
                 final systolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.systolic).toList();
                 final diastolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.diastolic).toList();
+
+                print(temperature);
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -159,7 +166,7 @@ class ElderlyRecords extends StatelessWidget {
                         onPressed: () {
                           context.pushRoute(
                             AllRecordsRoute(
-                              elderly: elderly,
+                              elderly: widget.elderly,
                             ),
                           );
                         },

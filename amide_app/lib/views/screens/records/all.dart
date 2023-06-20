@@ -46,6 +46,8 @@ class AllRecordsScreen extends StatelessWidget {
             final systolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.systolic).toList();
             final diastolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.diastolic).toList();
             final timeStamp = snapshot.data?.map((VitalSub vitalSub) => vitalSub.timeStamp).toList();
+            final height = snapshot.data?.map((VitalSub vitalSub) => vitalSub.height).toList();
+            final weight = snapshot.data?.map((VitalSub vitalSub) => vitalSub.weight).toList();
 
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -79,6 +81,8 @@ class AllRecordsScreen extends StatelessWidget {
                           systolic: systolic![index],
                           diastolic: diastolic![index],
                           timeStamp: timeStamp[index],
+                          height: height![index],
+                          weight: weight![index],
                         ),
                         date: date,
                       );

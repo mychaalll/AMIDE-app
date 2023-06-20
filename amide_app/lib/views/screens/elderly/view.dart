@@ -28,7 +28,7 @@ class ViewElderlyScreen extends StatelessWidget {
           backgroundColor: AppColors.primBlue,
           centerTitle: true,
           elevation: 0,
-          title: const Text(""),
+          title: Text(elderly.name),
           leading: IconButton(
             onPressed: () {
               context.popRoute();
@@ -57,9 +57,7 @@ class ViewElderlyScreen extends StatelessWidget {
             IconButton(
               onPressed: () {
                 context.pushRoute(
-                   RecordRoute(
-                    elderly: elderly
-                  ),
+                  RecordRoute(elderly: elderly),
                 );
               },
               icon: const Icon(
@@ -68,7 +66,6 @@ class ViewElderlyScreen extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            
 
             IconButton(
               onPressed: () {

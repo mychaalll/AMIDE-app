@@ -1,16 +1,17 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
+import 'package:amide_app/features/data/models/records/vital_sub.dart';
 import 'package:amide_app/features/data/models/reminder/reminder.dart';
 import 'package:amide_app/features/data/provider/reminder.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/features/data/services/database.dart';
 import 'package:amide_app/views/widgets/buttons/custom.dart';
+import 'package:amide_app/views/widgets/dashboard/elderly_tile.dart';
 import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/dashboard/elderly_tile.dart';
 import '../../widgets/dashboard/main_button.dart';
 import '../../widgets/dashboard/topbar.dart';
 
@@ -193,10 +194,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             } else if (snapshot.hasData) {
                               final elderlyDoc = snapshot.data!;
                               return ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: elderlyDoc.length,
                                   itemBuilder: (context, index) {
-                                    return StreamBuilder(
+                                    return StreamBuilder<List<VitalSub>>(
                                         stream: DatabaseServices().elderVital(elderlyDoc[index].uid),
                                         builder: (context, snapshot) {
                                           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -206,8 +208,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             if (snapshot.hasError) {
                                               return const Text('Error');
                                             } else if (snapshot.hasData) {
+                                              final List<VitalSub> data = snapshot.data!;
+                                              print("Vital Sub: ${data[0].toJson()}");
                                               return DashboardRecordTile(
                                                 name: elderlyDoc[index].name,
+                                                data: data.first,
                                               );
                                             } else {
                                               return const Text('Empty data');
@@ -227,7 +232,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                     const SizedBox(height: 24),
                     CustomButton(
-                      onPressed: () {},
+                      onPressed: () => context.pushRoute(const ElderlyRoute()),
                       label: "View Elderly List",
                     ),
 
