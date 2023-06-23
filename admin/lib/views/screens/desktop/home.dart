@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DesktopHomeScreen extends StatefulWidget {
+  static String route = "/home";
   const DesktopHomeScreen({Key? key}) : super(key: key);
 
   @override

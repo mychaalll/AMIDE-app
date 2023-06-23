@@ -22,4 +22,11 @@ class DashboardServices extends ChangeNotifier {
     bodyScreenIndex = value;
     notifyListeners();
   }
+
+  String? elderlyId;
+
+  void updateElderlyIndex(String index) {
+    elderlyId = index;
+    notifyListeners();
+  }
 }

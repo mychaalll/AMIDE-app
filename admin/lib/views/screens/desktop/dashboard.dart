@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DesktopDashboardScreen extends StatefulWidget {
+  static String route = "/dashboard";
   const DesktopDashboardScreen({Key? key}) : super(key: key);
 
   @override
@@ -105,7 +106,8 @@ class _DesktopDashboardScreenState extends State<DesktopDashboardScreen> {
                                 return DataCell(
                                   onTap: () {
                                     if (elderly.id == user) {
-                                      dashboard.toggleIsAscending();
+                                      dashboard.updateBodyScreen(2);
+                                      dashboard.updateElderlyIndex(elderly.id);
                                     }
                                   },
                                   Text(

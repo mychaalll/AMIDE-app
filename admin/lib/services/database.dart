@@ -1,5 +1,6 @@
 import 'package:admin/models/elderly.dart';
 import 'package:admin/models/reminder.dart';
+import 'package:admin/models/vital.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +38,28 @@ class DatabaseServices extends ChangeNotifier {
         id: doc.get("id"),
         dateTime: doc.get("dateTime"),
         detail: doc.get("detail"),
+      );
+    }).toList();
+  }
+
+  Stream<List<VitalSign>> getVitalSign(id) {
+    return _db
+        .collection("elderly")
+        .doc(id)
+        .collection("vitalSign")
+        .orderBy("timeStamp", descending: false)
+        .snapshots()
+        .map(vitalSignFromSnapshot);
+  }
+
+  List<VitalSign> vitalSignFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return VitalSign(
+        heartRate: doc.get("heartRate"),
+        oxygenRate: doc.get("oxygenRate"),
+        temperature: doc.get("temperature"),
+        systolic: doc.get("systolic"),
+        diastolic: doc.get("diastolic"),
       );
     }).toList();
   }

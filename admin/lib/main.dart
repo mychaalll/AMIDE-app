@@ -1,7 +1,10 @@
 import 'package:admin/core/theme/theme.dart';
 import 'package:admin/firebase_options.dart';
 import 'package:admin/services/dashboard.dart';
+import 'package:admin/services/login.dart';
+import 'package:admin/views/screens/desktop/dashboard.dart';
 import 'package:admin/views/screens/desktop/home.dart';
+import 'package:admin/views/screens/desktop/login/login.dart';
 import 'package:admin/views/screens/mobile/dashboard.dart';
 import 'package:admin/views/screens/responsive_layout.dart';
 import 'package:admin/views/screens/tablet/dashboard.dart';
@@ -26,15 +29,27 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => DashboardServices()),
+        ChangeNotifierProvider(create: (context) => LoginServices()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const ResponsiveLayout(
-          mobileScaffold: MobileDashboardScreen(),
-          tabletScaffold: TabletDashboardScreen(),
-          desktopScaffold: DesktopHomeScreen(),
-        ),
+        initialRoute: DesktopLoginScreen.route,
         theme: CustomTheme.data,
+        onGenerateRoute: (RouteSettings settings) {
+          return MaterialPageRoute(builder: (context) {
+            if (settings.name == DesktopDashboardScreen.route) {
+              return const DesktopDashboardScreen();
+            } else if (settings.name == DesktopHomeScreen.route) {
+              return const DesktopHomeScreen();
+            } else {
+              return ResponsiveLayout(
+                mobileScaffold: const MobileDashboardScreen(),
+                tabletScaffold: const TabletDashboardScreen(),
+                desktopScaffold: DesktopLoginScreen(),
+              );
+            }
+          });
+        },
       ),
     );
   }
