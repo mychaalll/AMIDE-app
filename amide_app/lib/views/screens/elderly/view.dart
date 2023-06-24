@@ -189,7 +189,7 @@ class ViewElderlyScreen extends StatelessWidget {
                                           ),
                                           const SizedBox(height: 10),
                                           Text(
-                                            "$height",
+                                            height!.toStringAsFixed(2),
                                             style: const TextStyle(
                                               fontSize: 20,
                                               color: Colors.white,
@@ -214,7 +214,7 @@ class ViewElderlyScreen extends StatelessWidget {
                                           ),
                                           const SizedBox(height: 10),
                                           Text(
-                                          "$weight",
+                                          weight!.toStringAsFixed(2),
                                             style: const TextStyle(
                                               fontSize: 20,
                                               color: Colors.white,

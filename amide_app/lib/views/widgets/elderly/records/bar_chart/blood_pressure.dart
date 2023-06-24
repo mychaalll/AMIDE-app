@@ -9,8 +9,8 @@ class BloodPressureBarChart extends StatelessWidget {
     required this.diastolic,
   }) : super(key: key);
 
-  final List systolic;
-  final List diastolic;
+  final List<double> systolic;
+  final List<double> diastolic;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class BloodPressureBarChart extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   textAlign: TextAlign.center,
-                  "${systolic.first} / ${diastolic.first} mmHg",
+                  "${systolic.first.toStringAsFixed(2)} / ${diastolic.first.toStringAsFixed(2)} mmHg",
                   style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,

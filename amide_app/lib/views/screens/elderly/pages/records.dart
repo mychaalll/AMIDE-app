@@ -120,14 +120,14 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                           data: temperature ?? [],
                         ),
                         title: "Temperature",
-                        detail: "${temperature?.first} ° Celcius",
+                        detail: "${temperature?.first.toStringAsFixed(2)} ° Celcius",
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       ElderlyGraphs(
                         title: "Heart Rate",
-                        detail: "${heartRate?.first} bpm",
+                        detail: "${heartRate?.first.toStringAsFixed(2)} bpm",
                         graph: Graph(
                           maxY: 100,
                           minY: 70,
@@ -139,7 +139,7 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                       ),
                       ElderlyGraphs(
                         title: "Oxygen Saturation",
-                        detail: "${oxygenRate?.first} bpm",
+                        detail: "${oxygenRate?.first.toStringAsFixed(2)} bpm",
                         graph: Graph(
                           maxY: 100,
                           minY: 92,
