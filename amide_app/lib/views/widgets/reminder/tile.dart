@@ -3,6 +3,7 @@ import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/core/config/utils.dart';
 import 'package:amide_app/features/data/services/database.dart';
 import 'package:amide_app/features/data/services/local_notifications.dart';
+import 'package:amide_app/features/data/services/realtime.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -77,6 +78,7 @@ class _ReminderTileState extends State<ReminderTile> {
             SlidableAction(
               onPressed: (context) {
                 DatabaseServices().deleteReminder(widget.reminder.id);
+                Realtime().deleteData(widget.reminder.id);
               }, //delete function
               icon: Icons.delete_forever,
               label: 'Delete',
