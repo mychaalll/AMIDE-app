@@ -1,6 +1,7 @@
 import 'package:amide_app/core/routes/routes.gr.dart';
 import 'package:amide_app/core/config/colors.dart';
 import 'package:amide_app/features/data/models/elderly/elderly.dart';
+import 'package:amide_app/features/data/services/database.dart';
 import 'package:amide_app/views/screens/elderly/pages/details.dart';
 import 'package:amide_app/views/screens/elderly/pages/records.dart';
 import 'package:auto_route/auto_route.dart';
@@ -14,9 +15,6 @@ class ViewElderlyScreen extends StatelessWidget {
   }) : super(key: key);
 
   final Elderly elderly;
-
-// boolean to remove the record button if theres an existing record for the day,
-  final bool todayHasRecord = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,20 +38,6 @@ class ViewElderlyScreen extends StatelessWidget {
             ),
           ),
           actions: [
-            // todayHasRecord == true
-            //     ? IconButton(
-            //         onPressed: () {
-            //           context.pushRoute(
-            //             const RecordingRoute(),
-            //           );
-            //         },
-            //         icon: const Icon(
-            //           Icons.add_chart,
-            //           size: 20,
-            //           color: Colors.white,
-            //         ),
-            //       )
-            //     : Container(),
             IconButton(
               onPressed: () {
                 context.pushRoute(
@@ -179,64 +163,80 @@ class ViewElderlyScreen extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        //   child: Row(
-                        //     crossAxisAlignment: CrossAxisAlignment.center,
-                        //     children: [
-                        //       Expanded(
-                        //         child: Column(
-                        //           children: [
-                        //             Text(
-                        //               'Height',
-                        //               style: TextStyle(
-                        //                 fontSize: 14,
-                        //                 color: Colors.grey[400],
-                        //                 fontWeight: FontWeight.w600,
-                        //                 overflow: TextOverflow.ellipsis,
-                        //               ),
-                        //             ),
-                        //             const SizedBox(height: 10),
-                        //             Text(
-                        //               "${elderly.height}",
-                        //               style: const TextStyle(
-                        //                 fontSize: 20,
-                        //                 color: Colors.white,
-                        //                 fontWeight: FontWeight.w700,
-                        //                 overflow: TextOverflow.ellipsis,
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //       Expanded(
-                        //         child: Column(
-                        //           children: [
-                        //             Text(
-                        //               'Weight',
-                        //               style: TextStyle(
-                        //                 fontSize: 14,
-                        //                 color: Colors.grey[400],
-                        //                 fontWeight: FontWeight.w600,
-                        //                 overflow: TextOverflow.ellipsis,
-                        //               ),
-                        //             ),
-                        //             const SizedBox(height: 10),
-                        //             Text(
-                        //               "${elderly.weight}",
-                        //               style: const TextStyle(
-                        //                 fontSize: 20,
-                        //                 color: Colors.white,
-                        //                 fontWeight: FontWeight.w700,
-                        //                 overflow: TextOverflow.ellipsis,
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
+                        StreamBuilder(
+                          stream: DatabaseServices().streamVital(elderly.uid),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData || snapshot.connectionState == ConnectionState.done) {
+                              final height = snapshot.data!.first.height;
+                              final weight = snapshot.data!.first.weight;
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Height',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[400],
+                                              fontWeight: FontWeight.w600,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            "$height",
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Weight',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[400],
+                                              fontWeight: FontWeight.w600,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                          "$weight",
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text("${snapshot.error}"),
+                              );
+                            }
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        ),
                         const Spacer(),
                         const TabBar(
                           tabs: [

@@ -65,5 +65,9 @@ class AppRouter extends $AppRouter {
           page: RecordRoute.page,
           transitionsBuilder: TransitionsBuilders.slideLeft,
         ),
+        CustomRoute(
+          page: AboutSettings.page,
+          transitionsBuilder: TransitionsBuilders.slideLeft,
+        ),
       ];
 }

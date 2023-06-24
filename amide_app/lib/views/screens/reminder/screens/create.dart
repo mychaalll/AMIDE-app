@@ -7,7 +7,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 @RoutePage()
 class CreateReminderScreen extends StatefulWidget {
@@ -135,22 +134,8 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: CustomButton(
                       onPressed: () {
-                        final uid = const Uuid().v4();
-
-                        final String id = uid.replaceAll("-", "").substring(0, 4);
-
                         if (formKey.currentState!.validate()) {
                           reminderData.createReminder();
-
-                          // Realtime().createData(
-                          //   Music(
-                          //     hour: reminderData.hour ?? reminderData.now.hour,
-                          //     minute: reminderData.minute ?? reminderData.now.minute,
-                          //     musicKey: reminderData.musicIndex,
-                          //     id: id,
-                          //   ),
-                          // );
-
                           context.popRoute();
                         }
                       },

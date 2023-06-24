@@ -23,7 +23,7 @@ class ReminderTile extends StatefulWidget {
 }
 
 class _ReminderTileState extends State<ReminderTile> {
-  bool _value = true;
+  final bool _value = true;
 
   void enableNotification(Reminder reminder) async {
     DateTime dateTime = reminder.dateTime;
@@ -104,62 +104,45 @@ class _ReminderTileState extends State<ReminderTile> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                  Icon(
-                    Icons.task,
-                    color: _value == true ? Colors.white : Colors.grey[500],
-                    size: 25,
-                  ),
-                  const SizedBox(width: 30),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          widget.reminder.time,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            fontFamily: 'Montserrat',
-                            color: _value == true ? Colors.white : Colors.grey[500],
-                          ),
-                        ),
-                        Text(
-                          widget.reminder.name,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            fontFamily: 'Montserrat',
-                            color: _value == true ? Colors.white : Colors.grey[500],
-                          ),
-                        )
-                      ],
+                  child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                    Icon(
+                      Icons.task,
+                      color: _value == true ? Colors.white : Colors.grey[500],
+                      size: 25,
                     ),
-                  ),
-                  const SizedBox(width: 15),
-                  Switch.adaptive(
-                    activeColor: Colors.white,
-                    activeTrackColor: const Color.fromARGB(255, 20, 44, 223),
-                    inactiveThumbColor: Colors.grey[500],
-                    inactiveTrackColor: const Color.fromARGB(255, 10, 23, 119),
-                    value: _value,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _value = newValue;
-                      });
-
-                      if (_value) {
-                        enableNotification(widget.reminder); // Enable notification when the switch is toggled on
-                      } else {
-                        disableNotification(widget.reminder); // Cancel notification when the switch is toggled off
-                      }
-                    },
-                  ),
-                ]),
+                    const SizedBox(width: 30),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            widget.reminder.time,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              decoration: TextDecoration.none,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              fontFamily: 'Montserrat',
+                              color: _value == true ? Colors.white : Colors.grey[500],
+                            ),
+                          ),
+                          Text(
+                            widget.reminder.name,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              fontFamily: 'Montserrat',
+                              color: _value == true ? Colors.white : Colors.grey[500],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                  ],
+                ),
               ),
             ),
           ),

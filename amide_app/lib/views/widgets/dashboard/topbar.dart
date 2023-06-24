@@ -1,3 +1,5 @@
+import 'package:amide_app/core/routes/routes.gr.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 class Topbar extends StatelessWidget {
@@ -30,7 +32,7 @@ class Topbar extends StatelessWidget {
           ],
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () => context.pushRoute(const AboutSettings()),
           icon: const Icon(
             Icons.settings,
             size: 23,

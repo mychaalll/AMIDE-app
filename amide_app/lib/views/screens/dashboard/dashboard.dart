@@ -36,11 +36,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<ReminderData>(builder: (context, value, child) {
-        return SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              color: AppColors.bgColor,
+      backgroundColor: AppColors.bgColor,
+      body: Consumer<ReminderData>(
+        builder: (context, value, child) {
+          return SafeArea(
+            child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Column(
@@ -109,12 +109,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             color: Colors.black,
                           ),
                         ),
-                        const SizedBox(height: 22),
+                        const SizedBox(height: 24),
                         StreamBuilder<List<Reminder>>(
                           stream: DatabaseServices().reminders,
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
+                              return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
                             } else if (snapshot.connectionState == ConnectionState.active ||
                                 snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
@@ -123,45 +125,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 final reminder = snapshot.data!;
                                 return snapshot.data!.isEmpty
                                     ? const Text("Please input a reminder.")
-                                    : SizedBox(
-                                        height: 200,
-                                        child: ListView.builder(
-                                          physics: const NeverScrollableScrollPhysics(),
-                                          itemCount: snapshot.data!.length < 3 ? snapshot.data!.length : 3,
-                                          itemBuilder: (context, index) {
-                                            return Container(
-                                              padding: const EdgeInsets.all(10),
-                                              margin: const EdgeInsets.only(bottom: 10),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(10),
+                                    : ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      itemCount: snapshot.data!.length < 3 ? snapshot.data!.length : 3,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          padding: const EdgeInsets.all(10),
+                                          margin: const EdgeInsets.only(bottom: 10),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: ListTile(
+                                            leading: Text(
+                                              reminder[index].time,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
                                               ),
-                                              child: ListTile(
-                                                leading: Text(
-                                                  reminder[index].time,
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                                horizontalTitleGap: 50,
-                                                title: Text(
-                                                  reminder[index].name,
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                    fontSize: 20,
-                                                  ),
-                                                ),
-                                                subtitle: Text(reminder[index].detail),
+                                            ),
+                                            horizontalTitleGap: 50,
+                                            title: Text(
+                                              reminder[index].name,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 20,
                                               ),
-                                            );
-                                          },
-                                        ),
-                                      );
+                                            ),
+                                            subtitle: Text(reminder[index].detail),
+                                          ),
+                                        );
+                                      },
+                                    );
                               } else {
                                 return const Text('Empty data');
                               }
                             } else {
-                              return Text('State: ${snapshot.connectionState}');
+                              return Center(
+                                child: Text(
+                                  'State: ${snapshot.connectionState}',
+                                ),
+                              );
                             }
                           },
                         ),
@@ -183,67 +187,70 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
 
                     StreamBuilder(
-                        stream: DatabaseServices().elders,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          } else if (snapshot.connectionState == ConnectionState.active ||
-                              snapshot.connectionState == ConnectionState.done) {
-                            if (snapshot.hasError) {
-                              return const Text('Error');
-                            } else if (snapshot.hasData) {
-                              final elderlyDoc = snapshot.data!;
-                              return ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: elderlyDoc.length,
-                                  itemBuilder: (context, index) {
-                                    return StreamBuilder<List<VitalSub>>(
-                                        stream: DatabaseServices().elderVital(elderlyDoc[index].uid),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.waiting) {
-                                            return const CircularProgressIndicator();
-                                          } else if (snapshot.connectionState == ConnectionState.active ||
-                                              snapshot.connectionState == ConnectionState.done) {
-                                            if (snapshot.hasError) {
-                                              return const Text('Error');
-                                            } else if (snapshot.hasData) {
-                                              final List<VitalSub> data = snapshot.data!;
-                                              print("Vital Sub: ${data[0].toJson()}");
-                                              return DashboardRecordTile(
-                                                name: elderlyDoc[index].name,
-                                                data: data.first,
-                                              );
-                                            } else {
-                                              return const Text('Empty data');
-                                            }
+                      stream: DatabaseServices().elders,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                        } else if (snapshot.connectionState == ConnectionState.active ||
+                            snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasError) {
+                            return const Text('Error');
+                          } else if (snapshot.hasData) {
+                            final elderlyDoc = snapshot.data!;
+                            return ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: elderlyDoc.length,
+                                itemBuilder: (context, index) {
+                                  return StreamBuilder<List<VitalSub>>(
+                                      stream: DatabaseServices().elderVital(elderlyDoc[index].uid),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState == ConnectionState.waiting) {
+                                          return const Center(
+                                              child: CircularProgressIndicator(),
+                                            );
+                                        } else if (snapshot.connectionState == ConnectionState.active ||
+                                            snapshot.connectionState == ConnectionState.done) {
+                                          if (snapshot.hasError) {
+                                            return const Text('Error');
+                                          } else if (snapshot.hasData) {
+                                            final List<VitalSub> data = snapshot.data!;
+                                            return DashboardRecordTile(
+                                              name: elderlyDoc[index].name,
+                                              data: data.first,
+                                            );
                                           } else {
-                                            return Text('State: ${snapshot.connectionState}');
+                                            return const Text('Empty data');
                                           }
-                                        });
-                                  });
-                            } else {
-                              return const Text('Empty data');
-                            }
+                                        } else {
+                                          return Text('State: ${snapshot.connectionState}');
+                                        }
+                                      });
+                                });
                           } else {
-                            return Text('State: ${snapshot.connectionState}');
+                            return const Text('Empty data');
                           }
-                        }),
+                        } else {
+                          return Text('State: ${snapshot.connectionState}');
+                        }
+                      },
+                    ),
 
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 24.0),
                     CustomButton(
                       onPressed: () => context.pushRoute(const ElderlyRoute()),
                       label: "View Elderly List",
                     ),
-
                     const SizedBox(height: 20),
                   ],
                 ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
