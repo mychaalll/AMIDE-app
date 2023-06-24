@@ -125,27 +125,27 @@ class RecordServices extends ChangeNotifier {
   double? weight;
 
   void updateTemperature(value) {
-    temperature = value.toDouble();
+    temperature = double.parse(value.toString());
     notifyListeners();
   }
 
   void updateHeartRate(value) {
-    heartRate = value.toDouble();
+    heartRate = double.parse(value.toString());
     notifyListeners();
   }
 
   void updateOxygenRate(value) {
-    oxygenRate = value.toDouble();
+    oxygenRate = double.parse(value.toString());
     notifyListeners();
   }
 
   void updateHeight(value) {
-    height = value.toDouble();
+    height = double.parse(value.toString());
     notifyListeners();
   }
 
   void updateWeight(value) {
-    weight = value.toDouble();
+    weight = double.parse(value.toString());
     notifyListeners();
   }
 

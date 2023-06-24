@@ -166,7 +166,8 @@ class ViewElderlyScreen extends StatelessWidget {
                         StreamBuilder(
                           stream: DatabaseServices().streamVital(elderly.uid),
                           builder: (context, snapshot) {
-                            if (snapshot.hasData || snapshot.connectionState == ConnectionState.done) {
+                            try {
+                               if (snapshot.hasData || snapshot.connectionState == ConnectionState.done) {
                               final height = snapshot.data!.first.height;
                               final weight = snapshot.data!.first.weight;
                               return Padding(
@@ -235,6 +236,67 @@ class ViewElderlyScreen extends StatelessWidget {
                             return const Center(
                               child: CircularProgressIndicator(),
                             );
+                            } catch (e) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Height',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[400],
+                                              fontWeight: FontWeight.w600,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          const Text(
+                                            "",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Weight',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[400],
+                                              fontWeight: FontWeight.w600,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          const Text(
+                                          "",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                           
                           }
                         ),
                         const Spacer(),

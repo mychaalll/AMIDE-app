@@ -37,7 +37,7 @@ class _ViewReminderScreenState extends State<ViewReminderScreen> {
   @override
   Widget build(BuildContext context) {
     final ReminderData reminder = Provider.of<ReminderData>(context);
-
+ 
     return GestureDetector(
       onTap: () => Focus.of(context).requestFocus(FocusNode()),
       child: Consumer<ReminderData>(

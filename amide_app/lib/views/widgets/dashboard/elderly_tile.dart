@@ -31,8 +31,8 @@ class DashboardRecordTile extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 14,
-                fontFamily: 'Montserrat',
-                color: Colors.black,
+                fontFamily: 'Montserrat', 
+                color: Colors.black
               ),
             ),
             const SizedBox(height: 10.0),

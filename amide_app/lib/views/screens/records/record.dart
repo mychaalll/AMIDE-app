@@ -93,9 +93,10 @@ class _RecordScreenState extends State<RecordScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             query: Realtime().vital_db,
                             itemBuilder: (context, snapshot, animation, index) {
+                              final data = snapshot.value.toString();
                               if (snapshot.key == "heartRate") {
                                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                  record.updateHeartRate(snapshot.value);
+                                  record.updateHeartRate(double.parse(data).toStringAsFixed(2));
                                 });
                               } else if (snapshot.key == "height") {
                                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -114,7 +115,6 @@ class _RecordScreenState extends State<RecordScreen> {
                                   record.updateWeight(snapshot.value);
                                 });
                               }
-
                               return Visibility(
                                 visible: record.doneList[0] == true,
                                 child: CustomTimeline(
@@ -126,7 +126,7 @@ class _RecordScreenState extends State<RecordScreen> {
                                     label: record.recordTitleList[index],
                                     bodyText: record.bodyTextList[index],
                                     rangeOfVitalSign: record.rangeOfVitalSignList[index],
-                                    vitalSign: ("${snapshot.value} ${record.vitalUnit[index]}"),
+                                    vitalSign: ("${data == "-1" ? "--" :  double.parse(data).toStringAsFixed(2)} ${record.vitalUnit[index]}"),
                                   ),
                                 ),
                               );

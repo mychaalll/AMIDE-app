@@ -205,30 +205,57 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 itemCount: elderlyDoc.length,
                                 itemBuilder: (context, index) {
                                   return StreamBuilder<List<VitalSub>>(
-                                      stream: DatabaseServices().elderVital(elderlyDoc[index].uid),
-                                      builder: (context, snapshot) {
+                                    stream: DatabaseServices().elderVital(elderlyDoc[index].uid),
+                                    builder: (context, snapshot) {
+                                      try {
                                         if (snapshot.connectionState == ConnectionState.waiting) {
                                           return const Center(
-                                              child: CircularProgressIndicator(),
-                                            );
+                                            child: CircularProgressIndicator(),
+                                          );
                                         } else if (snapshot.connectionState == ConnectionState.active ||
-                                            snapshot.connectionState == ConnectionState.done) {
-                                          if (snapshot.hasError) {
+                                          snapshot.connectionState == ConnectionState.done) {
+                                           if (snapshot.hasError) {
                                             return const Text('Error');
-                                          } else if (snapshot.hasData) {
-                                            final List<VitalSub> data = snapshot.data!;
-                                            return DashboardRecordTile(
-                                              name: elderlyDoc[index].name,
-                                              data: data.first,
-                                            );
-                                          } else {
-                                            return const Text('Empty data');
-                                          }
+                                        } else if (snapshot.hasData) {
+                                          final List<VitalSub> data = snapshot.data!;
+                                          return DashboardRecordTile(
+                                            name: elderlyDoc[index].name,
+                                            data: data.first,
+                                          );
+                                        } else {
+                                          return const Text('Empty data');
+                                        }
                                         } else {
                                           return Text('State: ${snapshot.connectionState}');
                                         }
-                                      });
-                                });
+                                      } catch (e) {
+                                        return Container(
+                                          margin: const EdgeInsets.symmetric(vertical: 8),
+                                          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 9),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                elderlyDoc[index].name,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 10),
+                                              const Text("No vital signs recorded."),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                      
+                                    },
+                                  );
+                                },
+                              );
                           } else {
                             return const Text('Empty data');
                           }

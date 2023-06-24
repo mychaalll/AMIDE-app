@@ -165,13 +165,13 @@ class ReminderData extends ChangeNotifier {
   /// START OF REALTIME DATABASE
 
   final musicList = [
-    "1st music",
-    "2nd music",
-    "3rd music",
-    "4th music",
-    "5th music",
-    "6th music",
-    "7th music",
+    "0001normal.mp3",
+    "0001morning.mp3",
+    "0003sleep.mp3",
+    "0004prayer.mp3",
+    "0005medicine.mp3",
+    "0006reading.mp3",
+    "0007soothing.mp3",
   ];
 
   String? music;
@@ -179,7 +179,7 @@ class ReminderData extends ChangeNotifier {
 
   void updateMusic(value) {
     music = value;
-    musicIndex = musicList.indexOf(value);
+    musicIndex = musicList.indexOf(value) + 1;
     notifyListeners();
   }
 
