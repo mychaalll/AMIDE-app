@@ -91,62 +91,6 @@ class AllRecordsScreen extends StatelessWidget {
           },
         ),
       ),
-      // body: SafeArea(
-      //   child: Container(
-      //     color: AppColors.bgColor,
-      //     child: Column(
-      //       children: [
-      //         const SizedBox(height: 20),
-      //         const Text(
-      //           'Records List',
-      //           overflow: TextOverflow.ellipsis,
-      //           style: TextStyle(
-      //             fontWeight: FontWeight.w600,
-      //             fontSize: 16,
-      //             fontFamily: 'Montserrat',
-      //             color: Colors.black,
-      //           ),
-      //         ),
-      //         const SizedBox(height: 20),
-      //         Expanded(
-      //           child: listviewCount == 0
-      //               ? SizedBox(
-      //                   width: width,
-      //                   child: const Column(
-      //                     children: [
-      //                       SizedBox(height: 60),
-      //                       Icon(
-      //                         Icons.cancel_sharp,
-      //                         size: 100,
-      //                       ),
-      //                       Text(
-      //                         'No Records',
-      //                         style: TextStyle(
-      //                             fontWeight: FontWeight.w700,
-      //                             fontSize: 18,
-      //                             fontFamily: 'Montserrat',
-      //                             color: Colors.black),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 )
-      //               : ListView.builder(
-      //                   itemCount: listviewCount,
-      //                   itemBuilder: ((context, index) {
-      //                     return const RecordTile(
-      //                       date: 'Dec. 10, 2022, 09:00 AM',
-      //                       temp: '35.7',
-      //                       bp: '90/80',
-      //                       bpm: '85',
-      //                       bol: '98',
-      //                     );
-      //                   }),
-      //                 ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

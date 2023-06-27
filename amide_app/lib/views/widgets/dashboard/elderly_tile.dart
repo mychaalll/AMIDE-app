@@ -29,11 +29,7 @@ class DashboardRecordTile extends StatelessWidget {
               name,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-                fontFamily: 'Montserrat', 
-                color: Colors.black
-              ),
+                  fontWeight: FontWeight.w700, fontSize: 14, fontFamily: 'Montserrat', color: Colors.black),
             ),
             const SizedBox(height: 10.0),
             //2nd row
@@ -41,7 +37,7 @@ class DashboardRecordTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElderlyVitalRecordDetail(
-                  label: '${data.temperature}° Celcius',
+                  label: '${data.temperature.toStringAsFixed(2)}° Celcius',
                   iconData: const Icon(
                     Icons.thermostat_outlined,
                     color: Colors.blue,
@@ -49,7 +45,7 @@ class DashboardRecordTile extends StatelessWidget {
                   ),
                 ),
                 ElderlyVitalRecordDetail(
-                  label: '${data.systolic}/${data.diastolic} mmHg',
+                  label: '${data.systolic.toStringAsFixed(2)}/${data.diastolic.toStringAsFixed(2)} mmHg',
                   iconData: const Icon(
                     Icons.monitor_heart_outlined,
                     color: Colors.purple,
@@ -64,7 +60,7 @@ class DashboardRecordTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElderlyVitalRecordDetail(
-                  label: '${data.heartRate} BPM',
+                  label: '${data.heartRate.toStringAsFixed(2)} BPM',
                   iconData: const Icon(
                     Icons.favorite,
                     color: Colors.red,
@@ -72,7 +68,7 @@ class DashboardRecordTile extends StatelessWidget {
                   ),
                 ),
                 ElderlyVitalRecordDetail(
-                  label: '${data.oxygenRate}% SpO2',
+                  label: '${data.oxygenRate.toStringAsFixed(2)}% SpO2',
                   iconData: const Icon(
                     Icons.water_drop_rounded,
                     color: Colors.red,

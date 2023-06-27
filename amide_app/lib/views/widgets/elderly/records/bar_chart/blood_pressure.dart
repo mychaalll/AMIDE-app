@@ -7,10 +7,12 @@ class BloodPressureBarChart extends StatelessWidget {
     Key? key,
     required this.systolic,
     required this.diastolic,
+    required this.date,
   }) : super(key: key);
 
   final List<double> systolic;
   final List<double> diastolic;
+  final String date;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,15 @@ class BloodPressureBarChart extends StatelessWidget {
                     fontSize: 18,
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  date,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],

@@ -50,7 +50,7 @@ class RecordTile extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        '${vital.temperature}° Celcius',
+                        '${vital.temperature.toStringAsFixed(2)}° Celcius',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
@@ -75,7 +75,7 @@ class RecordTile extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        '${vital.systolic} /  ${vital.diastolic} mmHg',
+                        '${vital.systolic.toStringAsFixed(2)} /  ${vital.diastolic.toStringAsFixed(2)} mmHg',
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
                       ),
@@ -103,7 +103,7 @@ class RecordTile extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        '${vital.heartRate} BPM',
+                        '${vital.heartRate.toStringAsFixed(2)} BPM',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
@@ -124,7 +124,7 @@ class RecordTile extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        '${vital.oxygenRate}% SpO2',
+                        '${vital.oxygenRate.toStringAsFixed(2)}% SpO2',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
@@ -154,7 +154,7 @@ class RecordTile extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        '${vital.height} cm',
+                        '${vital.height!.toStringAsFixed(2)} cm',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),
@@ -175,7 +175,7 @@ class RecordTile extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        '${vital.weight} kg',
+                        '${vital.weight!.toStringAsFixed(2)} kg',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 12, fontFamily: 'Montserrat', color: Colors.black),

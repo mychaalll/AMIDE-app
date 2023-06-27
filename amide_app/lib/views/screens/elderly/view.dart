@@ -50,7 +50,6 @@ class ViewElderlyScreen extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-
             IconButton(
               onPressed: () {
                 context.pushRoute(
@@ -164,141 +163,139 @@ class ViewElderlyScreen extends StatelessWidget {
                         ),
                         const Spacer(),
                         StreamBuilder(
-                          stream: DatabaseServices().streamVital(elderly.uid),
-                          builder: (context, snapshot) {
-                            try {
-                               if (snapshot.hasData || snapshot.connectionState == ConnectionState.done) {
-                              final height = snapshot.data!.first.height;
-                              final weight = snapshot.data!.first.weight;
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            'Height',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[400],
-                                              fontWeight: FontWeight.w600,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+                            stream: DatabaseServices().streamVital(elderly.uid),
+                            builder: (context, snapshot) {
+                              try {
+                                if (snapshot.hasData || snapshot.connectionState == ConnectionState.done) {
+                                  final height = snapshot.data!.first.height;
+                                  final weight = snapshot.data!.first.weight;
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'Height',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.grey[400],
+                                                  fontWeight: FontWeight.w600,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                "${height!.toStringAsFixed(2)} kg",
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          const SizedBox(height: 10),
-                                          Text(
-                                            height!.toStringAsFixed(2),
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'Weight',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.grey[400],
+                                                  fontWeight: FontWeight.w600,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                "${weight!.toStringAsFixed(2)} cm",
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            'Weight',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[400],
-                                              fontWeight: FontWeight.w600,
-                                              overflow: TextOverflow.ellipsis,
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Center(
+                                    child: Text("${snapshot.error}"),
+                                  );
+                                }
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } catch (e) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'Height',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey[400],
+                                                fontWeight: FontWeight.w600,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Text(
-                                          weight!.toStringAsFixed(2),
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                              overflow: TextOverflow.ellipsis,
+                                            const SizedBox(height: 10),
+                                            const Text(
+                                              "",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                child: Text("${snapshot.error}"),
-                              );
-                            }
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                            } catch (e) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            'Height',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[400],
-                                              fontWeight: FontWeight.w600,
-                                              overflow: TextOverflow.ellipsis,
+                                      Expanded(
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'Weight',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey[400],
+                                                fontWeight: FontWeight.w600,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          const Text(
-                                            "",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                              overflow: TextOverflow.ellipsis,
+                                            const SizedBox(height: 10),
+                                            const Text(
+                                              "",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            'Weight',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.grey[400],
-                                              fontWeight: FontWeight.w600,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          const Text(
-                                          "",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                           
-                          }
-                        ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            }),
                         const Spacer(),
                         const TabBar(
                           tabs: [

@@ -150,6 +150,12 @@ class RecordServices extends ChangeNotifier {
   }
 
   bool isEnabledValidation() {
-    return (heartRate != -1 && oxygenRate != -1 && temperature != -1 && bpValue != null && bpValue != "0");
+    return (heartRate != -1 &&
+        oxygenRate != -1 &&
+        temperature != -1 &&
+        systolic.text.isNotEmpty &&
+        diastolic.text.isNotEmpty &&
+        bpValue != null &&
+        bpValue != "0");
   }
 }

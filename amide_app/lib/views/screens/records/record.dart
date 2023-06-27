@@ -30,7 +30,6 @@ class RecordScreen extends StatefulWidget {
 }
 
 class _RecordScreenState extends State<RecordScreen> {
-
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   @override
@@ -92,7 +91,7 @@ class _RecordScreenState extends State<RecordScreen> {
                                 index: 0,
                               ),
                             ),
-    
+
                             FirebaseAnimatedList(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
@@ -105,19 +104,19 @@ class _RecordScreenState extends State<RecordScreen> {
                                   });
                                 } else if (snapshot.key == "height") {
                                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                    record.updateHeight(snapshot.value);
+                                    record.updateHeight(double.parse(data).toStringAsFixed(2));
                                   });
                                 } else if (snapshot.key == "oxygenRate") {
                                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                    record.updateOxygenRate(snapshot.value);
+                                    record.updateOxygenRate(double.parse(data).toStringAsFixed(2));
                                   });
                                 } else if (snapshot.key == "temperature") {
                                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                    record.updateTemperature(snapshot.value);
+                                    record.updateTemperature(double.parse(data).toStringAsFixed(2));
                                   });
                                 } else if (snapshot.key == "weight") {
                                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                                    record.updateWeight(snapshot.value);
+                                    record.updateWeight(double.parse(data).toStringAsFixed(2));
                                   });
                                 }
                                 return Visibility(
@@ -131,13 +130,14 @@ class _RecordScreenState extends State<RecordScreen> {
                                       label: record.recordTitleList[index],
                                       bodyText: record.bodyTextList[index],
                                       rangeOfVitalSign: record.rangeOfVitalSignList[index],
-                                      vitalSign: ("${data == "-1" ? "--" :  double.parse(data).toStringAsFixed(2)} ${record.vitalUnit[index]}"),
+                                      vitalSign:
+                                          ("${data == "-1" ? "--" : double.parse(data).toStringAsFixed(2)} ${record.vitalUnit[index]}"),
                                     ),
                                   ),
                                 );
                               },
                             ),
-    
+
                             /// Blood Pressure
                             Visibility(
                               visible: record.doneList[0] == true,
@@ -286,7 +286,7 @@ class _RecordScreenState extends State<RecordScreen> {
                                 ),
                               ),
                             ),
-    
+
                             // Done step
                             Visibility(
                               visible: record.doneList[0] == true,
@@ -300,11 +300,11 @@ class _RecordScreenState extends State<RecordScreen> {
                                   height: 30,
                                   indicator: Container(
                                     decoration: BoxDecoration(
-                                      color: record.bpValue != null ? Colors.green : Colors.red,
+                                      color: record.isEnabledValidation() ? Colors.green : Colors.red,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
-                                      record.bpValue != null ? Icons.done : Icons.more_horiz,
+                                      record.isEnabledValidation() ? Icons.done : Icons.more_horiz,
                                       size: 20,
                                       color: Colors.white,
                                     ),
@@ -403,24 +403,24 @@ class _RecordScreenState extends State<RecordScreen> {
                                           alignment: Alignment.bottomRight,
                                           child: StepButton(
                                             onPressed: () async {
-                                              if(formkey.currentState!.validate()) {
+                                              if (formkey.currentState!.validate()) {
                                                 await DatabaseServices()
-                                                  .sendVital(
-                                                      widget.elderly!.uid,
-                                                      VitalSub(
-                                                        heartRate: record.heartRate!,
-                                                        height: record.height!,
-                                                        oxygenRate: record.oxygenRate!,
-                                                        temperature: record.temperature!,
-                                                        weight: record.weight!,
-                                                        systolic: double.parse(record.systolic.text),
-                                                        diastolic: double.parse(record.diastolic.text),
-                                                        timeStamp: Timestamp.fromDate(DateTime.now()),
-                                                      ).toJson())
-                                                  .then((value) {
-                                                record.clearRecord();
-                                                context.popRoute();
-                                              });
+                                                    .sendVital(
+                                                        widget.elderly!.uid,
+                                                        VitalSub(
+                                                          heartRate: record.heartRate!,
+                                                          height: record.height!,
+                                                          oxygenRate: record.oxygenRate!,
+                                                          temperature: record.temperature!,
+                                                          weight: record.weight!,
+                                                          systolic: double.parse(record.systolic.text),
+                                                          diastolic: double.parse(record.diastolic.text),
+                                                          timeStamp: Timestamp.fromDate(DateTime.now()),
+                                                        ).toJson())
+                                                    .then((value) {
+                                                  record.clearRecord();
+                                                  context.popRoute();
+                                                });
                                               }
                                             },
                                             title: "Finish",

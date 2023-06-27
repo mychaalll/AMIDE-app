@@ -6,10 +6,13 @@ import 'package:amide_app/features/data/provider/elderly.dart';
 import 'package:amide_app/features/data/services/database.dart';
 import 'package:amide_app/views/widgets/buttons/custom.dart';
 import 'package:amide_app/views/widgets/elderly/records/bar_chart/blood_pressure.dart';
+import 'package:amide_app/views/widgets/elderly/records/bar_chart/bmi.dart';
 import 'package:amide_app/views/widgets/elderly/records/graphs.dart';
 import 'package:amide_app/views/widgets/elderly/records/line_chart/blood_pressure.dart';
+import 'package:amide_app/views/widgets/elderly/records/line_chart/bmi.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ElderlyRecords extends StatefulWidget {
@@ -66,15 +69,6 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      // Text(
-                      //   ' last 7 days',
-                      //   style: TextStyle(
-                      //     fontSize: 14,
-                      //     color: Colors.grey[600],
-                      //     fontWeight: FontWeight.w600,
-                      //     overflow: TextOverflow.ellipsis,
-                      //   ),
-                      // ),
                       IconButton(
                         onPressed: () {
                           elderlyData.toggleBarGraph();
@@ -92,14 +86,6 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
             StreamBuilder(
               stream: DatabaseServices().streamVital(widget.elderly!.uid),
               builder: (context, snapshot) {
-                final temperature = snapshot.data?.map((VitalSub vitalSub) => vitalSub.temperature).toList();
-                final heartRate = snapshot.data?.map((VitalSub vitalSub) => vitalSub.heartRate).toList();
-                final oxygenRate = snapshot.data?.map((VitalSub vitalSub) => vitalSub.oxygenRate).toList();
-                final systolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.systolic).toList();
-                final diastolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.diastolic).toList();
-
-                print(temperature);
-
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -111,6 +97,23 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                 }
 
                 if (snapshot.data!.isNotEmpty) {
+                  final temperature = snapshot.data?.map((VitalSub vitalSub) => vitalSub.temperature).toList();
+                  final heartRate = snapshot.data?.map((VitalSub vitalSub) => vitalSub.heartRate).toList();
+                  final oxygenRate = snapshot.data?.map((VitalSub vitalSub) => vitalSub.oxygenRate).toList();
+                  final systolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.systolic).toList();
+                  final diastolic = snapshot.data?.map((VitalSub vitalSub) => vitalSub.diastolic).toList();
+                  final DateTime dateFormat = snapshot.data!.first.timeStamp!.toDate();
+                  final String date = DateFormat("MMMM-dd-yyyy hh-mm").format(dateFormat);
+
+                  // try {
+                  final height = snapshot.data?.map((VitalSub vitalSub) => vitalSub.height!).toList();
+                  final weight = snapshot.data?.map((VitalSub vitalSub) => vitalSub.weight!).toList();
+
+                  //   final double bmi = weight!.first / ((height!.first) / 100 * (height.first) / 100);
+                  // } catch (e) {
+                  //   rethrow;
+                  // }
+
                   return Column(
                     children: [
                       ElderlyGraphs(
@@ -121,6 +124,7 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                         ),
                         title: "Temperature",
                         detail: "${temperature?.first.toStringAsFixed(2)} ° Celcius",
+                        date: date,
                       ),
                       const SizedBox(
                         height: 20,
@@ -130,9 +134,10 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                         detail: "${heartRate?.first.toStringAsFixed(2)} bpm",
                         graph: Graph(
                           maxY: 100,
-                          minY: 70,
+                          minY: 40,
                           data: heartRate ?? [],
                         ),
+                        date: date,
                       ),
                       const SizedBox(
                         height: 20,
@@ -145,6 +150,7 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                           minY: 92,
                           data: oxygenRate ?? [],
                         ),
+                        date: date,
                       ),
                       const SizedBox(
                         height: 20,
@@ -153,14 +159,32 @@ class _ElderlyRecordsState extends State<ElderlyRecords> {
                           ? BloodPressureBarChart(
                               systolic: systolic ?? [],
                               diastolic: diastolic ?? [],
+                              date: date,
                             )
                           : BloodPressureLineChart(
                               systolic: systolic ?? [],
                               diastolic: diastolic ?? [],
+                              date: date,
                             ),
                       const SizedBox(
                         height: 20,
                       ),
+                      height!.isNotEmpty && weight!.isNotEmpty
+                          ? elderlyData.isBar
+                              ? BMIBarChart(
+                                  height: height,
+                                  weight: weight,
+                                  date: date,
+                                )
+                              : BMILineChart(
+                                  height: height,
+                                  weight: weight,
+                                  date: date,
+                                )
+                          : const Center(
+                              child: Text("No records of body mass index"),
+                            ),
+                      const SizedBox(height: 20),
                       CustomButton(
                         label: "View All Records",
                         onPressed: () {

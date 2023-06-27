@@ -11,15 +11,18 @@ class ElderlyGraphs extends StatelessWidget {
     required this.graph,
     required this.title,
     required this.detail,
+    required this.date,
   }) : super(key: key);
 
   final Graph graph;
   final String title;
   final String detail;
+  final String date;
 
   @override
   Widget build(BuildContext context) {
     final ElderlyData elderlyData = Provider.of<ElderlyData>(context);
+
     return Container(
       height: 300,
       padding: const EdgeInsets.all(15),
@@ -56,6 +59,15 @@ class ElderlyGraphs extends StatelessWidget {
                     fontSize: 18,
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  date,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
