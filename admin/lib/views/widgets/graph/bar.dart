@@ -1,17 +1,15 @@
+import 'package:admin/core/theme/color.dart';
+import 'package:admin/models/graph.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class RecordsBarChart extends StatelessWidget {
   const RecordsBarChart({
     Key? key,
-    required this.minY,
-    required this.maxY,
     required this.graph,
   }) : super(key: key);
 
-  final double minY;
-  final double maxY;
-  final List graph;
+  final Graph graph;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class RecordsBarChart extends StatelessWidget {
 
     return BarChart(
       BarChartData(
-        minY: minY,
+        minY: graph.minY,
         gridData: const FlGridData(show: false),
         borderData: FlBorderData(show: false),
         titlesData: const FlTitlesData(
@@ -27,17 +25,18 @@ class RecordsBarChart extends StatelessWidget {
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
         ),
-        barGroups: graph.take(7).map((model) {
+        barGroups: graph.data.take(7).map((model) {
           return BarChartGroupData(
             x: i++,
             barRods: [
               BarChartRodData(
                 width: 10,
                 toY: model,
+                color: CustomColor.primBlue,
                 borderRadius: BorderRadius.circular(4),
                 backDrawRodData: BackgroundBarChartRodData(
                   color: Colors.grey[400],
-                  toY: maxY,
+                  toY: graph.maxY,
                   show: true,
                 ),
               ),

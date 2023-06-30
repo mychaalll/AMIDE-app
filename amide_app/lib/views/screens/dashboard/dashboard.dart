@@ -115,8 +115,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
                               return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
+                                child: CircularProgressIndicator(),
+                              );
                             } else if (snapshot.connectionState == ConnectionState.active ||
                                 snapshot.connectionState == ConnectionState.done) {
                               if (snapshot.hasError) {
@@ -126,37 +126,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 return snapshot.data!.isEmpty
                                     ? const Text("Please input a reminder.")
                                     : ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      itemCount: snapshot.data!.length < 3 ? snapshot.data!.length : 3,
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                          padding: const EdgeInsets.all(10),
-                                          margin: const EdgeInsets.only(bottom: 10),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: ListTile(
-                                            leading: Text(
-                                              reminder[index].time,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                              ),
+                                        shrinkWrap: true,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: snapshot.data!.length < 3 ? snapshot.data!.length : 3,
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                            padding: const EdgeInsets.all(10),
+                                            margin: const EdgeInsets.only(bottom: 10),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10),
                                             ),
-                                            horizontalTitleGap: 50,
-                                            title: Text(
-                                              reminder[index].name,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 20,
+                                            child: ListTile(
+                                              leading: Text(
+                                                reminder[index].time,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                ),
                                               ),
+                                              horizontalTitleGap: 50,
+                                              title: Text(
+                                                reminder[index].name,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              subtitle: Text(reminder[index].detail),
                                             ),
-                                            subtitle: Text(reminder[index].detail),
-                                          ),
-                                        );
-                                      },
-                                    );
+                                          );
+                                        },
+                                      );
                               } else {
                                 return const Text('Empty data');
                               }
@@ -191,71 +191,72 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return const Center(
-                              child: CircularProgressIndicator(),
-                            );
+                            child: CircularProgressIndicator(),
+                          );
                         } else if (snapshot.connectionState == ConnectionState.active ||
                             snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.hasError) {
-                            return const Text('Error');
+                            return Text('${snapshot.error}');
                           } else if (snapshot.hasData) {
                             final elderlyDoc = snapshot.data!;
                             return ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: elderlyDoc.length,
-                                itemBuilder: (context, index) {
-                                  return StreamBuilder<List<VitalSub>>(
-                                    stream: DatabaseServices().elderVital(elderlyDoc[index].uid),
-                                    builder: (context, snapshot) {
-                                      try {
-                                        if (snapshot.connectionState == ConnectionState.waiting) {
-                                          return const Center(
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        } else if (snapshot.connectionState == ConnectionState.active ||
-                                          snapshot.connectionState == ConnectionState.done) {
-                                           if (snapshot.hasError) {
-                                            return const Text('Error');
-                                        } else if (snapshot.hasData) {
-                                          final List<VitalSub> data = snapshot.data!;
-                                          return DashboardRecordTile(
-                                            name: elderlyDoc[index].name,
-                                            data: data.first,
-                                          );
-                                        } else {
-                                          return const Text('Empty data');
-                                        }
-                                        } else {
-                                          return Text('State: ${snapshot.connectionState}');
-                                        }
-                                      } catch (e) {
-                                        return Container(
-                                          margin: const EdgeInsets.symmetric(vertical: 8),
-                                          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 9),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                elderlyDoc[index].name,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: elderlyDoc.length,
+                              itemBuilder: (context, index) {
+                                return elderlyDoc[index].isDeleted
+                                    ? const SizedBox()
+                                    : StreamBuilder<List<VitalSub>>(
+                                        stream: DatabaseServices().elderVital(elderlyDoc[index].uid),
+                                        builder: (context, snapshot) {
+                                          try {
+                                            if (snapshot.connectionState == ConnectionState.waiting) {
+                                              return const Center(
+                                                child: CircularProgressIndicator(),
+                                              );
+                                            } else if (snapshot.connectionState == ConnectionState.active ||
+                                                snapshot.connectionState == ConnectionState.done) {
+                                              if (snapshot.hasError) {
+                                                return const Text('Error');
+                                              } else if (snapshot.hasData) {
+                                                final List<VitalSub> data = snapshot.data!;
+                                                return DashboardRecordTile(
+                                                  name: elderlyDoc[index].name,
+                                                  data: data.first,
+                                                );
+                                              } else {
+                                                return const Text('Empty data');
+                                              }
+                                            } else {
+                                              return Text('State: ${snapshot.connectionState}');
+                                            }
+                                          } catch (e) {
+                                            return Container(
+                                              margin: const EdgeInsets.symmetric(vertical: 8),
+                                              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 9),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(12),
                                               ),
-                                              const SizedBox(height: 10),
-                                              const Text("No vital signs recorded."),
-                                            ],
-                                          ),
-                                        );
-                                      }
-                                      
-                                    },
-                                  );
-                                },
-                              );
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    elderlyDoc[index].name,
+                                                    style: const TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  const Text("No vital signs recorded."),
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      );
+                              },
+                            );
                           } else {
                             return const Text('Empty data');
                           }

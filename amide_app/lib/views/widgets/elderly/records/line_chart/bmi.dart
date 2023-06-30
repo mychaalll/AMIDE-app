@@ -19,6 +19,8 @@ class BMILineChart extends StatelessWidget {
     double i = 0;
     double j = 0;
 
+    final double bmi = weight.first / ((height.first) / 100 * (height.first) / 100);
+
     return Container(
       height: 400,
       padding: const EdgeInsets.all(15),
@@ -39,7 +41,7 @@ class BMILineChart extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Blood Pressure",
+                  "Body Mass Index",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[600],
@@ -49,7 +51,7 @@ class BMILineChart extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "${height.first} / ${weight.first} mmHg",
+                  "${bmi.toStringAsFixed(2)} kg/m²",
                   style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,

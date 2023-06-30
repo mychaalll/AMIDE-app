@@ -8,6 +8,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 
 import '../../../features/data/models/reminder/reminder.dart';
 
@@ -48,6 +49,7 @@ class _ReminderTileState extends State<ReminderTile> {
 
   @override
   Widget build(BuildContext context) {
+    final time = DateFormat("h:mma").format(widget.reminder.dateTime);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Slidable(
@@ -106,7 +108,9 @@ class _ReminderTileState extends State<ReminderTile> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
                     Icon(
                       Icons.task,
                       color: _value == true ? Colors.white : Colors.grey[500],
@@ -119,7 +123,7 @@ class _ReminderTileState extends State<ReminderTile> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            widget.reminder.time,
+                            time,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               decoration: TextDecoration.none,

@@ -336,7 +336,7 @@ class _RecordScreenState extends State<RecordScreen> {
                                             text: "Heart Rate: ",
                                             children: [
                                               TextSpan(
-                                                  text: "${record.heartRate} bpm",
+                                                  text: record.heartRate == -1 ? "--" : " ${record.heartRate} bpm",
                                                   style: const TextStyle(fontWeight: FontWeight.normal)),
                                             ],
                                           ),
@@ -347,7 +347,7 @@ class _RecordScreenState extends State<RecordScreen> {
                                             text: "Height: ",
                                             children: [
                                               TextSpan(
-                                                  text: "${record.height}cm",
+                                                  text: record.height == -1 ? "--" : "${record.height}cm",
                                                   style: const TextStyle(fontWeight: FontWeight.normal)),
                                             ],
                                           ),
@@ -358,7 +358,7 @@ class _RecordScreenState extends State<RecordScreen> {
                                             text: "Oxygen Rate ",
                                             children: [
                                               TextSpan(
-                                                  text: "${record.oxygenRate} % Spo2",
+                                                  text: record.oxygenRate == -1 ? "--" : "${record.oxygenRate} % Spo2",
                                                   style: const TextStyle(fontWeight: FontWeight.normal)),
                                             ],
                                           ),
@@ -369,7 +369,9 @@ class _RecordScreenState extends State<RecordScreen> {
                                             text: "Body Temperature: ",
                                             children: [
                                               TextSpan(
-                                                  text: "${record.temperature}° Celcius",
+                                                  text: record.temperature == -1
+                                                      ? "--"
+                                                      : "${record.temperature}° Celcius",
                                                   style: const TextStyle(fontWeight: FontWeight.normal)),
                                             ],
                                           ),
@@ -380,7 +382,7 @@ class _RecordScreenState extends State<RecordScreen> {
                                             text: "Weight: ",
                                             children: [
                                               TextSpan(
-                                                  text: "${record.weight} kg",
+                                                  text: record.weight == -1 ? "--" : "${record.weight} kg",
                                                   style: const TextStyle(fontWeight: FontWeight.normal)),
                                             ],
                                           ),
@@ -391,7 +393,9 @@ class _RecordScreenState extends State<RecordScreen> {
                                             text: "Blood Pressure: ",
                                             children: [
                                               TextSpan(
-                                                  text: "${record.bpValue} mmHg",
+                                                  text: record.systolic.text.isEmpty && record.diastolic.text.isEmpty
+                                                      ? "--"
+                                                      : "${record.bpValue} mmHg",
                                                   style: const TextStyle(fontWeight: FontWeight.normal)),
                                             ],
                                           ),

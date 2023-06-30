@@ -78,7 +78,7 @@ class BloodPressureLineChart extends StatelessWidget {
                     LineChartData(
                       minX: 0,
                       maxX: 7,
-                      minY: 100,
+                      minY: 50,
                       maxY: 200,
                       gridData: FlGridData(
                         show: true,
@@ -126,8 +126,8 @@ class BloodPressureLineChart extends StatelessWidget {
                     LineChartData(
                       minX: 0,
                       maxX: 7,
-                      minY: 70,
-                      maxY: 100,
+                      minY: 50,
+                      maxY: 150,
                       gridData: FlGridData(
                         show: true,
                         getDrawingHorizontalLine: (value) {

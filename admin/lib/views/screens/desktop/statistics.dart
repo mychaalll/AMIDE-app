@@ -1,8 +1,9 @@
 import 'package:admin/core/strings/dimen.dart';
+import 'package:admin/models/graph.dart';
 import 'package:admin/models/vital.dart';
 import 'package:admin/services/dashboard.dart';
 import 'package:admin/services/database.dart';
-import 'package:admin/views/widgets/graph/bar.dart';
+import 'package:admin/views/widgets/graph/elderly.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,38 +29,71 @@ class _DescktopStatScreenState extends State<DescktopStatScreen> {
           if (snapshot.hasError) {
             return const Text('Error');
           } else if (snapshot.hasData) {
-            print(snapshot.data);
-            // return Padding(
-            //   padding: EdgeInsets.all(Dimen.defaultPadding),
-            //   child: const Expanded(
-            //     child: RecordsBarChart(
-            //       minY: 55,
-            //       maxY: 100,
-            //       graph: [],
-            //     ),
-            //   ),
-            // );
             final vital = snapshot.data!;
+            final temperature = vital.map((VitalSign vitalSign) => vitalSign.temperature).toList();
+            final oxygenRate = vital.map((VitalSign vitalSign) => vitalSign.oxygenRate).toList();
+            final heartRate = vital.map((VitalSign vitalSign) => vitalSign.heartRate).toList();
+            final systolic = vital.map((VitalSign vitalSign) => vitalSign.systolic).toList();
+            final diastolic = vital.map((VitalSign vitalSign) => vitalSign.diastolic).toList();
 
-            return Padding(
-              padding: EdgeInsets.all(Dimen.defaultPadding),
-              child: Container(
-                height: 300,
-                width: 300,
-                color: Colors.red,
-                child: ListView.builder(
-                  itemCount: vital.length,
-                  itemBuilder: (context, index) {
-                    return SizedBox(
-                      width: 300,
-                      height: 300,
-                      child: RecordsBarChart(
-                        minY: 40,
-                        maxY: 30,
-                        graph: vital.map((VitalSign vitalSign) => vitalSign.temperature).toList(),
+            return Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(Dimen.defaultPadding),
+                  child: Column(
+                    children: [
+                      ElderlyGraphs(
+                        graph: Graph(
+                          maxY: 40,
+                          minY: 30,
+                          data: vital.map((VitalSign vitalSign) => vitalSign.temperature).toList(),
+                        ),
+                        title: "Temperature",
+                        detail: "${temperature.first} ° Celcius",
                       ),
-                    );
-                  },
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElderlyGraphs(
+                        title: "Heart Rate",
+                        detail: "${heartRate.first} bpm",
+                        graph: Graph(
+                          maxY: 100,
+                          minY: 70,
+                          data: heartRate,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElderlyGraphs(
+                        title: "Oxygen Saturation",
+                        detail: "${oxygenRate.first} bpm",
+                        graph: Graph(
+                          maxY: 100,
+                          minY: 92,
+                          data: oxygenRate,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      // CustomButton(
+                      //   label: "View All Records",
+                      //   onPressed: () {
+                      //     context.pushRoute(
+                      //       AllRecordsRoute(
+                      //         elderly: widget.elderly,
+                      //       ),
+                      //     );
+                      //   },
+                      //   hasIcon: false,
+                      // ),
+                    ],
+                  ),
                 ),
               ),
             );
