@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
               return StreamBuilder(
                 stream: auth.authStateChanges(),
                 builder: (context, snapshot) {
-                  print(snapshot.data);
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   } else if (snapshot.connectionState == ConnectionState.active ||
