@@ -32,19 +32,16 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
     if (newTime != null) {
       // ignore: use_build_context_synchronously
       reminderData.updateTime(newTime.format(context), newTime);
-      print(reminderData.hour);
-      print(reminderData.minute);
     }
   }
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final ReminderData reminderData = Provider.of<ReminderData>(context);
 
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
     return GestureDetector(
-      onTap: () => Focus.of(context).requestFocus(FocusNode()),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(

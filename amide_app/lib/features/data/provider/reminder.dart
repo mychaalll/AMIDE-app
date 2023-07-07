@@ -3,6 +3,7 @@ import 'package:amide_app/features/data/services/database.dart';
 import 'package:amide_app/features/data/services/realtime.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/reminder/reminder.dart';
@@ -185,12 +186,12 @@ class ReminderData extends ChangeNotifier {
 
   TextEditingController timeController = TextEditingController();
   final DateTime now = DateTime.now();
+  DateTime? militaryTime;
   int? hour;
   int? minute;
 
   void updateTime(value, newTime) {
-    timeController.text = value;
-    final militaryTime = DateTime(
+    militaryTime = DateTime(
       now.year,
       now.month,
       now.day,
@@ -198,8 +199,14 @@ class ReminderData extends ChangeNotifier {
       newTime.minute,
     );
 
-    hour = militaryTime.hour;
-    minute = militaryTime.minute;
+    final String convertedTime = DateFormat("hh:mm a").format(militaryTime!);
+
+    print(militaryTime);
+
+    hour = militaryTime!.hour;
+    minute = militaryTime!.minute;
+
+    timeController.text = convertedTime;
 
     notifyListeners();
   }
