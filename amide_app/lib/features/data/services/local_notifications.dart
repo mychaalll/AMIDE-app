@@ -24,30 +24,38 @@ class NotificationService {
         onDidReceiveNotificationResponse: (NotificationResponse) async {});
   }
 
-  notificationDetails() {
-    return const NotificationDetails(
+  // USE THIS WHEN HAVE RESEARCHED HOW TO USE DEVICE DEFAULT RINGTONE
+  notificationDetails(String? sound) {
+    // notificationDetails() {
+    return NotificationDetails(
         android: AndroidNotificationDetails('channelId', 'channelName',
             enableVibration: true,
             enableLights: true,
-            importance: Importance.max),
-        iOS: DarwinNotificationDetails());
+            importance: Importance.max,
+            // INPUT SOUND PATH HERE <<<<<<<<<<<<<<<<<<<<<<<<<<<
+            sound: sound != null
+                ? RawResourceAndroidNotificationSound(sound)
+                : null,
+            playSound: sound == null),
+        iOS: DarwinNotificationDetails(sound: sound));
   }
 
-  Future showNotification({
-    int? id,
-    String? title,
-    String? body,
-    String? payLoad,
-  }) async {
-    return notificationsPlugin.show(
-        id!, title, body, await notificationDetails());
-  }
+  // Future showNotification({
+  //   int? id,
+  //   String? title,
+  //   String? body,
+  //   String? payLoad,
+  // }) async {
+  //   return notificationsPlugin.show(
+  //       id!, title, body, await notificationDetails());
+  // }
 
   Future dailyNotification(
       {int? id,
       String? title,
       String? body,
       String? payLoad,
+      String? sound,
       required Time notificationTime}) async {
     var now = DateTime.now();
     var scheduledDate = DateTime(now.year, now.month, now.day,
@@ -60,7 +68,7 @@ class NotificationService {
         title,
         body,
         tz.TZDateTime.from(scheduledDate, tz.local),
-        await notificationDetails(),
+        await notificationDetails(sound),
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);
@@ -89,23 +97,23 @@ class NotificationService {
     await notificationsPlugin.cancel(id!);
   }
 
-  Future scheduleNotification(
-      {int? id,
-      String? title,
-      String? body,
-      String? payLoad,
-      required DateTime scheduledNotificationDateTime}) async {
-    return notificationsPlugin.zonedSchedule(
-        id!,
-        title,
-        body,
-        tz.TZDateTime.from(
-          scheduledNotificationDateTime,
-          tz.local,
-        ),
-        await notificationDetails(),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime);
-  }
+  // Future scheduleNotification(
+  //     {int? id,
+  //     String? title,
+  //     String? body,
+  //     String? payLoad,
+  //     required DateTime scheduledNotificationDateTime}) async {
+  //   return notificationsPlugin.zonedSchedule(
+  //       id!,
+  //       title,
+  //       body,
+  //       tz.TZDateTime.from(
+  //         scheduledNotificationDateTime,
+  //         tz.local,
+  //       ),
+  //       await notificationDetails(),
+  //       androidAllowWhileIdle: true,
+  //       uiLocalNotificationDateInterpretation:
+  //           UILocalNotificationDateInterpretation.absoluteTime);
+  // }
 }

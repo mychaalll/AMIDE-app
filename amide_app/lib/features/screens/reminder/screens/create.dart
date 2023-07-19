@@ -93,14 +93,21 @@ class _CreateReminderScreenState extends State<CreateReminderScreen> {
   //   }
   // }
 
-  void pickFile() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
+  Future<String?> pickFile() async {
+    final result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['mp3', 'wav']);
+    if (result != null) {
+      String filePath = result.files.single.path!;
+      debugPrint('THIS IS YOUR FILE PATH >>>>> $filePath');
+      return filePath;
+    }
+    return null;
+    // debugPrint(result);
   }
 
-  void openFile(PlatformFile file) {
-    OpenFile.open(file.path!);
-  }
+  // void openFile(PlatformFile file) {
+  //   OpenFile.open(file.path!);
+  // }
 
   Future<File> saveFilePermanently(PlatformFile file) async {
     final appStorage = await getApplicationDocumentsDirectory();
